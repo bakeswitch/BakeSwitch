@@ -1,0 +1,25 @@
+.mainBox {
+  margin: auto;
+  width: 70%;
+  padding-top: 4rem;
+}
+
+.inputBox {
+  margin: 1.5rem;
+}
+
+.inputText {
+  display: flex;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.googleLogIn {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem;
+}
+
+.button {
+  margin: 20px;
+}
