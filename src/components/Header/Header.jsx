@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import SearchBar from "./SearchBar";
 import HeaderBrand from "./HeaderBrand";
@@ -7,6 +7,16 @@ import Tab from "./OtherTabs";
 import LogOutTab from "./LogOutTab";
 
 function Header(props) {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	function handleLogIn() {
+		setIsLoggedIn(true);
+	}
+
+	function handleLogOut() {
+		setIsLoggedIn(false);
+	}
+
 	const tabDetails = [
 		{
 			hrefVal: "../pages/Bakers",

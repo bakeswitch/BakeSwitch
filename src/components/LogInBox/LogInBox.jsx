@@ -52,15 +52,14 @@ function LogInBox(props) {
 						className={styles.inputText}
 					/>
 				</div>
-				<Button
-					variant="contained"
-					color="primary"
-					className={styles.button}
-					onClick={submitChange}
-				>
+				<Button variant="contained" color="primary" onClick={submitChange}>
 					Log In
 				</Button>
 			</form>
+			<div className={styles.signUp}>
+				<h6>Don't have an account?</h6>
+				<a href="">Sign up!</a>
+			</div>
 		</div>
 	);
 }

@@ -1,25 +1,30 @@
 .mainBox {
-  margin: auto;
-  width: 70%;
-  padding-top: 4rem;
+	margin: auto;
+	width: 70%;
+	padding-top: 4rem;
 }
 
 .inputBox {
-  margin: 1.5rem;
+	margin: 1.5rem;
 }
 
 .inputText {
-  display: flex;
-  margin: auto;
-  margin-top: 1rem;
+	display: flex;
+	margin: auto;
+	margin-top: 1rem;
 }
 
 .googleLogIn {
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem;
+	display: flex;
+	justify-content: center;
+	margin: 1.5rem;
 }
 
-.button {
-  margin: 20px;
+.signUp {
+	margin-top: 2rem;
+}
+
+.signUp h6 {
+	display: inline-block;
+	margin-right: 1.2rem;
 }
