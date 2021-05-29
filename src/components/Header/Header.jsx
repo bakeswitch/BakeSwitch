@@ -57,7 +57,7 @@ function Header(props) {
 						<Tab hrefVal={item.hrefVal} tabName={item.tabName} />
 					))}
 					{/* Log Out tab only shows when isLogggedIn is true */}
-					{props.isLoggedIn && <LogOutTab onLogOut={props.onLogOut} />}
+					{props.isLoggedIn && <LogOutTab />}
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>

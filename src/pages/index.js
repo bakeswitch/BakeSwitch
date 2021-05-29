@@ -7,15 +7,14 @@ import Bakes from "./Bakes";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 
-function Webpages(props) {
+function Webpages() {
 	return (
 		<BrowserRouter>
 			<Route exact path="/" component={Home} />
 			<Route exact path="/about" component={About} />
 			<Route exact path="/bakers" component={Bakers} />
 			<Route exact path="/bakes" component={Bakes} />
-			{/* Pass the function to change log in state to the Log In page  */}
-			<Route path="/log-in" render={() => <LogIn onLogIn={props.onLogIn} />} />
+			<Route path="/log-in" component={LogIn} />
 			<Route path="/sign-up" component={SignUp} />
 		</BrowserRouter>
 	);

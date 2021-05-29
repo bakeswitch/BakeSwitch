@@ -3,9 +3,9 @@ import { Nav } from "react-bootstrap";
 import styles from "./Header.module.css";
 import { auth } from "../../config/firebase";
 
-export default function LogOutTab(props) {
+export default function LogOutTab() {
 	const GoogleSignOut = () => {
-		auth.signOut().then(() => !auth.currentUser && alert("You are logged out."));
+		auth.signOut().then(() => auth.currentUser === null && alert("You are logged out."));
 	};
 
 	return (
@@ -13,7 +13,6 @@ export default function LogOutTab(props) {
 			<Nav.Link
 				onClick={() => {
 					GoogleSignOut();
-					props.onLogOut();
 				}}
 			>
 				Log Out
