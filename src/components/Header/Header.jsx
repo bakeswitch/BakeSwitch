@@ -51,7 +51,7 @@ function Header(props) {
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse>
 				<SearchBar />
-				<Nav>
+				<Nav className="ms-auto">
 					<AboutUsTab />
 					{currentTabs.map((item) => (
 						<Tab hrefVal={item.hrefVal} tabName={item.tabName} />
