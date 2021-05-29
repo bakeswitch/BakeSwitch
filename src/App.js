@@ -18,9 +18,7 @@ function App() {
 	return (
 		<>
 			<Header isLoggedIn={isLoggedIn} onLogOut={handleLogOut} />
-			<WebPages>
-				<LogIn onLogIn={handleLogIn} />
-			</WebPages>
+			<WebPages onLogIn={handleLogIn} />
 		</>
 	);
 }

@@ -58,7 +58,7 @@ function LogInBox(props) {
 			</form>
 			<div className={styles.signUp}>
 				<h6>Don't have an account?</h6>
-				<a href="">Sign up!</a>
+				<a href="/sign-up">Sign up!</a>
 			</div>
 		</div>
 	);

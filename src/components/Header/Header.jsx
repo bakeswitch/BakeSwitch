@@ -7,23 +7,13 @@ import Tab from "./OtherTabs";
 import LogOutTab from "./LogOutTab";
 
 function Header(props) {
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-	function handleLogIn() {
-		setIsLoggedIn(true);
-	}
-
-	function handleLogOut() {
-		setIsLoggedIn(false);
-	}
-
 	const tabDetails = [
 		{
-			hrefVal: "../pages/Bakers",
+			hrefVal: "",
 			tabName: "Bakers",
 		},
 		{
-			hrefVal: "#bakes",
+			hrefVal: "",
 			tabName: "Bakes",
 		},
 	];
@@ -31,7 +21,7 @@ function Header(props) {
 	const loggedOutTabs = [
 		...tabDetails,
 		{
-			hrefVal: "",
+			hrefVal: "/log-in",
 			tabName: "Log In",
 		},
 	];
