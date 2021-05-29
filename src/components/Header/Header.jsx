@@ -9,11 +9,11 @@ import LogOutTab from "./LogOutTab";
 function Header(props) {
 	const tabDetails = [
 		{
-			hrefVal: "",
+			hrefVal: "/bakers",
 			tabName: "Bakers",
 		},
 		{
-			hrefVal: "",
+			hrefVal: "/bakes",
 			tabName: "Bakes",
 		},
 	];

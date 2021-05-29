@@ -13,6 +13,9 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+//Set auth state to persist until user logs out
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
 const auth = firebase.auth();
 const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
