@@ -14,8 +14,8 @@ function Webpages() {
 			<Route exact path="/about" component={About} />
 			<Route exact path="/bakers" component={Bakers} />
 			<Route exact path="/bakes" component={Bakes} />
-			<Route path="/log-in" component={LogIn} />
-			<Route path="/sign-up" component={SignUp} />
+			<Route exact path="/log-in" component={LogIn} />
+			<Route exact path="/sign-up" component={SignUp} />
 		</BrowserRouter>
 	);
 }

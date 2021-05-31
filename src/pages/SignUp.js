@@ -1,6 +1,6 @@
 import React from "react";
+import SignUpBuyer from "../components/SignUpBuyer";
 
 export default function SignUp() {
-	//replace with actual content
-	return <h3 style={{ padding: "5rem" }}>Sign up page in construction</h3>;
+	return <SignUpBuyer />;
 }
