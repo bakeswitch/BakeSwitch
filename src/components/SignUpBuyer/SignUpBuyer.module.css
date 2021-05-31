@@ -1,9 +1,7 @@
 .mainBox {
-    margin: auto;
-    width: 50%;
-    margin-top: 2rem;
-    padding: 4rem 2rem 4rem;
-    text-align: left;
-    border: 1px solid black;
-  }
-  
+	margin: auto;
+	margin-top: 2rem;
+	padding: 4rem 2rem 4rem;
+	text-align: left;
+	border: 1px solid black;
+}
