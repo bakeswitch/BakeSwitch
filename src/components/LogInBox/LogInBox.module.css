@@ -4,19 +4,16 @@
 	padding-top: 4rem;
 }
 
-.inputBox {
-	margin: 1.5rem;
-}
-
-.inputText {
-	display: flex;
-	margin: auto;
-	margin-top: 1rem;
-}
-
 .googleLogIn {
 	display: flex;
 	justify-content: center;
+	margin: 1.5rem;
+}
+
+.inputBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	margin: 1.5rem;
 }
 
@@ -25,6 +22,6 @@
 }
 
 .signUp h6 {
-	display: inline-block;
+	display: inline;
 	margin-right: 1.2rem;
 }

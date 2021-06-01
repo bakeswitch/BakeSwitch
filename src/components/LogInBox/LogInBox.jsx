@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./LogInBox.module.css";
-import { Button } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import GoogleButton from "react-google-button";
 
 function LogInBox(props) {
@@ -35,21 +35,21 @@ function LogInBox(props) {
 			<hr />
 			<form>
 				<div className={styles.inputBox}>
-					<input
+					<TextField
 						name="email"
 						type="email"
-						placeholder="Email"
 						onChange={handleChange}
 						value={loginInput.email}
-						className={styles.inputText}
+						label="Email"
+						variant="filled"
 					/>
-					<input
+					<TextField
 						name="password"
 						type="password"
-						placeholder="Password"
 						onChange={handleChange}
 						value={loginInput.password}
-						className={styles.inputText}
+						label="Password"
+						variant="filled"
 					/>
 				</div>
 				<Button variant="contained" color="primary" onClick={submitChange}>
