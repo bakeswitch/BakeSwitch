@@ -1,34 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import WebPages from "./pages";
 import { auth } from "./config/firebase";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-	const hasUser = auth.currentUser != null;
-	const [isLoggedIn, setIsLoggedIn] = useState(hasUser);
-
-	function handleLogIn() {
-		setIsLoggedIn(true);
-	}
-
-	function handleLogOut() {
-		setIsLoggedIn(false);
-	}
+	const [isLoggedIn, setIsLoggedIn] = useState();
+	const [isLoading, setIsLoading] = useState(true);
 
 	auth.onAuthStateChanged(function (user) {
 		if (user) {
-			handleLogIn();
+			setIsLoggedIn(true);
+			setIsLoading(false);
 		} else {
-			handleLogOut();
+			setIsLoggedIn(false);
+			setIsLoading(false);
 		}
 	});
 
 	return (
-		<>
-			<Header isLoggedIn={isLoggedIn} />
-			<WebPages />
-		</>
+		!isLoading && (
+			<>
+				<Header isLoggedIn={isLoggedIn} />
+				<WebPages isLoggedIn={isLoggedIn} />
+			</>
+		)
 	);
 }
 

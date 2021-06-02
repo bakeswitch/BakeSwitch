@@ -11,12 +11,11 @@ const firebaseConfig = {
 	measurementId: "G-SJY0D853EQ",
 };
 
-firebase.initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 
+const auth = app.auth();
 //Set auth state to persist until user logs out
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
-const auth = firebase.auth();
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export { auth, GoogleAuthProvider };
+export { app, auth, GoogleAuthProvider };

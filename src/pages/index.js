@@ -11,7 +11,7 @@ import ProfileSettings from "./ProfileSettings";
 import Chats from "./Chats";
 import Favourited from "./Favourited";
 
-function Webpages() {
+function Webpages(props) {
 	return (
 		<BrowserRouter>
 			<Route exact path="/" component={Home} />
@@ -20,10 +20,22 @@ function Webpages() {
 			<Route exact path="/bakes" component={Bakes} />
 			<Route exact path="/log-in" component={LogIn} />
 			<Route exact path="/sign-up" component={SignUp} />
-			<Route exact path="/order-cart" component={OrderCart} />
-			<Route exact path="/profile-settings" component={ProfileSettings} />
-			<Route exact path="/chats" component={Chats} />
-			<Route exact path="/favourited" component={Favourited} />
+			<Route
+				exact
+				path="/order-cart"
+				component={() => <OrderCart isLoggedIn={props.isLoggedIn} />}
+			/>
+			<Route
+				exact
+				path="/profile-settings"
+				component={() => <ProfileSettings isLoggedIn={props.isLoggedIn} />}
+			/>
+			<Route exact path="/chats" component={() => <Chats isLoggedIn={props.isLoggedIn} />} />
+			<Route
+				exact
+				path="/favourited"
+				component={() => <Favourited isLoggedIn={props.isLoggedIn} />}
+			/>
 		</BrowserRouter>
 	);
 }
