@@ -18,4 +18,5 @@ const auth = app.auth();
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export { app, auth, GoogleAuthProvider };
+export { auth, GoogleAuthProvider };
+export default app;

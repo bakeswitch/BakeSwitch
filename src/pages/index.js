@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Home from "./Home";
 import About from "./About";
 import Bakers from "./Bakers";
@@ -13,7 +13,7 @@ import Favourited from "./Favourited";
 
 function Webpages(props) {
 	return (
-		<BrowserRouter>
+		<Switch>
 			<Route exact path="/" component={Home} />
 			<Route exact path="/about" component={About} />
 			<Route exact path="/bakers" component={Bakers} />
@@ -36,7 +36,7 @@ function Webpages(props) {
 				path="/favourited"
 				component={() => <Favourited isLoggedIn={props.isLoggedIn} />}
 			/>
-		</BrowserRouter>
+		</Switch>
 	);
 }
 

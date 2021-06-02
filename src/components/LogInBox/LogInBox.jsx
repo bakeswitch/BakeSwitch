@@ -1,58 +1,41 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "./LogInBox.module.css";
 import { Button, TextField } from "@material-ui/core";
 import GoogleButton from "react-google-button";
+import { useAuth } from "../../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 
-function LogInBox(props) {
-	const [loginInput, setLoginInput] = useState({
-		email: "",
-		password: "",
-	});
+function LogInBox() {
+	const emailRef = useRef();
+	const passwordRef = useRef();
+	const { googleLogIn, passwordLogIn } = useAuth();
+	const history = useHistory();
 
-	function handleChange(event) {
-		const { name, value } = event.target;
-		setLoginInput((prev) => ({
-			...prev,
-			[name]: value,
-		}));
+	async function handleGoogleLogIn() {
+		await googleLogIn();
+		// Redirect to most recent page user was on before logging in
+		history.goBack();
 	}
 
-	function submitChange(event) {
-		setLoginInput({
-			email: "",
-			password: "",
-		});
-		props.passwordSignIn(loginInput.email, loginInput.password);
+	async function handleSubmit(event) {
+		event.preventDefault();
+		await passwordLogIn(emailRef.current.value, passwordRef.current.value);
 	}
 
 	return (
 		<div className={styles.mainBox}>
 			<h2>Log In</h2>
 			<div className={styles.googleLogIn}>
-				<GoogleButton label="Log in with Google" onClick={props.googleSignInFunc} />
+				<GoogleButton label="Log in with Google" onClick={handleGoogleLogIn} />
 			</div>
 			<h6>OR</h6>
 			<hr />
-			<form>
+			<form onSubmit={handleSubmit}>
 				<div className={styles.inputBox}>
-					<TextField
-						name="email"
-						type="email"
-						onChange={handleChange}
-						value={loginInput.email}
-						label="Email"
-						variant="filled"
-					/>
-					<TextField
-						name="password"
-						type="password"
-						onChange={handleChange}
-						value={loginInput.password}
-						label="Password"
-						variant="filled"
-					/>
+					<TextField inputRef={emailRef} type="email" label="Email" variant="filled" />
+					<TextField inputRef={passwordRef} type="password" label="Password" variant="filled" />
 				</div>
-				<Button variant="contained" color="primary" onClick={submitChange}>
+				<Button variant="contained" color="primary" type="submit">
 					Log In
 				</Button>
 			</form>

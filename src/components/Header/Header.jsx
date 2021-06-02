@@ -6,8 +6,12 @@ import AboutUsTab from "./AboutUsTab";
 import Tab from "./OtherTabs";
 import MyProfileTab from "./MyProfileTab";
 import LogOutTab from "./LogOutTab";
+import { useAuth } from "../../contexts/AuthContext";
 
-function Header(props) {
+function Header() {
+	const { currentUser } = useAuth();
+	const isLoggedIn = currentUser != null;
+
 	return (
 		<Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" sticky="top">
 			<HeaderBrand />
@@ -18,10 +22,10 @@ function Header(props) {
 					<AboutUsTab />
 					<Tab hrefVal="/bakers" tabName="Bakers" />
 					<Tab hrefVal="/bakes" tabName="Bakes" />
-					{!props.isLoggedIn && <Tab hrefVal="/log-in" tabName="Log In" />}
-					{props.isLoggedIn && <Tab hrefVal="/order-cart" tabName="My Order Cart" />}
-					{props.isLoggedIn && <MyProfileTab />}
-					{props.isLoggedIn && <LogOutTab />}
+					{!isLoggedIn && <Tab hrefVal="/log-in" tabName="Log In" />}
+					{isLoggedIn && <Tab hrefVal="/order-cart" tabName="My Order Cart" />}
+					{isLoggedIn && <MyProfileTab />}
+					{isLoggedIn && <LogOutTab />}
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>
