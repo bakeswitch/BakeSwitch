@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar } from "react-bootstrap";
+import Navbar from "react-bootstrap/Navbar";
 import styles from "./Header.module.css";
 
 export default function HeaderBrand() {

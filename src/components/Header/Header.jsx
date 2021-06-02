@@ -4,47 +4,10 @@ import SearchBar from "./SearchBar";
 import HeaderBrand from "./HeaderBrand";
 import AboutUsTab from "./AboutUsTab";
 import Tab from "./OtherTabs";
+import MyProfileTab from "./MyProfileTab";
 import LogOutTab from "./LogOutTab";
 
 function Header(props) {
-	const tabDetails = [
-		{
-			hrefVal: "/bakers",
-			tabName: "Bakers",
-		},
-		{
-			hrefVal: "/bakes",
-			tabName: "Bakes",
-		},
-	];
-
-	const loggedOutTabs = [
-		...tabDetails,
-		{
-			hrefVal: "/log-in",
-			tabName: "Log In",
-		},
-	];
-
-	const loggedInTabs = [
-		...tabDetails,
-		{
-			hrefVal: "",
-			tabName: "Profile settings",
-		},
-		{
-			hrefVal: "",
-			tabName: "Chats",
-		},
-		{
-			hrefVal: "",
-			tabName: "Favourited",
-		},
-	];
-
-	//Determine which set of tabs to show depending on whether user is logged in
-	const currentTabs = props.isLoggedIn ? loggedInTabs : loggedOutTabs;
-
 	return (
 		<Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" sticky="top">
 			<HeaderBrand />
@@ -53,10 +16,11 @@ function Header(props) {
 				<SearchBar />
 				<Nav className="ms-auto">
 					<AboutUsTab />
-					{currentTabs.map((item) => (
-						<Tab hrefVal={item.hrefVal} tabName={item.tabName} />
-					))}
-					{/* Log Out tab only shows when isLogggedIn is true */}
+					<Tab hrefVal="/bakers" tabName="Bakers" />
+					<Tab hrefVal="/bakes" tabName="Bakes" />
+					{!props.isLoggedIn && <Tab hrefVal="/log-in" tabName="Log In" />}
+					{props.isLoggedIn && <Tab hrefVal="/order-cart" tabName="My Order Cart" />}
+					{props.isLoggedIn && <MyProfileTab />}
 					{props.isLoggedIn && <LogOutTab />}
 				</Nav>
 			</Navbar.Collapse>

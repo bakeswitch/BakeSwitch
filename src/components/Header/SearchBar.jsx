@@ -4,8 +4,8 @@ import styles from "./Header.module.css";
 
 export default function SearchBar() {
 	return (
-		<Form inline className={styles.searchBar}>
-			<FormControl type="text" placeholder="Search" className="mr-sm-2" />
+		<Form inline className="ms-auto">
+			<FormControl type="text" placeholder="Search" />
 		</Form>
 	);
 }
