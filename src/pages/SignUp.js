@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import SignUpBuyer from "../components/SignUpBuyer";
 import SignUpSeller from "../components/SignUpSeller";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Button, ButtonGroup} from "react-bootstrap";
 import styles from "./pages.module.css";
 
 export default function SignUp() {
+	/* -1: no buttons pressed
+		0: sign up as buyer
+		1: sign up as seller */
 	const [signUpCategory, setSignUpCategory] = useState(-1);
 
 	function handleBuyer() {
@@ -17,23 +20,34 @@ export default function SignUp() {
 
 	return (
 		<div className={styles.signUpBox}>
-			<h2>Sign Up</h2>
-			<Container>
+			<h1>Create account</h1>
+			<div className={styles.logIn}>
+				<h6>Already have an account? <span> <a href="/log-in">Log in</a></span></h6>
+			</div>
+			<ButtonGroup className="d-grid d-md-flex">
+				<Button variant="outline-dark" size="lg" onClick={handleBuyer}>
+					Sign Up as a Buyer
+				</Button>
+				<Button variant="outline-dark" size="lg" onClick={handleSeller}>
+					Sign Up as a Seller
+				</Button>
+			</ButtonGroup>
+
+
+			{/* <Container>
 				<Row>
-					<Col>
-						{" "}
-						<Button variant="primary" size="lg" onClick={handleBuyer}>
-							Buyer
+					<Col className="d-grid" style={{padding:"3px"}}>
+						<Button variant="outline-dark" size="lg" onClick={handleBuyer}>
+							Sign Up as a Buyer
 						</Button>
 					</Col>
-					<Col>
-						{" "}
-						<Button variant="primary" size="lg" onClick={handleSeller}>
-							Seller
+					<Col className="d-grid" style={{padding:"3px"}}>
+						<Button variant="outline-dark" size="lg" onClick={handleSeller}>
+							Sign Up as a Seller
 						</Button>
 					</Col>
 				</Row>
-			</Container>
+			</Container> */}
 			{signUpCategory == -1 ? null : signUpCategory == 0 ? (
 				<SignUpBuyer />
 			) : signUpCategory == 1 ? (

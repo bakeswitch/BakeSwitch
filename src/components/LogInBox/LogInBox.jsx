@@ -56,6 +56,10 @@ function LogInBox(props) {
 					Log In
 				</Button>
 			</form>
+			{/* <Form.Group className="mb-3" controlId="formRememberMeCheckbox">
+        <Form.Check type="checkbox" label="Remember Me" />
+      </Form.Group> */}
+
 			<div className={styles.signUp}>
 				<h6>Don't have an account?</h6>
 				<a href="/sign-up">Sign up!</a>
