@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 import Home from "./Home";
 import About from "./About";
 import Bakers from "./Bakers";
@@ -11,20 +12,20 @@ import ProfileSettings from "./ProfileSettings";
 import Chats from "./Chats";
 import Favourited from "./Favourited";
 
-function Webpages() {
+function Webpages(props) {
 	return (
-		<BrowserRouter>
+		<Switch>
 			<Route exact path="/" component={Home} />
 			<Route exact path="/about" component={About} />
 			<Route exact path="/bakers" component={Bakers} />
 			<Route exact path="/bakes" component={Bakes} />
 			<Route exact path="/log-in" component={LogIn} />
 			<Route exact path="/sign-up" component={SignUp} />
-			<Route exact path="/order-cart" component={OrderCart} />
-			<Route exact path="/profile-settings" component={ProfileSettings} />
-			<Route exact path="/chats" component={Chats} />
-			<Route exact path="/favourited" component={Favourited} />
-		</BrowserRouter>
+			<PrivateRoute exact path="/order-cart" component={OrderCart} />
+			<PrivateRoute exact path="/profile-settings" component={ProfileSettings} />
+			<PrivateRoute exact path="/chats" component={Chats} />
+			<PrivateRoute exact path="/favourited" component={Favourited} />
+		</Switch>
 	);
 }
 
