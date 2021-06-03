@@ -5,15 +5,9 @@ import { Form, Button, InputGroup } from "react-bootstrap";
 const SignUpBuyer = () => (
 	<div className={styles.mainBox}>
 		<Form>
-			<Form.Group className="mb-3" controlId="formEmail">
-				<Form.Label>Email address</Form.Label>
-				<Form.Control type="email" placeholder="Enter email" />
-			</Form.Group>
-
 			<Form.Group className="mb-3" controlId="formUsername">
 				<Form.Label>Username</Form.Label>
 				<Form.Control type="text" placeholder="Enter username" />
-				<Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
 			</Form.Group>
 
 			<Form.Group className="mb-3" controlId="formPassword">
@@ -27,19 +21,34 @@ const SignUpBuyer = () => (
 				<Form.Control type="password" placeholder="Password" />
 			</Form.Group>
 
-			<Form.Group className="mb-3" controlId="formPhoneNumber">
+			<Form.Group className="" controlId="formPhoneNumber">
 				<Form.Label>Phone number</Form.Label>
 				<InputGroup className="mb-2">
-					<InputGroup.Text>+65</InputGroup.Text>
+					<InputGroup.Prepend>
+						<InputGroup.Text>+65</InputGroup.Text>
+					</InputGroup.Prepend>
 					<Form.Control type="text" placeholder="Enter your phone number" />
+					<Button id="buttonVerifyPhone">verify</Button>
 				</InputGroup>
 			</Form.Group>
 
-			{/* <Form.Group className="mb-3" controlId="formRememberMeCheckbox">
-        <Form.Check type="checkbox" label="Remember Me" />
-      </Form.Group> */}
+			<Form.Group className="mb-3" controlId="formVerifyPhone">
+				<Form.Control className="" type="number" placeholder="OTP" />
+			</Form.Group>
 
-			<Button variant="primary" type="submit">
+			<Form.Group className="" controlId="formEmail">
+				<Form.Label> Email Address </Form.Label>
+				<InputGroup className="mb-2">
+					<Form.Control type="text" placeholder="Enter your email address" />
+					<Button id="buttonVerifyEmail">verify</Button>
+				</InputGroup>
+			</Form.Group>
+
+			<Form.Group className="mb-3" controlId="formVerifyEmail">
+				<Form.Control className="" type="number" placeholder="OTP" />
+			</Form.Group>
+
+			<Button className="mt-3" variant="primary" type="submit">
 				Submit
 			</Button>
 		</Form>
