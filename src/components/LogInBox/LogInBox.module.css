@@ -8,7 +8,7 @@ hr {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 4rem;
+	margin: 4rem 0rem;
 }
 
 .googleLogIn {

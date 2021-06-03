@@ -19,27 +19,6 @@ export function AuthProvider({ children }) {
 		return auth.signInWithEmailAndPassword(email, password);
 	}
 
-	// 		.then((result) => {
-	// 			alert("Welcome " + result.user.displayName + "!");
-	// 		})
-	// 		.catch((error) => {
-	// 			const errorCode = error.code;
-	// 			switch (errorCode) {
-	// 				case "auth/invalid-email":
-	// 					alert("Please enter a valid email");
-	// 					break;
-	// 				case "auth/user-not-found":
-	// 					alert("User not found. Please sign up for an account.");
-	// 					break;
-	// 				case "auth/wrong-password":
-	// 					alert("Invalid password");
-	// 					break;
-	// 				default:
-	// 					alert(error.message);
-	// 			}
-	// 		});
-	// };
-
 	function logOut() {
 		return auth.signOut();
 	}
@@ -54,7 +33,10 @@ export function AuthProvider({ children }) {
 		return unsubscribe;
 	}, []);
 
-	const value = { currentUser, googleLogIn, passwordLogIn, logOut };
+	// Stores all the values that are "shipped over" as the context when useAuth is imported in another file
+	const contextValues = { currentUser, googleLogIn, passwordLogIn, logOut };
 
-	return <AuthContext.Provider value={value}>{!isLoading && children}</AuthContext.Provider>;
+	return (
+		<AuthContext.Provider value={contextValues}>{!isLoading && children}</AuthContext.Provider>
+	);
 }

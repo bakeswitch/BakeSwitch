@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 import Home from "./Home";
 import About from "./About";
 import Bakers from "./Bakers";
@@ -20,22 +21,10 @@ function Webpages(props) {
 			<Route exact path="/bakes" component={Bakes} />
 			<Route exact path="/log-in" component={LogIn} />
 			<Route exact path="/sign-up" component={SignUp} />
-			<Route
-				exact
-				path="/order-cart"
-				component={() => <OrderCart isLoggedIn={props.isLoggedIn} />}
-			/>
-			<Route
-				exact
-				path="/profile-settings"
-				component={() => <ProfileSettings isLoggedIn={props.isLoggedIn} />}
-			/>
-			<Route exact path="/chats" component={() => <Chats isLoggedIn={props.isLoggedIn} />} />
-			<Route
-				exact
-				path="/favourited"
-				component={() => <Favourited isLoggedIn={props.isLoggedIn} />}
-			/>
+			<PrivateRoute exact path="/order-cart" component={OrderCart} />
+			<PrivateRoute exact path="/profile-settings" component={ProfileSettings} />
+			<PrivateRoute exact path="/chats" component={Chats} />
+			<PrivateRoute exact path="/favourited" component={Favourited} />
 		</Switch>
 	);
 }

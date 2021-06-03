@@ -9,10 +9,14 @@ export default function LogOutTab() {
 	const history = useHistory();
 
 	async function handleLogOut() {
-		await logOut();
-		// Redirects to home page after log out
-		history.push("/");
-		alert("You are logged out.");
+		try {
+			await logOut();
+			// Redirects to home page after log out
+			history.push("/");
+			alert("You are logged out.");
+		} catch (err) {
+			alert("Log-out failed. " + err.message);
+		}
 	}
 
 	return (

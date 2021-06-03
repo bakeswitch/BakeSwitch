@@ -8,7 +8,7 @@ function App() {
 	return (
 		<AuthProvider>
 			<Header />
-			<WebPages isLoggedIn={true} />
+			<WebPages />
 		</AuthProvider>
 	);
 }
