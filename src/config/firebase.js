@@ -2,13 +2,13 @@ import firebase from "@firebase/app";
 import "@firebase/auth";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyAmfOVXbw4RhLxy35WQeYUaTblvy_BDOHU",
-	authDomain: "bakeswitch-orbital.firebaseapp.com",
-	projectId: "bakeswitch-orbital",
-	storageBucket: "bakeswitch-orbital.appspot.com",
-	messagingSenderId: "1097478969661",
-	appId: "1:1097478969661:web:1ae4ddb4911a2de150cd54",
-	measurementId: "G-SJY0D853EQ",
+	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+	authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.REACT_APP_FIREBASE_APP_ID,
+	measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = firebase.initializeApp(firebaseConfig);
