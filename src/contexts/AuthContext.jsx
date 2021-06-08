@@ -11,6 +11,11 @@ export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState();
 	const [isLoading, setIsLoading] = useState(true);
 
+	function signUp(email, password) {
+		return auth.createUserWithEmailAndPassword(email, password);
+	}
+
+
 	function googleLogIn() {
 		return auth.signInWithPopup(GoogleAuthProvider);
 	}
@@ -24,6 +29,7 @@ export function AuthProvider({ children }) {
 	}
 
 	useEffect(() => {
+		//onAuthStateChanged returns method to unsubscribe
 		const unsubscribe = auth.onAuthStateChanged(function (user) {
 			setCurrentUser(user);
 			setIsLoading(false);
@@ -34,9 +40,17 @@ export function AuthProvider({ children }) {
 	}, []);
 
 	// Stores all the values that are "shipped over" as the context when useAuth is imported in another file
-	const contextValues = { currentUser, googleLogIn, passwordLogIn, logOut };
+	const contextValues = { 
+		currentUser, 
+		signUp,
+		googleLogIn, 
+		passwordLogIn, 
+		logOut 
+	};
 
 	return (
-		<AuthContext.Provider value={contextValues}>{!isLoading && children}</AuthContext.Provider>
+		<AuthContext.Provider value={contextValues}>
+			{!isLoading && children}
+		</AuthContext.Provider>
 	);
 }

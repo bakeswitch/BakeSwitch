@@ -72,7 +72,7 @@ function LogInBox() {
 
 	return (
 		<div className={styles.mainBox}>
-			<h2>Log In</h2>
+			<h1>Log In</h1>
 			<div className={styles.googleLogIn}>
 				<GoogleButton
 					label="Log in with Google"

@@ -1,13 +1,15 @@
-/* SignUp Page */
-.logIn {
-	margin: 1rem;
-}
-
-.signUpBox {
+/* LogIn and SignUp */
+.formBox {
 	margin: auto;
 	margin-top: 3rem;
 	margin-bottom: 3rem;
+	max-width: 500px;
 	width: 60%;
+}
+
+/* SignUp Page */
+.logIn {
+	margin: 1rem;
 }
 
 .toggleButton {
