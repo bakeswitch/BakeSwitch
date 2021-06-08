@@ -15,13 +15,16 @@ export function AuthProvider({ children }) {
 		return auth.createUserWithEmailAndPassword(email, password);
 	}
 
-
 	function googleLogIn() {
 		return auth.signInWithPopup(GoogleAuthProvider);
 	}
 
 	function passwordLogIn(email, password) {
 		return auth.signInWithEmailAndPassword(email, password);
+	}
+
+	function resetPassword(email) {
+		return auth.sendPasswordResetEmail(email);
 	}
 
 	function logOut() {
@@ -40,17 +43,16 @@ export function AuthProvider({ children }) {
 	}, []);
 
 	// Stores all the values that are "shipped over" as the context when useAuth is imported in another file
-	const contextValues = { 
-		currentUser, 
+	const contextValues = {
+		currentUser,
 		signUp,
-		googleLogIn, 
-		passwordLogIn, 
-		logOut 
+		googleLogIn,
+		passwordLogIn,
+		resetPassword,
+		logOut,
 	};
 
 	return (
-		<AuthContext.Provider value={contextValues}>
-			{!isLoading && children}
-		</AuthContext.Provider>
+		<AuthContext.Provider value={contextValues}>{!isLoading && children}</AuthContext.Provider>
 	);
 }
