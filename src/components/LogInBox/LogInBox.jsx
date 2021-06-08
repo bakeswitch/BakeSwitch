@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import styles from "./LogInBox.module.css";
-import { Button, TextField } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 import GoogleButton from "react-google-button";
-import Alert from "react-bootstrap/Alert";
+import { Alert, Button } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { db } from "../../config/firebase";
 
 function LogInBox() {
@@ -31,7 +31,7 @@ function LogInBox() {
 	}
 
 	// Redirect to home page after logging in
-	function redirectPrevPage() {
+	function redirectPage() {
 		history.push("/");
 		// Redirect to most recent page user was on before logging in. Problematic as database does not update if this used
 		// history.goBack();
@@ -76,7 +76,7 @@ function LogInBox() {
 			<div className={styles.googleLogIn}>
 				<GoogleButton
 					label="Log in with Google"
-					onClick={() => handleGoogleLogIn().then(() => redirectPrevPage())}
+					onClick={() => handleGoogleLogIn().then(() => redirectPage())}
 				/>
 			</div>
 			<h6>OR</h6>
@@ -86,12 +86,17 @@ function LogInBox() {
 				<div className={styles.inputBox}>
 					<TextField inputRef={emailRef} type="email" label="Email" variant="filled" />
 					<TextField inputRef={passwordRef} type="password" label="Password" variant="filled" />
+					<div className={styles.forgotPassword}>
+						<Link to="/forgot-password">Forgot Password?</Link>
+					</div>
 				</div>
+				<Button variant="primary" type="submit">
+					Log In
+				</Button>
 			</form>
-
 			<div className={styles.signUp}>
 				<h6>Don't have an account?</h6>
-				<a href="/sign-up">Sign up!</a>
+				<Link to="/sign-up">Sign up!</Link>
 			</div>
 		</div>
 	);

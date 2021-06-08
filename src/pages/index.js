@@ -11,6 +11,7 @@ import OrderCart from "./OrderCart";
 import ProfileSettings from "./ProfileSettings";
 import Chats from "./Chats";
 import Favourited from "./Favourited";
+import ForgotPassword from "./ForgotPassword";
 
 function Webpages(props) {
 	return (
@@ -20,6 +21,7 @@ function Webpages(props) {
 			<Route exact path="/bakers" component={Bakers} />
 			<Route exact path="/bakes" component={Bakes} />
 			<Route exact path="/log-in" component={LogIn} />
+			<Route exact path="/forgot-password" component={ForgotPassword} />
 			<Route exact path="/sign-up" component={SignUp} />
 			<PrivateRoute exact path="/order-cart" component={OrderCart} />
 			<PrivateRoute exact path="/profile-settings" component={ProfileSettings} />
