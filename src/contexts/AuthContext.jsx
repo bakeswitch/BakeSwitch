@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
 			setIsLoading(false);
 		});
 
-		// Performs clean-up by stopping the onAuthStateChanged listener
+		// Performs clean-up by stopping the onAuthStateChanged listener to prevent memory leak
 		return unsubscribe;
 	}, []);
 

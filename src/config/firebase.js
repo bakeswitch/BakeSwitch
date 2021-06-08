@@ -1,5 +1,6 @@
 import firebase from "@firebase/app";
 import "@firebase/auth";
+import "@firebase/firestore";
 
 const firebaseConfig = {
 	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,10 +14,12 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 
-const auth = app.auth();
+const auth = firebase.auth();
+const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const db = firebase.firestore();
+
 //Set auth state to persist until user logs out
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export { auth, GoogleAuthProvider };
+export { auth, GoogleAuthProvider, db };
 export default app;

@@ -5,6 +5,7 @@ import GoogleButton from "react-google-button";
 import Alert from "react-bootstrap/Alert";
 import { useAuth } from "../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
+import { db } from "../../config/firebase";
 
 function LogInBox() {
 	const emailRef = useRef();
@@ -13,12 +14,33 @@ function LogInBox() {
 	const history = useHistory();
 	const [errorMsg, setErrorMsg] = useState("");
 
+	// Add user details to database if user not registered in database
+	async function checkUserInDatabase(user) {
+		const uid = user.uid;
+		const userRef = db.collection("users").doc(uid);
+		await userRef.get().then((userRecord) => {
+			if (!userRecord.exists) {
+				userRef.set({
+					username: user.displayName,
+					email: user.email,
+					photoUrl: user.photoURL,
+					emailVerified: user.emailVerified,
+				});
+			}
+		});
+	}
+
+	// Redirect to home page after logging in
+	function redirectPrevPage() {
+		history.push("/");
+		// Redirect to most recent page user was on before logging in. Problematic as database does not update if this used
+		// history.goBack();
+	}
+
 	async function handleGoogleLogIn() {
 		try {
-			await googleLogIn();
-			// Redirect to most recent page user was on before logging in
-			history.goBack();
-			alert("Welcome " + currentUser.displayName + "!");
+			const result = await googleLogIn();
+			await checkUserInDatabase(result.user);
 		} catch (err) {
 			alert("Log-in failed. " + err.message);
 		}
@@ -52,7 +74,10 @@ function LogInBox() {
 		<div className={styles.mainBox}>
 			<h2>Log In</h2>
 			<div className={styles.googleLogIn}>
-				<GoogleButton label="Log in with Google" onClick={handleGoogleLogIn} />
+				<GoogleButton
+					label="Log in with Google"
+					onClick={() => handleGoogleLogIn().then(() => redirectPrevPage())}
+				/>
 			</div>
 			<h6>OR</h6>
 			<hr />
@@ -62,13 +87,7 @@ function LogInBox() {
 					<TextField inputRef={emailRef} type="email" label="Email" variant="filled" />
 					<TextField inputRef={passwordRef} type="password" label="Password" variant="filled" />
 				</div>
-				<Button variant="contained" color="primary" type="submit">
-					Log In
-				</Button>
 			</form>
-			{/* <Form.Group className="mb-3" controlId="formRememberMeCheckbox">
-        <Form.Check type="checkbox" label="Remember Me" />
-      </Form.Group> */}
 
 			<div className={styles.signUp}>
 				<h6>Don't have an account?</h6>
