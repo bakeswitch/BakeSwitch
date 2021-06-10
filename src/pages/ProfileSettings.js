@@ -1,6 +1,10 @@
 import React from "react";
+import BuyerProfile from "../components/BuyerProfile";
 
 export default function ProfileSettings() {
-	//replace with actual content
-	return <h3 style={{ padding: "5rem" }}>Profile settings page in construction</h3>;
+	return (
+		<>
+			<BuyerProfile />
+		</>
+	);
 }

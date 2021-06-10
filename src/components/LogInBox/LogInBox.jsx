@@ -14,17 +14,20 @@ function LogInBox() {
 	const history = useHistory();
 	const [errorMsg, setErrorMsg] = useState("");
 
-	// Add user details to database if user not registered in database
+	// Add user details to database if user not registered in database.
+	// Password is not stored in database but handled by firebase authentication.
+	// Optional chaining ?. is used to return a null value for a field should there be no value.
 	async function checkUserInDatabase(user) {
 		const uid = user.uid;
 		const userRef = db.collection("users").doc(uid);
 		await userRef.get().then((userRecord) => {
 			if (!userRecord.exists) {
 				userRef.set({
-					username: user.displayName,
+					username: user?.displayName,
 					email: user.email,
-					photoUrl: user.photoURL,
-					emailVerified: user.emailVerified,
+					photoURL: user?.photoURL,
+					phoneNumber: user?.phoneNumber,
+					isSeller: false,
 				});
 			}
 		});
