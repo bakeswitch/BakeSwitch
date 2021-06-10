@@ -28,6 +28,7 @@ function LogInBox() {
 					photoURL: user?.photoURL,
 					phoneNumber: user?.phoneNumber,
 					isSeller: false,
+					emailVerified: user.emailVerified,
 				});
 			}
 		});
