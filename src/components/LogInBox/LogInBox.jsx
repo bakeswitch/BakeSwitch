@@ -52,10 +52,18 @@ function LogInBox() {
 
 	async function handleSubmit(event) {
 		event.preventDefault();
+		let user;
 
 		try {
-			await passwordLogIn(emailRef.current.value, passwordRef.current.value);
-			alert("Welcome " + currentUser.displayName + "!");
+			await passwordLogIn(emailRef.current.value, passwordRef.current.value).then((userCredential) => {
+				user = userCredential.user;
+			});
+			if (user.emailVerified) {
+				alert("Welcome " + user.displayName + "!");
+				history.push('/');
+			} else {
+				return setErrorMsg("Please verify your email");
+			}
 		} catch (err) {
 			const errorCode = err.code;
 			switch (errorCode) {

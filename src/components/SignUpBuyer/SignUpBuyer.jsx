@@ -12,33 +12,73 @@ const SignUpBuyer = () => {
 	const phoneConfirmRef = useRef();
 	const emailRef = useRef();
 	const emailConfirmRef= useRef();
-	const { signUp } = useAuth();
-	const [error, setError] = useState('');
+	const { signUp, passwordLogIn, logOut } = useAuth();
+	const [errors, setErrors] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
 	async function handleSubmit(e) {
 		e.preventDefault();
+		setErrors([]);
 
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-			return setError("Passwords do not match");
+			return setErrors(prevErrors => [...prevErrors, "Passwords do not match"]);
 		}
 
+		//SIGN-UP
 		try {
-			setError("");
 			setLoading(true);
-			await signUp(emailRef.current.value, passwordRef.current.value);
-			history.push("/");
-		} catch {
-			setError("Failed to create an account");
-		} 
-		setLoading(false);
-		
+			await signUp(emailRef.current.value, passwordRef.current.value).then((userCredential) => {
+				var user = userCredential.user;
+				sendEmailVer(user);	 //SEND-EMAIL-VERIFICATION and LOG-OUT
+			});
+		} catch (err) {
+			setErrors(prevErrors => [...prevErrors, "Failed to create an account"]);
+			console.log("Failed to create an account");
+		} finally {
+			setLoading(false);
+		}
 	}
+
+	async function sendEmailVer(user) {
+		try {
+			setLoading(true);
+			await user.sendEmailVerification();
+			logOut();
+			alert("Email verification sent");
+			history.push('/log-in');
+		} catch {
+			setErrors(prevErrors => [...prevErrors, "Failed to send email verification"]);
+			console.log("Failed to send email verification");
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	// async function loginAndCheckVerification() {
+	// 	let user;
+	// 	try {
+	// 		setLoading(true);
+	// 		await passwordLogIn(emailRef.current.value, passwordRef.current.value).then((userCredential) => {
+	// 			user = userCredential.user;
+	// 		});
+	// 	} catch {
+	// 		return setErrors(prevErrors => [...prevErrors, "Failed to Log In"]);
+	// 	} finally {
+	// 		setLoading(false);
+	// 	}
+	// 	console.log(user);
+	// 	//should not run if failed to login
+	// 	if (user.emailVerified) {
+	// 		history.push("/");
+	// 	} else {
+	// 		setErrors(prevErrors => [...prevErrors, "Email not verified yet"]);
+	// 	}
+	// }
 
 	return (
 		<Card className={styles.mainBox}>
-			{error && <Alert variant="danger">{error}</Alert>}
+			{errors && errors.map(err => <Alert variant="danger">{err}</Alert>)}
 			<Card.Body>
 				<Form onSubmit={handleSubmit}>
 					<Form.Group className="mb-3" controlId="formUsername">
@@ -76,15 +116,12 @@ const SignUpBuyer = () => {
 						<Form.Label> Email Address </Form.Label>
 						<InputGroup className="mb-2">
 							<Form.Control type="text" placeholder="Enter your email address"  ref={emailRef} required  />
-							<Button id="buttonVerifyEmail">verify</Button>
+							{/* <Button id="buttonVerifyEmail">verify</Button> */}
 						</InputGroup>
 					</Form.Group>
 
-					<Form.Group className="mb-3" controlId="formVerifyEmail">
-						<Form.Control className="" type="number" placeholder="OTP"  ref={emailConfirmRef} required  />
-					</Form.Group>
 
-					<Button disabled={loading} className="mt-3" variant="primary" type="submit">
+					<Button disabled={loading} className="mt-3 w-100" variant="primary" type="submit">
 						Submit
 					</Button>
 				</Form>
