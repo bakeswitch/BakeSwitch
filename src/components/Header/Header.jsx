@@ -10,7 +10,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 function Header() {
 	const { currentUser } = useAuth();
-	const isLoggedIn = currentUser != null;
+	const isLoggedIn = currentUser?.emailVerified;
 
 	return (
 		<Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" sticky="top">

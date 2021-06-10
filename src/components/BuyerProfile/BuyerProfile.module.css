@@ -2,10 +2,15 @@
 	display: flex;
 	flex-direction: column;
 	width: 70%;
-	height: 25vh;
 	align-items: center;
 	justify-content: space-between;
 	margin: 3rem auto 1rem;
+}
+
+.profileImg {
+	width: 125px;
+	height: 125px;
+	margin-bottom: 1.75rem;
 }
 
 .tableDetails {

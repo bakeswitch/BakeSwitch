@@ -10,7 +10,7 @@ import { db } from "../../config/firebase";
 function LogInBox() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const { googleLogIn, passwordLogIn, currentUser } = useAuth();
+	const { googleLogIn, passwordLogIn } = useAuth();
 	const history = useHistory();
 	const [errorMsg, setErrorMsg] = useState("");
 
@@ -55,12 +55,14 @@ function LogInBox() {
 		let user;
 
 		try {
-			await passwordLogIn(emailRef.current.value, passwordRef.current.value).then((userCredential) => {
-				user = userCredential.user;
-			});
+			await passwordLogIn(emailRef.current.value, passwordRef.current.value).then(
+				(userCredential) => {
+					user = userCredential.user;
+				}
+			);
 			if (user.emailVerified) {
-				alert("Welcome " + user.displayName + "!");
-				history.push('/');
+				// alert("Welcome " + user.displayName + "!");
+				history.push("/");
 			} else {
 				return setErrorMsg("Please verify your email");
 			}

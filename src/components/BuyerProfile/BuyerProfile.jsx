@@ -33,7 +33,14 @@ function BuyerProfile() {
 	return (
 		<>
 			<div className={styles.profileHeader}>
-				{userRec?.photoURL && <Image src={userRec.photoURL} alt="Profile picture" roundedCircle />}
+				{userRec?.photoURL && (
+					<Image
+						src={userRec.photoURL}
+						alt="Profile picture"
+						roundedCircle
+						className={styles.profileImg}
+					/>
+				)}
 				<h2>My Profile</h2>
 			</div>
 			<Card className={styles.tableDetails}>

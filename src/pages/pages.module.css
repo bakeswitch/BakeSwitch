@@ -8,8 +8,13 @@
 }
 
 /* SignUp Page */
-.logIn {
-	margin: 1rem;
+.loginLink {
+	margin: 1.5rem auto 1rem;
+}
+
+.loginLink h6 {
+	display: inline;
+	margin-right: 1.2rem;
 }
 
 .toggleButton {
