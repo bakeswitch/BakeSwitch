@@ -5,3 +5,11 @@
 	text-align: left;
 	border: 1px solid black;
 }
+
+.qnBox {
+	margin: 1.5rem 0;
+}
+
+.replyButtons {
+	margin-right: 1.5rem;
+}
