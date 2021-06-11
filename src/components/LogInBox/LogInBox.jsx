@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import GoogleButton from "react-google-button";
 import { Alert, Button } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link  useHistory } from "react-router-dom";
 import { db } from "../../config/firebase";
 
 function LogInBox() {
@@ -78,7 +78,7 @@ function LogInBox() {
 		<div className={styles.mainBox}>
 			<h1>Log In</h1>
 			<div className={styles.googleLogIn}>
-				<GoogleButton label="Log in with Google" onClick={handleGoogleLogIn} />
+				<GoogleButton label="Continue with Google" onClick={handleGoogleLogIn} />
 			</div>
 			<h6>OR</h6>
 			<hr />

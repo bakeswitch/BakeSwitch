@@ -87,6 +87,11 @@ function BuyerProfile() {
 				</Card.Body>
 			</Card>
 			<BuyerOrders />
+			{!userRec.isSeller && (
+				<Button href="/sign-up-seller" variant="secondary" className={styles.sellerButton}>
+					Join as a seller
+				</Button>
+			)}
 		</>
 	);
 }

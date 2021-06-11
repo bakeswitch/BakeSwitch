@@ -1,4 +1,4 @@
-/* LogIn and SignUp */
+/* LogIn */
 .formBox {
 	margin: auto;
 	margin-top: 3rem;
@@ -19,4 +19,15 @@
 
 .toggleButton {
 	padding: 3px;
+}
+
+/* SignUpSeller */
+.qnBox {
+	width: 50vw;
+	height: 50vh;
+	margin: 10% auto;
+}
+
+.replyButtons {
+	margin: 1.5rem;
 }

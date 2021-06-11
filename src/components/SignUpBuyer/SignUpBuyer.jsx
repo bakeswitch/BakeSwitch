@@ -12,16 +12,16 @@ const SignUpBuyer = () => {
 	const phoneRef = useRef();
 	const emailRef = useRef();
 	const { signUp, logOut } = useAuth();
-	const [errors, setErrors] = useState([]);
+	const [errors, setErrors] = useState("");
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		setErrors([]);
+		setErrors("");
 
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-			return setErrors((prevErrors) => [...prevErrors, "Passwords do not match"]);
+			return setErrors("Passwords do not match");
 		}
 
 		//SIGN-UP
@@ -36,28 +36,16 @@ const SignUpBuyer = () => {
 			const errorCode = err.code;
 			switch (errorCode) {
 				case "auth/email-already-in-use":
-					setErrors((prevErrors) => [
-						...prevErrors,
-						"Failed to create an account",
-						"Account with this email already exists",
-					]);
+					setErrors("Account with this email already exists");
 					break;
 				case "auth/invalid-email":
-					setErrors((prevErrors) => [
-						...prevErrors,
-						"Failed to create an account",
-						"Invalid email",
-					]);
+					setErrors("Invalid email");
 					break;
 				case "auth/weak-password":
-					setErrors((prevErrors) => [
-						...prevErrors,
-						"Failed to create an account",
-						"Password is too weak",
-					]);
+					setErrors("Password is too weak");
 					break;
 				default:
-					setErrors((prevErrors) => [...prevErrors, "Failed to create an account", "" + err]);
+					setErrors("Failed to create an account" + err.message);
 			}
 		} finally {
 			setLoading(false);
@@ -92,7 +80,7 @@ const SignUpBuyer = () => {
 
 	return (
 		<Card className={styles.mainBox}>
-			{errors && errors.map((err) => <Alert variant="danger">{err}</Alert>)}
+			{errors && <Alert variant="danger">{errors}</Alert>}
 			<Card.Body>
 				<Form onSubmit={handleSubmit}>
 					<Form.Group className="mb-3" controlId="formUsername">
