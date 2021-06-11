@@ -22,7 +22,17 @@ export default function ResetPassword() {
 				"An email has been sent to the given email address. Please refer to the email for further instructions."
 			);
 		} catch (err) {
-			setErrorMsg("" + err);
+			const errorCode = err.code;
+			switch (errorCode) {
+				case "auth/invalid-email":
+					setErrorMsg("Please enter a valid email");
+					break;
+				case "auth/user-not-found":
+					setErrorMsg("No user found with the given email address. Please sign up for an account.");
+					break;
+				default:
+					setErrorMsg("Failed to send password reset email. " + err.message);
+			}
 		}
 	}
 
