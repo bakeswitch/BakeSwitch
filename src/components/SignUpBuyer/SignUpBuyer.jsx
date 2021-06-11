@@ -58,9 +58,11 @@ const SignUpBuyer = () => {
 			logOut();
 			await user.sendEmailVerification();
 			history.push("/log-in");
-			alert("Email verification sent. Please check your email inbox to verify.");
+			alert(
+				"Email verification sent. Please check your inbox and verify your email to complete account creation."
+			);
 		} catch {
-			setErrors((prevErrors) => [...prevErrors, "Failed to send email verification"]);
+			setErrors("Failed to send email verification");
 		} finally {
 			setLoading(false);
 		}
@@ -75,6 +77,7 @@ const SignUpBuyer = () => {
 			photoURL: user?.photoURL,
 			phoneNumber: phoneRef.current.value,
 			isSeller: false,
+			isNewUser: true,
 		});
 	}
 

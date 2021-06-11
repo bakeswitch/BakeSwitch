@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import styles from "./SellerForm.module.css";
 import { Card, Form, Button, InputGroup, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 import { db } from "../../config/firebase";
 
 export default function SellerForm() {
@@ -14,7 +13,7 @@ export default function SellerForm() {
 	const [error, setError] = useState("");
 	const [message, setMessage] = useState("");
 	const [loading, setLoading] = useState(false);
-	const history = useHistory();
+	const [toHomePage, setToHomePage] = useState(false);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -23,13 +22,12 @@ export default function SellerForm() {
 
 		try {
 			setLoading(true);
-			await addUserToDatabase()
-			history.push("/profile-settings")
+			await addUserToDatabase();
 		} catch (err) {
 			setError("Failed to join as a seller. " + err);
 		} finally {
 			setLoading(false);
-			setMessage("Successfully registered as a seller.")
+			setMessage("Successfully registered as a seller");
 		}
 	}
 
@@ -42,11 +40,17 @@ export default function SellerForm() {
 			address: addressRef.current.value,
 			isSeller: true,
 		});
+		setToHomePage(true);
 	}
 	return (
 		<Card className={styles.mainBox}>
 			{error && <Alert variant="danger">{error}</Alert>}
 			{message && <Alert variant="success">{message}</Alert>}
+			{toHomePage && (
+				<Button className="mt-3" variant="primary" href="/">
+					Back to home page
+				</Button>
+			)}
 			<Card.Body>
 				<Form onSubmit={handleSubmit}>
 					<Form.Group className="mb-3" controlId="formBakingShopName">

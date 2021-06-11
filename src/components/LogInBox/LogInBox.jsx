@@ -4,14 +4,15 @@ import TextField from "@material-ui/core/TextField";
 import GoogleButton from "react-google-button";
 import { Alert, Button } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link  useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { db } from "../../config/firebase";
 
 function LogInBox() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const { googleLogIn, passwordLogIn } = useAuth();
+	const { googleLogIn, passwordLogIn, logOut } = useAuth();
 	const [errorMsg, setErrorMsg] = useState("");
+	const history = useHistory();
 
 	// Add user details to database if user not registered in database.
 	// Password is not stored in database but handled by firebase authentication.
@@ -28,6 +29,8 @@ function LogInBox() {
 					phoneNumber: user?.phoneNumber,
 					isSeller: false,
 				});
+				// Ask if user wants to register as seller on the first time user logs in
+				history.push("/sign-up-seller");
 			}
 		});
 	}
@@ -43,19 +46,19 @@ function LogInBox() {
 
 	async function handleSubmit(event) {
 		event.preventDefault();
-		let user;
 
 		try {
 			await passwordLogIn(emailRef.current.value, passwordRef.current.value).then(
 				(userCredential) => {
-					user = userCredential.user;
+					const user = userCredential.user;
+					if (!user.emailVerified) {
+						setErrorMsg("Please verify your email");
+						logOut();
+					} else {
+						history.push("/");
+					}
 				}
 			);
-			if (user.emailVerified) {
-				window.location.reload();
-			} else {
-				setErrorMsg("Please verify your email");
-			}
 		} catch (err) {
 			const errorCode = err.code;
 			switch (errorCode) {
