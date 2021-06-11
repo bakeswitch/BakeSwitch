@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
-import styles from "./SignUpBuyer.module.css";
+import styles from "./ManualSignUp.module.css";
 import { Card, Form, Button, InputGroup, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import { db } from "../../config/firebase";
 
-const SignUpBuyer = () => {
+const ManualSignUp = () => {
 	const usernameRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
@@ -138,4 +138,4 @@ const SignUpBuyer = () => {
 	);
 };
 
-export default SignUpBuyer;
+export default ManualSignUp;

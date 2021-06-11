@@ -3,6 +3,9 @@ import SellerForm from "../components/SellerForm";
 import Button from "react-bootstrap/Button";
 import styles from "./pages.module.css";
 
+// Users who use google to create account and those who decide to become a seller after being prompted the first time
+// will be directed to this page to register as a seller.
+// This can be accesssed through the "Join as a seller" button under profile settings
 export default function SignUpSeller() {
 	const [joinSeller, setJoinSeller] = useState(false);
 
@@ -22,6 +25,7 @@ export default function SignUpSeller() {
 					>
 						Yes
 					</Button>
+					{/* Redirect to home page should "No" be selected */}
 					<Button variant="outline-secondary" size="lg" className={styles.replyButtons} href={"/"}>
 						No
 					</Button>
