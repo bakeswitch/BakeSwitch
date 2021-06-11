@@ -4,14 +4,13 @@ import TextField from "@material-ui/core/TextField";
 import GoogleButton from "react-google-button";
 import { Alert, Button } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { db } from "../../config/firebase";
 
 function LogInBox() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const { googleLogIn, passwordLogIn } = useAuth();
-	const history = useHistory();
 	const [errorMsg, setErrorMsg] = useState("");
 
 	// Add user details to database if user not registered in database.
@@ -28,17 +27,9 @@ function LogInBox() {
 					photoURL: user?.photoURL,
 					phoneNumber: user?.phoneNumber,
 					isSeller: false,
-					emailVerified: user.emailVerified,
 				});
 			}
 		});
-	}
-
-	// Redirect to home page after logging in
-	function redirectPage() {
-		history.push("/");
-		// Redirect to most recent page user was on before logging in. Problematic as database does not update if this used
-		// history.goBack();
 	}
 
 	async function handleGoogleLogIn() {
@@ -61,10 +52,9 @@ function LogInBox() {
 				}
 			);
 			if (user.emailVerified) {
-				// alert("Welcome " + user.displayName + "!");
-				history.push("/");
+				window.location.reload();
 			} else {
-				return setErrorMsg("Please verify your email");
+				setErrorMsg("Please verify your email");
 			}
 		} catch (err) {
 			const errorCode = err.code;
@@ -79,7 +69,7 @@ function LogInBox() {
 					setErrorMsg("Invalid password");
 					break;
 				default:
-					setErrorMsg(err.message);
+					setErrorMsg("Log-in failed. " + err.message);
 			}
 		}
 	}
@@ -88,10 +78,7 @@ function LogInBox() {
 		<div className={styles.mainBox}>
 			<h1>Log In</h1>
 			<div className={styles.googleLogIn}>
-				<GoogleButton
-					label="Log in with Google"
-					onClick={() => handleGoogleLogIn().then(() => redirectPage())}
-				/>
+				<GoogleButton label="Log in with Google" onClick={handleGoogleLogIn} />
 			</div>
 			<h6>OR</h6>
 			<hr />

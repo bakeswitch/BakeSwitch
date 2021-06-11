@@ -87,7 +87,6 @@ const SignUpBuyer = () => {
 			photoURL: user?.photoURL,
 			phoneNumber: phoneRef.current.value,
 			isSeller: false,
-			emailVerified: user.emailVerified,
 		});
 	}
 
