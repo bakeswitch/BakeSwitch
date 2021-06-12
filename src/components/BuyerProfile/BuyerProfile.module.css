@@ -1,0 +1,42 @@
+.profileHeader {
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+	align-items: center;
+	justify-content: space-between;
+	margin: 3rem auto 1rem;
+}
+
+.profileImg {
+	width: 125px;
+	height: 125px;
+	margin-bottom: 1.75rem;
+}
+
+.tableDetails {
+	width: 75%;
+	margin: 1.75rem auto;
+}
+
+td {
+	width: 50%;
+}
+
+.ordersNum {
+	width: 20%;
+}
+
+.editDetails {
+	width: 425px;
+	margin: auto;
+}
+
+@media screen and (max-width: 600px) {
+	.editDetails {
+		width: 90%;
+	}
+}
+
+.sellerButton {
+	margin-bottom: 2rem;
+}

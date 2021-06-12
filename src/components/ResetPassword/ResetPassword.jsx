@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export default function ResetPassword() {
 	const emailRef = useRef();
-	const { resetPassword } = useAuth();
+	const { resetPassword, currentUser } = useAuth();
 	const [errorMsg, setErrorMsg] = useState("");
 	const [message, setMessage] = useState("");
 
@@ -22,7 +22,17 @@ export default function ResetPassword() {
 				"An email has been sent to the given email address. Please refer to the email for further instructions."
 			);
 		} catch (err) {
-			setErrorMsg("" + err);
+			const errorCode = err.code;
+			switch (errorCode) {
+				case "auth/invalid-email":
+					setErrorMsg("Please enter a valid email");
+					break;
+				case "auth/user-not-found":
+					setErrorMsg("No user found with the given email address. Please sign up for an account.");
+					break;
+				default:
+					setErrorMsg("Failed to send password reset email. " + err.message);
+			}
 		}
 	}
 
@@ -40,10 +50,12 @@ export default function ResetPassword() {
 					Reset Password
 				</Button>
 			</form>
-			<div className={styles.signUp}>
-				<h6>Don't have an account?</h6>
-				<Link to="/sign-up">Sign up!</Link>
-			</div>
+			{!currentUser && (
+				<div className={styles.signUp}>
+					<h6>Don't have an account?</h6>
+					<Link to="/sign-up">Sign up!</Link>
+				</div>
+			)}
 		</div>
 	);
 }

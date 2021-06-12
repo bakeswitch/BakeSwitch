@@ -1,4 +1,4 @@
-/* LogIn and SignUp */
+/* LogIn */
 .formBox {
 	margin: auto;
 	margin-top: 3rem;
@@ -8,10 +8,26 @@
 }
 
 /* SignUp Page */
-.logIn {
-	margin: 1rem;
+.loginLink {
+	margin: 1.5rem auto 1rem;
+}
+
+.loginLink h6 {
+	display: inline;
+	margin-right: 1.2rem;
 }
 
 .toggleButton {
 	padding: 3px;
+}
+
+/* SignUpSeller */
+.qnBox {
+	width: 50vw;
+	height: 50vh;
+	margin: 10% auto;
+}
+
+.replyButtons {
+	margin: 1.5rem;
 }

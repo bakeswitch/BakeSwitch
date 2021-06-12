@@ -52,6 +52,7 @@ export function AuthProvider({ children }) {
 		logOut,
 	};
 
+	// Only renders content when isLoading is false
 	return (
 		<AuthContext.Provider value={contextValues}>{!isLoading && children}</AuthContext.Provider>
 	);

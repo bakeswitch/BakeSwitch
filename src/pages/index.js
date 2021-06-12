@@ -7,6 +7,7 @@ import Bakers from "./Bakers";
 import Bakes from "./Bakes";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
+import SignUpSeller from "./SignUpSeller";
 import OrderCart from "./OrderCart";
 import ProfileSettings from "./ProfileSettings";
 import Chats from "./Chats";
@@ -23,6 +24,7 @@ function Webpages(props) {
 			<Route exact path="/log-in" component={LogIn} />
 			<Route exact path="/forgot-password" component={ForgotPassword} />
 			<Route exact path="/sign-up" component={SignUp} />
+			<PrivateRoute exact path="/sign-up-seller" component={SignUpSeller} />
 			<PrivateRoute exact path="/order-cart" component={OrderCart} />
 			<PrivateRoute exact path="/profile-settings" component={ProfileSettings} />
 			<PrivateRoute exact path="/chats" component={Chats} />
