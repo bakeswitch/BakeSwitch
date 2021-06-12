@@ -12,6 +12,7 @@ import ProfileSettings from "./ProfileSettings";
 import Chats from "./Chats";
 import Favourited from "./Favourited";
 import ForgotPassword from "./ForgotPassword";
+import Store from "./Store"
 
 function Webpages(props) {
 	return (
@@ -27,6 +28,7 @@ function Webpages(props) {
 			<PrivateRoute exact path="/profile-settings" component={ProfileSettings} />
 			<PrivateRoute exact path="/chats" component={Chats} />
 			<PrivateRoute exact path="/favourited" component={Favourited} />
+			<PrivateRoute path="/store" component={Store} />
 		</Switch>
 	);
 }
