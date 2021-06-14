@@ -37,6 +37,25 @@ td {
 	}
 }
 
-.sellerButton {
-	margin-bottom: 2rem;
+.bottomButton {
+	margin: 0rem auto 1.75rem;
+}
+
+.delConfButton {
+	margin: 0.75rem 1.5rem 2rem;
+}
+
+.reAuthBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 50%;
+	margin: 1.5rem auto;
+	padding: 1.25rem;
+	border: 2px;
+	border-style: solid;
+}
+
+.googleButton {
+	margin: 1.25rem auto;
 }

@@ -27,6 +27,7 @@ function LogInBox() {
 					email: user.email,
 					photoURL: user?.photoURL,
 					phoneNumber: user?.phoneNumber,
+					isManualSignUp: false,
 					isSeller: false,
 				});
 				// Ask if user wants to register as seller on the first time user logs in

@@ -83,6 +83,7 @@ const ManualSignUp = () => {
 			email: user.email,
 			photoURL: user?.photoURL,
 			phoneNumber: phoneRef.current.value,
+			isManualSignUp: true,
 			isSeller: false,
 		});
 		if (yesSeller) {

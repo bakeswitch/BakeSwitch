@@ -7,16 +7,14 @@ import IconButton from "@material-ui/core/IconButton";
 import EditDetails from "./EditPhoneNum";
 
 function BuyerProfile(props) {
-	const [editNum, setEditNum] = useState(false);
-	const [addNum, setAddNum] = useState(false);
+	const [updateNum, setUpdateNum] = useState(false);
 	const [msg, setMsg] = useState("");
 	const [errorMsg, setErrorMsg] = useState("");
 	const userRef = props.userRef;
 	const userRec = props.userRec;
 
 	function handlePhoneNumUpdate(newValue) {
-		setAddNum(false);
-		setEditNum(false);
+		setUpdateNum(false);
 		setErrorMsg("");
 		setMsg("");
 		try {
@@ -67,19 +65,14 @@ function BuyerProfile(props) {
 								</td>
 								<td>
 									{userRec.phoneNumber}
-									<IconButton aria-label="edit detail">
-										{userRec?.phoneNumber ? (
-											<EditIcon onClick={() => setEditNum(!editNum)} />
-										) : (
-											<AddIcon onClick={() => setAddNum(!addNum)} />
-										)}
+									<IconButton aria-label="edit details" onClick={() => setUpdateNum(!updateNum)}>
+										{userRec?.phoneNumber ? <EditIcon /> : <AddIcon />}
 									</IconButton>
 								</td>
 							</tr>
 						</tbody>
 					</Table>
-					{editNum && <EditDetails action="Edit phone number" update={handlePhoneNumUpdate} />}
-					{addNum && <EditDetails action="Add phone number" update={handlePhoneNumUpdate} />}
+					{updateNum && <EditDetails update={handlePhoneNumUpdate} />}
 					{userRec?.password && (
 						<Button href="/forgot-password" variant="secondary">
 							Change password

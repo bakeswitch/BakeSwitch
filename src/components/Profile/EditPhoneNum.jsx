@@ -12,7 +12,7 @@ export default function EditPhoneNum(props) {
 					<InputGroup.Text>+65</InputGroup.Text>
 				</InputGroup.Prepend>
 				<Form.Control type="text" placeholder="Enter your phone number" ref={phoneRef} required />
-				<Button onClick={() => props.update(phoneRef.current.value)}>{props.action}</Button>
+				<Button onClick={() => props.update(phoneRef.current.value)}>Update</Button>
 			</InputGroup>
 		</Form.Group>
 	);

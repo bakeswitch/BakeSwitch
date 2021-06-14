@@ -9,9 +9,11 @@ export default function BuyerOrders(props) {
 			<Card.Body>
 				<Table striped bordered hover>
 					<thead>
-						<th className={styles.ordersNum}>Order ID</th>
-						<th className={styles.ordersNum}>Order date</th>
-						<th>Order details</th>
+						<tr>
+							<th className={styles.ordersNum}>Order ID</th>
+							<th className={styles.ordersNum}>Order date</th>
+							<th>Order details</th>
+						</tr>
 					</thead>
 					<tbody>
 						<tr>
