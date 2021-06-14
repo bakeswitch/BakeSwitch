@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import styles from "./BuyerProfile.module.css";
+import styles from "./Profile.module.css";
 
-export default function EditDetails(props) {
+export default function EditPhoneNum(props) {
 	const phoneRef = useRef();
 
 	return (

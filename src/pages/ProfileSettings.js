@@ -1,10 +1,10 @@
 import React from "react";
-import BuyerProfile from "../components/BuyerProfile";
+import Profile from "../components/Profile";
 
 export default function ProfileSettings() {
 	return (
 		<>
-			<BuyerProfile />
+			<Profile />
 		</>
 	);
 }

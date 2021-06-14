@@ -1,33 +1,31 @@
 import React, { useState } from "react";
-import styles from "./BuyerProfile.module.css";
-import { Image, Card, Button, Table } from "react-bootstrap";
+import styles from "./Profile.module.css";
+import { Image, Card, Button, Table, Alert } from "react-bootstrap";
 import EditIcon from "@material-ui/icons/Edit";
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
-import { useAuth } from "../../contexts/AuthContext";
-import { db } from "../../config/firebase";
-import EditDetails from "./EditDetails";
-import BuyerOrders from "./BuyerOrders";
+import EditDetails from "./EditPhoneNum";
 
-function BuyerProfile() {
-	const { currentUser } = useAuth();
-	// Get current user id to identify document in database
-	const uid = currentUser.uid;
-	const userRef = db.collection("users").doc(uid);
+function BuyerProfile(props) {
 	const [editNum, setEditNum] = useState(false);
 	const [addNum, setAddNum] = useState(false);
-
-	// Get user document from database
-	const [userRec, setUserRec] = useState({});
-	// Retrieve data from document as a document snapshot. Store in userRec variable.
-	userRef.get().then((snapshot) => setUserRec(snapshot.data()));
+	const [msg, setMsg] = useState("");
+	const [errorMsg, setErrorMsg] = useState("");
+	const userRef = props.userRef;
+	const userRec = props.userRec;
 
 	function handlePhoneNumUpdate(newValue) {
 		setAddNum(false);
 		setEditNum(false);
-		userRef
-			.update({ phoneNumber: newValue })
-			.then(() => alert("Phone number successfully updated"));
+		setErrorMsg("");
+		setMsg("");
+		try {
+			userRef
+				.update({ phoneNumber: newValue })
+				.then(() => setMsg("Phone number successfully updated."));
+		} catch (err) {
+			setErrorMsg("" + err);
+		}
 	}
 
 	return (
@@ -43,7 +41,10 @@ function BuyerProfile() {
 				)}
 				<h2>My Profile</h2>
 			</div>
+
 			<Card className={styles.tableDetails}>
+				{errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
+				{msg && <Alert variant="success">{msg}</Alert>}
 				<Card.Header as="h5">Account Details</Card.Header>
 				<Card.Body>
 					<Table borderless hover responsive>
@@ -86,12 +87,6 @@ function BuyerProfile() {
 					)}
 				</Card.Body>
 			</Card>
-			<BuyerOrders />
-			{!userRec.isSeller && (
-				<Button href="/sign-up-seller" variant="secondary" className={styles.sellerButton}>
-					Join as a seller
-				</Button>
-			)}
 		</>
 	);
 }

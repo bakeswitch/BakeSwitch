@@ -31,6 +31,8 @@ function LogInBox() {
 				});
 				// Ask if user wants to register as seller on the first time user logs in
 				history.push("/sign-up-seller");
+			} else {
+				history.push("/");
 			}
 		});
 	}
