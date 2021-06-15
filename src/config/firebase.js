@@ -16,10 +16,11 @@ const app = firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const EmailAuthProvider = firebase.auth.EmailAuthProvider;
 const db = firebase.firestore();
 
 //Set auth state to persist until user logs out
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-export { auth, GoogleAuthProvider, db };
+export { auth, GoogleAuthProvider, EmailAuthProvider, db };
 export default app;
