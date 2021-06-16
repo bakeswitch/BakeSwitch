@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import styles from "./BuyerProfile.module.css";
 import { Image, Card, Button, Table } from "react-bootstrap";
-import EditIcon from "@material-ui/icons/Edit";
-import AddIcon from "@material-ui/icons/Add";
-import IconButton from "@material-ui/core/IconButton";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../config/firebase";
 import EditDetails from "./EditDetails";
 import BuyerOrders from "./BuyerOrders";
+// icons
+import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
+import IconButton from "@material-ui/core/IconButton";
 
 function BuyerProfile() {
 	const { currentUser } = useAuth();
@@ -25,13 +26,14 @@ function BuyerProfile() {
 	function handlePhoneNumUpdate(newValue) {
 		setAddNum(false);
 		setEditNum(false);
+		// add loading state?
 		userRef
 			.update({ phoneNumber: newValue })
 			.then(() => alert("Phone number successfully updated"));
 	}
 
-	return (
-		<>
+	function ProfilePicture() {
+		return (
 			<div className={styles.profileHeader}>
 				{userRec?.photoURL && (
 					<Image
@@ -43,6 +45,11 @@ function BuyerProfile() {
 				)}
 				<h2>My Profile</h2>
 			</div>
+		);
+	}
+
+	function ProfileAccountDetails() {
+		return (
 			<Card className={styles.tableDetails}>
 				<Card.Header as="h5">Account Details</Card.Header>
 				<Card.Body>
@@ -67,11 +74,10 @@ function BuyerProfile() {
 								<td>
 									{userRec.phoneNumber}
 									<IconButton aria-label="edit detail">
-										{userRec?.phoneNumber ? (
-											<EditIcon onClick={() => setEditNum(!editNum)} />
-										) : (
-											<AddIcon onClick={() => setAddNum(!addNum)} />
-										)}
+										{userRec?.phoneNumber 
+											? <EditIcon onClick={() => setEditNum(!editNum)} />
+											: <AddIcon onClick={() => setAddNum(!addNum)} />
+										}
 									</IconButton>
 								</td>
 							</tr>
@@ -86,6 +92,13 @@ function BuyerProfile() {
 					)}
 				</Card.Body>
 			</Card>
+		);
+	}
+
+	return (
+		<>
+			<ProfilePicture />
+			<ProfileAccountDetails />
 			<BuyerOrders />
 			{!userRec.isSeller && (
 				<Button href="/sign-up-seller" variant="secondary" className={styles.sellerButton}>

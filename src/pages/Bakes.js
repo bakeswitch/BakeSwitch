@@ -1,6 +1,17 @@
-import React from "react";
+// import { Search } from "@material-ui/icons";
+import React, { useState } from "react";
+import SearchBox from "../components/SearchBox";
+import SearchResults from "../components/SearchResults";
+import DefaultSearchResults from "../components/SearchResults/Categories";
+import styles from "./pages.module.css";
 
 export default function Bakes() {
-	//replace with actual content
-	return <h3 style={{ padding: "5rem" }}>Bakes page in construction</h3>;
+	const [isSearching, setIsSearching] = useState(false);
+
+	return (
+		<div className={styles.contentBox}>
+			<SearchBox />
+			{isSearching ? <SearchResults /> : <DefaultSearchResults />}
+		</div>
+	);
 }
