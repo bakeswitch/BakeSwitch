@@ -7,9 +7,6 @@ export default function SellerAbout(props) {
 	return (
 		<Card body className={styles.tabBox}>
 			{sellerDoc.storeDesc}
-			<IconButton aria-label="edit details" onClick={() => setUpdateNum(!updateNum)}>
-				{userRec?.phoneNumber ? <EditIcon /> : <AddIcon />}
-			</IconButton>
 		</Card>
 	);
 }

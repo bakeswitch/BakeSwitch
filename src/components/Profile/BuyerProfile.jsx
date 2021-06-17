@@ -1,30 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Profile.module.css";
-import { Image, Card, Button, Table, Alert } from "react-bootstrap";
-import EditIcon from "@material-ui/icons/Edit";
-import AddIcon from "@material-ui/icons/Add";
-import IconButton from "@material-ui/core/IconButton";
-import EditDetails from "./EditPhoneNum";
+import { Image, Card, Button, Table } from "react-bootstrap";
+import UpdateString from "../UpdateInfo/UpdateString";
 
 function BuyerProfile(props) {
-	const [updateNum, setUpdateNum] = useState(false);
-	const [msg, setMsg] = useState("");
-	const [errorMsg, setErrorMsg] = useState("");
 	const userRef = props.userRef;
 	const userRec = props.userRec;
-
-	function handlePhoneNumUpdate(newValue) {
-		setUpdateNum(false);
-		setErrorMsg("");
-		setMsg("");
-		try {
-			userRef
-				.update({ phoneNumber: newValue })
-				.then(() => setMsg("Phone number successfully updated."));
-		} catch (err) {
-			setErrorMsg("" + err);
-		}
-	}
 
 	return (
 		<>
@@ -41,8 +22,6 @@ function BuyerProfile(props) {
 			</div>
 
 			<Card className={styles.tableDetails}>
-				{errorMsg && <Alert variant="danger">{errorMsg}</Alert>}
-				{msg && <Alert variant="success">{msg}</Alert>}
 				<Card.Header as="h5">Account Details</Card.Header>
 				<Card.Body>
 					<Table borderless hover responsive>
@@ -65,14 +44,11 @@ function BuyerProfile(props) {
 								</td>
 								<td>
 									{userRec.phoneNumber}
-									<IconButton aria-label="edit details" onClick={() => setUpdateNum(!updateNum)}>
-										{userRec?.phoneNumber ? <EditIcon /> : <AddIcon />}
-									</IconButton>
+									<UpdateString item={userRec?.phoneNumber} field="phoneNumber" docRef={userRef} />
 								</td>
 							</tr>
 						</tbody>
 					</Table>
-					{updateNum && <EditDetails update={handlePhoneNumUpdate} />}
 					{userRec?.password && (
 						<Button href="/forgot-password" variant="secondary">
 							Change password
