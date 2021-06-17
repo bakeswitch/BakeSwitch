@@ -37,6 +37,7 @@ export default function BasicStoreInfo(props) {
 							ref={storeDescRef}
 							as="textarea"
 							rows={5}
+							required
 						/>
 						<Form.Text className="text-muted">
 							Include a short description about your baking store.

@@ -1,6 +1,5 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-// import PrivateRoute from "./PrivateRoute";
 import Dashboard from "./StoreDashboard";
 import Products from "./StoreProducts";
 import Orders from "./StoreOrders";
@@ -10,7 +9,7 @@ import Information from "./StoreInformation";
 function StorePages(props) {
 	return (
 		<Switch>
-            <Route path="/store/dashboard" component={Dashboard} />
+			<Route path="/store/dashboard" component={Dashboard} />
 			<Route exact path="/store/information" component={Information} />
 			<Route exact path="/store/orders" component={Orders} />
 			<Route exact path="/store/products" component={Products} />

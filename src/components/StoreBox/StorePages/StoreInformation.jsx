@@ -8,7 +8,7 @@ export default function StoreInformation() {
 
 	return (
 		<div className={styles.contentBox}>
-			<SellerProfile storeID={userDoc.storeID} />
+			<SellerProfile storeID={userDoc.storeID} isOwnStore={true} />
 		</div>
 	);
 }
