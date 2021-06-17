@@ -1,6 +1,14 @@
 import React from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+import SellerProfile from "../../SellerProfile";
+import styles from "./StorePages.module.css";
 
 export default function StoreInformation() {
-	//replace with actual content
-	return <h3 style={{ padding: "5rem" }}>Store Info in construction</h3>;
+	const { userDoc } = useAuth();
+
+	return (
+		<div className={styles.contentBox}>
+			<SellerProfile storeID={userDoc.storeID} />
+		</div>
+	);
 }

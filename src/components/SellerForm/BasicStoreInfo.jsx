@@ -46,7 +46,7 @@ export default function BasicStoreInfo(props) {
 						<Form.Label>Store Logo</Form.Label>
 						<Form.File id="storeLogo" />
 						<Form.Text className="text-muted">
-							Upload your store logo (only .svg, .jpg, or .png files accepted)
+							Optional. Upload your store logo (only .svg, .jpg, or .png files accepted)
 						</Form.Text>
 					</Form.Group>
 					<Button className="mt-3" variant="primary" type="submit" disabled={loading}>
