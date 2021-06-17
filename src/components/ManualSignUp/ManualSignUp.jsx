@@ -1,23 +1,23 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styles from "./ManualSignUp.module.css";
-import { Card, Form, Button, InputGroup, Alert } from "react-bootstrap";
+import { Button, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import { db } from "../../config/firebase";
+import ProfileInfo from "./ProfileInfo";
+import BasicStoreInfo from "../SellerForm/BasicStoreInfo";
+import ContactInfo from "../SellerForm/ContactInfo";
 
 const ManualSignUp = () => {
 	const { signUp, logOut } = useAuth();
 	const history = useHistory();
 
-	const usernameRef = useRef();
-	const passwordRef = useRef();
-	const passwordConfirmRef = useRef();
-	const phoneRef = useRef();
-	const emailRef = useRef();
-	const shopNameRef = useRef();
-	const postalCodeRef = useRef();
-	const addressRef = useRef();
+	const [signUpInfo, setSignUpInfo] = useState("");
+	const [profileInfo, setProfileInfo] = useState("");
+	const [basicStoreInfo, setBasicStoreInfo] = useState("");
+	const [contactInfo, setContactInfo] = useState("");
 
+	const [basicInfoDone, setBasicInfoDone] = useState(false);
 	const [errors, setErrors] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [yesSeller, setYesSeller] = useState(false);
@@ -27,14 +27,10 @@ const ManualSignUp = () => {
 		e.preventDefault();
 		setErrors("");
 
-		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-			return setErrors("Passwords do not match");
-		}
-
 		//SIGN-UP
 		try {
 			setLoading(true);
-			await signUp(emailRef.current.value, passwordRef.current.value).then((userCredential) => {
+			await signUp(signUpInfo.email, signUpInfo.password).then((userCredential) => {
 				var user = userCredential.user;
 				sendEmailVer(user); //SEND-EMAIL-VERIFICATION and LOG-OUT
 				addUserToDatabase(user);
@@ -61,7 +57,6 @@ const ManualSignUp = () => {
 
 	async function sendEmailVer(user) {
 		try {
-			setLoading(true);
 			logOut();
 			await user.sendEmailVerification();
 			history.push("/log-in");
@@ -70,137 +65,98 @@ const ManualSignUp = () => {
 			);
 		} catch {
 			setErrors("Failed to send email verification");
-		} finally {
-			setLoading(false);
 		}
 	}
 
 	async function addUserToDatabase(user) {
 		const uid = user.uid;
 		const userRef = db.collection("users").doc(uid);
-		userRef.set({
-			username: usernameRef.current.value,
+		await userRef.set({
 			email: user.email,
 			photoURL: user?.photoURL,
-			phoneNumber: phoneRef.current.value,
 			isManualSignUp: true,
 			isSeller: false,
 		});
+		userRef.update({
+			username: profileInfo.username,
+			phoneNumber: profileInfo.phoneNumber,
+		});
 		if (yesSeller) {
+			const storeRef = await db.collection("stores").add({
+				userID: uid,
+			});
+			const storeID = storeRef.id;
+			db.collection("stores").doc(storeID).update(basicStoreInfo);
+			db.collection("stores").doc(storeID).update(contactInfo);
 			userRef.update({
-				shopName: shopNameRef.current.value,
-				postalCode: postalCodeRef.current.value,
-				address: addressRef.current.value,
 				isSeller: true,
+				storeID: storeID,
 			});
 		}
 	}
 
 	return (
-		<Card className={styles.mainBox}>
+		<div className={styles.mainBox}>
 			{errors && <Alert variant="danger">{errors}</Alert>}
-			<Card.Body>
-				<Form onSubmit={handleSubmit}>
-					<Form.Group className="mb-3" controlId="formUsername">
-						<Form.Label>Username</Form.Label>
-						<Form.Control type="text" placeholder="Enter username" ref={usernameRef} required />
-					</Form.Group>
-					<Form.Group className="mb-3" controlId="formPassword">
-						<Form.Label>Password</Form.Label>
-						<Form.Control type="password" placeholder="Password" ref={passwordRef} required />
-						<Form.Text> Please enter a password that is at least 6 digits long</Form.Text>
-					</Form.Group>
-					<Form.Group className="mb-3" controlId="formConfirmPassword">
-						<Form.Label>Confirm password</Form.Label>
-						<Form.Control
-							type="password"
-							placeholder="Password"
-							ref={passwordConfirmRef}
-							required
+			<ProfileInfo
+				updateFunc={(obj1, obj2) => {
+					setSignUpInfo(obj1);
+					setProfileInfo(obj2);
+				}}
+			/>
+			{signUpInfo && (
+				<div className={styles.qnBox}>
+					<h6>Do you want to register as a seller?</h6>
+					<Button
+						variant="outline-primary"
+						onClick={() => {
+							setYesSeller(true);
+							setShowSubmit(false);
+						}}
+						className={styles.replyButtons}
+					>
+						Yes
+					</Button>
+
+					<Button
+						variant="outline-secondary"
+						onClick={() => {
+							setShowSubmit(true);
+							setYesSeller(false);
+						}}
+						className={styles.replyButtons}
+					>
+						No
+					</Button>
+				</div>
+			)}
+
+			{yesSeller && (
+				<>
+					<BasicStoreInfo
+						updateFunc={(obj) => {
+							setBasicStoreInfo(obj);
+							setBasicInfoDone(true);
+						}}
+					/>
+					<br />
+					{basicInfoDone && (
+						<ContactInfo
+							updateFunc={(obj) => {
+								setContactInfo(obj);
+								setShowSubmit(true);
+							}}
 						/>
-					</Form.Group>
-					<Form.Group className="" controlId="formPhoneNumber">
-						<Form.Label>Phone number</Form.Label>
-						<InputGroup className="mb-3">
-							<InputGroup.Prepend>
-								<InputGroup.Text>+65</InputGroup.Text>
-							</InputGroup.Prepend>
-							<Form.Control type="text" placeholder="Enter your phone number" ref={phoneRef} />
-						</InputGroup>
-					</Form.Group>
-					<Form.Group className="" controlId="formEmail">
-						<Form.Label> Email Address </Form.Label>
-						<InputGroup className="mb-3">
-							<Form.Control
-								type="text"
-								placeholder="Enter your email address"
-								ref={emailRef}
-								required
-							/>
-						</InputGroup>
-					</Form.Group>
-					<div className={styles.qnBox}>
-						<h6>Do you want to register as a seller?</h6>
-						<Button
-							variant="outline-primary"
-							onClick={() => {
-								setYesSeller(true);
-								setShowSubmit(true);
-							}}
-							className={styles.replyButtons}
-						>
-							Yes
-						</Button>
-
-						<Button
-							variant="outline-secondary"
-							onClick={() => {
-								setYesSeller(false);
-								setShowSubmit(true);
-							}}
-							className={styles.replyButtons}
-						>
-							No
-						</Button>
-					</div>
-
-					{yesSeller && (
-						<>
-							<Form.Group className="mb-3" controlId="formBakingShopName">
-								<Form.Label>Name of Baking Shop</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder="Enter shop name"
-									ref={shopNameRef}
-									required
-								/>
-							</Form.Group>
-							<Form.Group className="mb-3" controlId="formPostal">
-								<Form.Label>Postal Code</Form.Label>
-								<InputGroup>
-									<InputGroup.Text>Singapore</InputGroup.Text>
-									<Form.Control type="text" placeholder="Enter postal code" ref={postalCodeRef} />
-								</InputGroup>
-							</Form.Group>
-							<Form.Group className="mb-3" controlId="formAddress">
-								<Form.Label>Address</Form.Label>
-								<Form.Control
-									type="text"
-									placeholder=""
-									style={{ height: "4rem" }}
-									ref={addressRef}
-								/>
-							</Form.Group>
-						</>
 					)}
-					{showSubmit && (
-						<Button disabled={loading} className="mt-3 w-100" variant="primary" type="submit">
-							Submit
-						</Button>
-					)}
-				</Form>
-			</Card.Body>
-		</Card>
+				</>
+			)}
+
+			{showSubmit && (
+				<Button disabled={loading} className="mt-3 w-100" variant="warning" onClick={handleSubmit}>
+					Submit
+				</Button>
+			)}
+		</div>
 	);
 };
 

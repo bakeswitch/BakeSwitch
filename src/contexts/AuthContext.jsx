@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { auth, GoogleAuthProvider } from "../config/firebase";
+import { db } from "../config/firebase";
 
 const AuthContext = React.createContext();
 
@@ -9,6 +10,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState();
+	const [userDoc, setUserDoc] = useState();
 	const [isLoading, setIsLoading] = useState(true);
 
 	function signUp(email, password) {
@@ -31,11 +33,20 @@ export function AuthProvider({ children }) {
 		return auth.signOut();
 	}
 
+	// Update currentUser and userDoc from database records
 	useEffect(() => {
 		//onAuthStateChanged returns method to unsubscribe
 		const unsubscribe = auth.onAuthStateChanged(function (user) {
 			setCurrentUser(user);
-			setIsLoading(false);
+			if (user) {
+				db.collection("users")
+					.doc(user.uid)
+					.get()
+					.then((snapshot) => setUserDoc(snapshot.data()))
+					.then(() => setIsLoading(false));
+			} else {
+				setIsLoading(false);
+			}
 		});
 
 		// Performs clean-up by stopping the onAuthStateChanged listener to prevent memory leak
@@ -50,6 +61,7 @@ export function AuthProvider({ children }) {
 		passwordLogIn,
 		resetPassword,
 		logOut,
+		userDoc,
 	};
 
 	// Only renders content when isLoading is false

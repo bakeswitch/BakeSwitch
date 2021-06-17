@@ -33,7 +33,7 @@ export default function SignUpSeller() {
 			)}
 			{joinSeller && (
 				<div className={styles.formBox}>
-					<SellerForm />
+					<SellerForm redirect="/" />
 				</div>
 			)}
 		</>

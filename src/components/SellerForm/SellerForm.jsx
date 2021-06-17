@@ -1,26 +1,26 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SellerForm.module.css";
-import { Card, Form, Button, Alert } from "react-bootstrap";
+import { Button, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../config/firebase";
+import BasicStoreInfo from "./BasicStoreInfo";
+import ContactInfo from "./ContactInfo";
 
-export default function SellerForm() {
-	const shopNameRef = useRef();
-	const instaRef = useRef();
-	const fbRef = useRef();
-	const websiteRef = useRef();
-
+export default function SellerForm(props) {
 	const { currentUser } = useAuth();
+	const [basicStoreInfo, setBasicStoreInfo] = useState("");
+	const [contactInfo, setContactInfo] = useState("");
+
 	const [error, setError] = useState("");
 	const [message, setMessage] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [toHomePage, setToHomePage] = useState(false);
+	const [proceed, setProceed] = useState(false);
+	const [basicInfoDone, setBasicInfoDone] = useState(false);
+	const [submitDetails, setSubmitDetails] = useState(false);
 
-	async function handleSubmit(e) {
-		e.preventDefault();
+	async function handleSubmit() {
 		setError("");
 		setMessage("");
-
 		try {
 			setLoading(true);
 			await addUserToDatabase();
@@ -28,6 +28,7 @@ export default function SellerForm() {
 			setError("Failed to join as a seller. " + err);
 		} finally {
 			setLoading(false);
+			setProceed(true);
 			setMessage("Successfully registered as a seller");
 		}
 	}
@@ -37,62 +38,59 @@ export default function SellerForm() {
 		const userRef = db.collection("users").doc(uid);
 		const storeRef = await db.collection("stores").add({
 			userID: uid,
-			shopName: shopNameRef.current.value,
-			instaLink: instaRef.current.value,
-			fbLink: fbRef.current.value,
-			websiteLink: websiteRef.current.value,
 		});
 		const storeID = storeRef.id;
+		db.collection("stores").doc(storeID).update(basicStoreInfo);
+		db.collection("stores").doc(storeID).update(contactInfo);
 		userRef.update({
 			isSeller: true,
 			storeID: storeID,
 		});
-		setToHomePage(true);
 	}
+
+	// Scroll to the top
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [message]);
+
 	return (
-		<Card className={styles.mainBox}>
+		<div className={styles.mainBox}>
 			{error && <Alert variant="danger">{error}</Alert>}
 			{message && <Alert variant="success">{message}</Alert>}
-			{toHomePage && (
-				<Button className="mt-3" variant="primary" href="/">
-					Back to home page
+			{proceed && (
+				<Button className="mt-3" variant="primary" href={props.redirect}>
+					Proceed
 				</Button>
 			)}
-			<Card.Body>
-				<Form onSubmit={handleSubmit}>
-					<Form.Group className="mb-3" controlId="formBakingShopName">
-						<Form.Label>Name of Baking Shop</Form.Label>
-						<Form.Control type="text" placeholder="Enter shop name" ref={shopNameRef} required />
-					</Form.Group>
-					<Form.Group className="mb-3" controlId="formInsta">
-						<Form.Label>Link to Instagram account (Optional)</Form.Label>
-						<Form.Control type="text" placeholder="URL link to instagram" ref={instaRef} />
-					</Form.Group>
-					<Form.Group className="mb-3" controlId="formFb">
-						<Form.Label>Link to Facebook page (Optional)</Form.Label>
-						<Form.Control type="text" placeholder="URL link to facebook" ref={fbRef} />
-					</Form.Group>
-					<Form.Group className="mb-3" controlId="formWebsite">
-						<Form.Label>Link to personal website (Optional)</Form.Label>
-						<Form.Control type="text" placeholder="URL link to website" ref={websiteRef} />
-					</Form.Group>
-
-					{/* <Form.Group className="mb-3" controlId="formPostal">
-						<Form.Label>Postal Code</Form.Label>
-						<InputGroup>
-							<InputGroup.Text>Singapore</InputGroup.Text>
-							<Form.Control type="text" placeholder="Enter postal code" ref={postalCodeRef} />
-						</InputGroup>
-					</Form.Group>
-					<Form.Group className="mb-3" controlId="formAddress">
-						<Form.Label>Address</Form.Label>
-						<Form.Control type="text" placeholder="" style={{ height: "4rem" }} ref={addressRef} />
-					</Form.Group> */}
-					<Button disabled={loading} className="mt-3" variant="primary" type="submit">
-						Submit
-					</Button>
-				</Form>
-			</Card.Body>
-		</Card>
+			<br />
+			{!basicStoreInfo && (
+				<BasicStoreInfo
+					updateFunc={(obj) => {
+						setBasicStoreInfo(obj);
+						setBasicInfoDone(true);
+					}}
+				/>
+			)}
+			<br />
+			{basicInfoDone && (
+				<ContactInfo
+					updateFunc={(obj) => {
+						setContactInfo(obj);
+						setSubmitDetails(true);
+					}}
+				/>
+			)}
+			{submitDetails && (
+				<Button
+					className="mt-3"
+					variant="warning"
+					size="lg"
+					onClick={handleSubmit}
+					disabled={loading}
+				>
+					Submit
+				</Button>
+			)}
+		</div>
 	);
 }
