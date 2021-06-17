@@ -41,16 +41,16 @@ export default function SellerProfile(props) {
 				<Card.Body>
 					<Tabs activeKey={key} onSelect={(k) => setKey(k)}>
 						<Tab eventKey="about" title="About">
-							<SellerAbout sellerDoc={storeRec} isOwnStore={isOwnStore} />
+							<SellerAbout sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
 						</Tab>
 						<Tab eventKey="bakeSale" title="Bake Sale">
-							<SellerBakeSale sellerDoc={storeRec} isOwnStore={isOwnStore} />
+							<SellerBakeSale sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
 						</Tab>
 						<Tab eventKey="contact" title="Contact">
-							<SellerContact sellerDoc={storeRec} isOwnStore={isOwnStore} />
+							<SellerContact sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
 						</Tab>
 						<Tab eventKey="storePref" title="Store Preferences">
-							<SellerPref sellerDoc={storeRec} isOwnStore={isOwnStore} />
+							<SellerPref sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
 						</Tab>
 					</Tabs>
 				</Card.Body>

@@ -5,6 +5,9 @@ import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import styles from "./UpdateInfo.module.css";
 
+// Takes in 3 compulsory props (item, field, docRef), 1 optional prop (isTextArea - for store description)
+// This is only to be used for fields that are non-mandatory.
+// To delete a field value, click update without typing anything in the input box
 export default function UpdateString(props) {
 	const item = props.item;
 	const field = props.field;
@@ -39,7 +42,17 @@ export default function UpdateString(props) {
 				<Form onSubmit={handleUpdate}>
 					<Form.Group className={styles.editString}>
 						<InputGroup className="mb-2">
-							<Form.Control type="text" placeholder="Type here" ref={newVal} required />
+							{props.isTextArea ? (
+								<Form.Control
+									type="text"
+									placeholder="Type here"
+									ref={newVal}
+									as="textarea"
+									rows={5}
+								/>
+							) : (
+								<Form.Control type="text" placeholder="Type here" ref={newVal} />
+							)}
 							<Button disabled={loading} type="submit">
 								Update
 							</Button>
