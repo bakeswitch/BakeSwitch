@@ -22,20 +22,20 @@ const SideBar = props => {
                 history.push(`/store/${selectedKey}`);
             }}>
                 {/* className={styles.sideBarSticky}>My Store</div> */}
-            <Nav.Item>
+            <Nav.Item className="mt-2">
                 <Nav.Link eventKey="dashboard"><i><ImStatsDots /></i> Dashboard</Nav.Link>
                 {/* href={"/" + {dashboard} */}
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className="mt-2">
                 <Nav.Link eventKey="products"><i><GiCookie /></i> Products</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className="mt-2">
                 <Nav.Link eventKey="orders"><i><BiReceipt /></i> Orders</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className="mt-2">
                 <Nav.Link eventKey="reviews"><i><AiOutlineComment /></i> Reviews</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className="mt-2">
                 <Nav.Link eventKey="information"><i><BsInfoSquare /></i> Information</Nav.Link>
             </Nav.Item>
             {/* <Nav.Item>

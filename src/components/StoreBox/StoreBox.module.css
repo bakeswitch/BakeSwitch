@@ -10,7 +10,7 @@
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 .sideBarWrapper{
-    background-color: rgba(0, 0, 0, 0.158);
+    background-color: rgb(180, 179, 179);
     min-height: 100vh !important;
     /* width: 0vw; */
     width: 100vw;

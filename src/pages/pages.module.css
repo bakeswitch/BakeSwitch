@@ -1,3 +1,8 @@
+.contentBox {
+	width: 75%;
+	margin:auto;	
+}
+
 /* LogIn */
 .formBox {
 	margin: auto;

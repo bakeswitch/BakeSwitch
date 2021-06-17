@@ -1,4 +1,5 @@
-body {
+:root {
   font-family: sans-serif;
   text-align: center;
+  --main-bg-color-light: #000;
 }
