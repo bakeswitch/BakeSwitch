@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Tabs, Tab } from "react-bootstrap";
+import { Card, Tabs, Tab } from "react-bootstrap";
 import { db } from "../../config/firebase";
 import SellerAbout from "./SellerAbout";
 import SellerBakeSale from "./SellerBakeSale";
