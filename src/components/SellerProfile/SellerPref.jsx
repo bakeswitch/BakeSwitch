@@ -69,11 +69,13 @@ export default function SellerPref(props) {
 			<Card.Text>
 				{sellerDoc.selfCollectionBool ? sellerDoc.selfCollectionDetails : "Not offered"}
 			</Card.Text>
-			<UpdateStorePref
-				offersThis={sellerDoc.selfCollectionBool}
-				field="selfCollectionBool"
-				docRef={storeRef}
-			/>
+			{isOwnStore && (
+				<UpdateStorePref
+					offersThis={sellerDoc.selfCollectionBool}
+					field="selfCollectionBool"
+					docRef={storeRef}
+				/>
+			)}
 			{isOwnStore && (
 				<UpdateString
 					item={sellerDoc.selfCollectionDetails}
