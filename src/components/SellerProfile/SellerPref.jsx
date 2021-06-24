@@ -50,7 +50,13 @@ export default function SellerPref(props) {
 		<Card body className={styles.tabBox}>
 			<Card.Title>Delivery details</Card.Title>
 			<Card.Text>{sellerDoc.deliveryBool ? sellerDoc.deliveryDetails : "Not offered"}</Card.Text>
-			<UpdateStorePref offersThis={sellerDoc.deliveryBool} field="deliveryBool" docRef={storeRef} />
+			{isOwnStore && (
+				<UpdateStorePref
+					offersThis={sellerDoc.deliveryBool}
+					field="deliveryBool"
+					docRef={storeRef}
+				/>
+			)}
 			{isOwnStore && (
 				<UpdateString
 					item={sellerDoc.deliveryDetails}
