@@ -4,6 +4,7 @@ import PrivateRoute from "./PrivateRoute";
 import Home from "./Home";
 import About from "./About";
 import Bakers from "./Bakers";
+import BakeProduct from "./BakeProduct"
 import Bakes from "./Bakes";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
@@ -22,6 +23,7 @@ function Webpages(props) {
 			<Route exact path="/about" component={About} />
 			<Route exact path="/bakers" component={Bakers} />
 			<Route exact path="/bakes" component={Bakes} />
+			<Route path="/bake-product" component={BakeProduct} />
 			<Route exact path="/log-in" component={LogIn} />
 			<Route exact path="/forgot-password" component={ForgotPassword} />
 			<Route exact path="/sign-up" component={SignUp} />
