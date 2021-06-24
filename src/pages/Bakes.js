@@ -6,12 +6,13 @@ import DefaultSearchResults from "../components/SearchResults/Categories";
 import styles from "./pages.module.css";
 
 export default function Bakes() {
-	const [isSearching, setIsSearching] = useState(false);
+	const [isSearching, setIsSearching] = useState(true);
 
 	return (
 		<div className={styles.contentBox}>
-			<SearchBox />
-			{isSearching ? <SearchResults /> : <DefaultSearchResults />}
+			<SearchBox/>
+			<SearchResults />
+			{/* {isSearching ? <SearchResults /> : <DefaultSearchResults />} */}
 		</div>
 	);
 }
