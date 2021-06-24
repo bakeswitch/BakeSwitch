@@ -1,6 +1,11 @@
 import React from "react";
+import BakersPage from "../components/BakersPage";
+import styles from "./pages.module.css";
 
 export default function Bakers() {
-	//replace with actual content
-	return <h3 style={{ padding: "5rem" }}>Bakers page in construction</h3>;
+	return (
+		<div className={styles.contentBox}>
+			<BakersPage />
+		</div>
+	);
 }
