@@ -1,11 +1,12 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Container } from "react-bootstrap";
+import styles from "./ProductNavPages.module.css";
 
 export default function ProductReviews() {
 	//replace with actual content
 	return (
-        <Card.Body>
-            <Card.Title>Product Review in construction</Card.Title>
-        </Card.Body>
+        <Container className={styles.cardDetailsBox}>
+            <h1>Product Review in construction</h1>
+        </Container>
     )
 }

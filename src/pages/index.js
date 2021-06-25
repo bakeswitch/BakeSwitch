@@ -4,7 +4,7 @@ import PrivateRoute from "./PrivateRoute";
 import Home from "./Home";
 import About from "./About";
 import Bakers from "./Bakers";
-import BakeProduct from "./BakeProduct"
+import BakeProduct from "./BakeProduct";
 import Bakes from "./Bakes";
 import BakerProfile from "./BakerProfile";
 import LogIn from "./LogIn";
@@ -16,6 +16,7 @@ import Chats from "./Chats";
 import Favourited from "./Favourited";
 import ForgotPassword from "./ForgotPassword";
 import Store from "./Store";
+import Temporary from "../Temporary"; //delete when done testing
 
 function Webpages() {
 	return (
@@ -24,7 +25,6 @@ function Webpages() {
 			<Route exact path="/about" component={About} />
 			<Route exact path="/bakers" component={Bakers} />
 			<Route exact path="/bakes" component={Bakes} />
-			<Route path="/bake-product" component={BakeProduct} />
 			<Route exact path="/log-in" component={LogIn} />
 			<Route exact path="/forgot-password" component={ForgotPassword} />
 			<Route exact path="/sign-up" component={SignUp} />
@@ -39,6 +39,13 @@ function Webpages() {
 				path="/bakerProfile/:id"
 				render={({ match }) => <BakerProfile storeID={match.params.id} />}
 			/>
+			<Route
+				exact
+				path="/bake-product/:id"
+				render={({ match }) => <BakeProduct bakeID={match.params.id} />}
+			/>
+			{/* delete when done testing */}
+			<PrivateRoute path="/temporary" component={Temporary} />
 		</Switch>
 	);
 }

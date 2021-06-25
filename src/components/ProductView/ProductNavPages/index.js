@@ -1,23 +1,35 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Tabs, Tab } from "react-bootstrap";
 import ProductDetails from "./ProductDetails";
 import ProductReviews from "./ProductReviews";
 import ProductAllergens from "./ProductAllergens";
 import ProductContactBaker from "./ProductContactBaker";
+import styles from "./ProductNavPages.module.css";
 
 function ProductNavPages(props) {
-	return (
-		<Switch>
-			<Route path="/bake-product/details" component={ProductDetails} />
-			<Route path="/bake-product/reviews" component={ProductReviews} />
-			<Route path="/bake-product/allergens" component={ProductAllergens} />
-			<Route path="/bake-product/contact" component={ProductContactBaker} />
-			{/* <Route exact path="/store/information" component={Information} />
-			<Route exact path="/store/orders" component={Orders} />
-			<Route exact path="/store/products" component={Products} />
-			<Route exact path="/store/reviews" component={Reviews} /> */}
-		</Switch>
-	);
+	const [key, setKey] = useState('home');
+
+  	return (
+		<Tabs
+			id="productTabs"
+			activeKey={key}
+			onSelect={(k) => setKey(k)}
+			className="mb-3 ms-2"
+		>
+			<Tab eventKey="details" title="details">
+				<ProductDetails />
+			</Tab>
+			<Tab eventKey="reviews" title="reviews">
+				<ProductReviews />
+			</Tab>
+			<Tab eventKey="allergens" title="allergens">
+				<ProductAllergens />
+			</Tab>
+			<Tab eventKey="contact" title="contact">
+				<ProductContactBaker />
+			</Tab>
+		</Tabs>
+  );
 }
 
 export default ProductNavPages;
