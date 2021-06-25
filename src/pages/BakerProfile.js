@@ -5,7 +5,7 @@ import SellerProfile from "../components/SellerProfile";
 export default function BakerProfile(props) {
 	const storeID = props.storeID;
 	return (
-		<div className={styles.contentBox}>
+		<div className={styles.contentBox} style={{ textAlign: "left" }}>
 			<SellerProfile storeID={storeID} isOwnStore={false} />
 		</div>
 	);

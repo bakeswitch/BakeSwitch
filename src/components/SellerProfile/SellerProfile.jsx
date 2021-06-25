@@ -36,9 +36,11 @@ export default function SellerProfile(props) {
 					style={{ width: "100%", height: "300px" }}
 				/>
 				{isOwnStore && (
-					<Card.ImgOverlay>
-						<UpdateString item={storeRec.storeLogo} field="storeLogo" docRef={storeRef} />
-					</Card.ImgOverlay>
+					<UpdateString
+						item={storeRec.storeLogo}
+						field="storeLogo"
+						docRef={storeRef}
+					></UpdateString>
 				)}
 
 				<div className={styles.storeName}>
