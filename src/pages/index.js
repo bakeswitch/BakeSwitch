@@ -6,6 +6,7 @@ import About from "./About";
 import Bakers from "./Bakers";
 import BakeProduct from "./BakeProduct"
 import Bakes from "./Bakes";
+import BakerProfile from "./BakerProfile";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import SignUpSeller from "./SignUpSeller";
@@ -14,9 +15,9 @@ import ProfileSettings from "./ProfileSettings";
 import Chats from "./Chats";
 import Favourited from "./Favourited";
 import ForgotPassword from "./ForgotPassword";
-import Store from "./Store"
+import Store from "./Store";
 
-function Webpages(props) {
+function Webpages() {
 	return (
 		<Switch>
 			<Route exact path="/" component={Home} />
@@ -33,6 +34,11 @@ function Webpages(props) {
 			<PrivateRoute exact path="/chats" component={Chats} />
 			<PrivateRoute exact path="/favourited" component={Favourited} />
 			<PrivateRoute path="/store" component={Store} />
+			<Route
+				exact
+				path="/bakerProfile/:id"
+				render={({ match }) => <BakerProfile storeID={match.params.id} />}
+			/>
 		</Switch>
 	);
 }

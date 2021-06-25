@@ -35,8 +35,6 @@ function CreateBakeSale(props) {
 				});
 		} catch (error) {
 			setErr("" + error);
-		} finally {
-			setLoading(false);
 		}
 	}
 
