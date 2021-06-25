@@ -1,0 +1,42 @@
+.box {
+    background: rgba(233, 233, 233, 0.932);
+    border-radius: 7px;
+    box-shadow: 0 2px 5px #ccc;
+    padding: 10px;
+    width: 240px;
+    margin: 16px;
+    /* float: left; */
+}
+
+.card {
+    height: 350px;
+    text-align: left;
+    margin-bottom: 2rem;
+    /* background-color:rgba(233, 233, 233, 0.932); */
+}
+
+.cardImg {
+    height: 50%;
+
+    /* border-radius:1rem; */
+}
+
+.cardBody {
+    background-color:rgba(233, 233, 233, 0.932);
+}
+
+.itemDescTruncate {
+    font-size: 14px;
+    width: 88%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .itemDescTruncate:hover {
+    white-space: normal;
+    overflow: visible;
+    position: absolute;
+    background-color:rgba(233, 233, 233, 0.932);
+    height: 25%;
+  }
