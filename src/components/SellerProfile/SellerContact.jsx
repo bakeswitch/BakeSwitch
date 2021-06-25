@@ -40,9 +40,11 @@ export default function SellerContact(props) {
 				{(sellerDoc?.instaLink || isOwnStore) && (
 					<>
 						<Card.Title>Instagram</Card.Title>
-						<a href={sellerDoc.instaLink}>
-							<Card.Text>Visit my instagram page</Card.Text>
-						</a>
+						{sellerDoc?.instaLink && (
+							<a href={sellerDoc.instaLink}>
+								<Card.Text>Visit my instagram page</Card.Text>
+							</a>
+						)}
 						{isOwnStore && (
 							<UpdateString item={sellerDoc.instaLink} field="instaLink" docRef={storeRef} />
 						)}
@@ -51,9 +53,11 @@ export default function SellerContact(props) {
 				{(sellerDoc?.fbLink || isOwnStore) && (
 					<>
 						<Card.Title>Facebook</Card.Title>
-						<a href={sellerDoc.fbLink}>
-							<Card.Text>Visit my facebook page</Card.Text>
-						</a>
+						{sellerDoc?.fbLink && (
+							<a href={sellerDoc.fbLink}>
+								<Card.Text>Visit my facebook page</Card.Text>
+							</a>
+						)}
 						{isOwnStore && (
 							<UpdateString item={sellerDoc.fbLink} field="fbLink" docRef={storeRef} />
 						)}
@@ -62,9 +66,11 @@ export default function SellerContact(props) {
 				{(sellerDoc?.websiteLink || isOwnStore) && (
 					<>
 						<Card.Title>Store website</Card.Title>
-						<a href={sellerDoc.websiteLink}>
-							<Card.Text>Visit my personal website</Card.Text>
-						</a>
+						{sellerDoc?.websiteLink && (
+							<a href={sellerDoc.websiteLink}>
+								<Card.Text>Visit my personal website</Card.Text>
+							</a>
+						)}
 						{isOwnStore && (
 							<UpdateString item={sellerDoc.websiteLink} field="websiteLink" docRef={storeRef} />
 						)}

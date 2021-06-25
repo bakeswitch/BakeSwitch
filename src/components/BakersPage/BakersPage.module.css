@@ -1,0 +1,41 @@
+.bakerBox {
+	display: flex;
+	justify-content: center;
+	height: 150px;
+	width: 65vw;
+	margin: 2rem auto;
+}
+
+.storeImg {
+	width: 125px;
+	height: 125px;
+}
+
+.bakerCard {
+	margin-left: 3rem;
+	flex-grow: 1;
+}
+
+.bakerDesc {
+	text-align: left;
+	overflow: auto;
+}
+
+@media (max-width: 800px) {
+	.storeImg {
+		width: 95px;
+		height: 95px;
+		margin: 0.8rem auto;
+	}
+
+	.bakerCard {
+		width: 85vw;
+		height: 125px;
+		margin: auto;
+	}
+
+	.bakerBox {
+		flex-wrap: wrap;
+		height: 235px;
+	}
+}
