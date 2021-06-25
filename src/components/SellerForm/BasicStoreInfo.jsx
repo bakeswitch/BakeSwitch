@@ -13,7 +13,7 @@ export default function BasicStoreInfo(props) {
 		props.updateFunc({
 			storeName: storeNameRef.current.value,
 			storeDesc: storeDescRef.current.value,
-			// storeLogo: storeLogoRef.current.value,
+			storeLogo: storeLogoRef.current.value,
 		});
 		setLoading(false);
 	}
@@ -45,9 +45,9 @@ export default function BasicStoreInfo(props) {
 					</Form.Group>
 					<Form.Group className="mb-3" controlId="formStoreLogo">
 						<Form.Label>Store Logo</Form.Label>
-						<Form.File id="storeLogo" />
+						<Form.Control type="text" placeholder="Enter image URL" ref={storeLogoRef} />
 						<Form.Text className="text-muted">
-							Optional. Upload your store logo (only .svg, .jpg, or .png files accepted)
+							Optional. Include URL to your store logo/image.
 						</Form.Text>
 					</Form.Group>
 					<Button className="mt-3" variant="primary" type="submit" disabled={loading}>

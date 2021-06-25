@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Tabs, Tab } from "react-bootstrap";
+import { Card, Tabs, Tab } from "react-bootstrap";
 import { db } from "../../config/firebase";
 import SellerAbout from "./SellerAbout";
 import SellerBakeSale from "./SellerBakeSale";
 import SellerContact from "./SellerContact";
 import SellerPref from "./SellerPref";
+import UpdateString from "../UpdateInfo/UpdateString";
 import styles from "./SellerProfile.module.css";
 
 export default function SellerProfile(props) {
@@ -31,9 +32,15 @@ export default function SellerProfile(props) {
 				<Card.Img
 					variant="top"
 					alt="Image from store"
-					src="https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971552_1280.jpg"
+					src={storeRec.storeLogo}
 					style={{ width: "100%", height: "300px" }}
 				/>
+				{isOwnStore && (
+					<Card.ImgOverlay>
+						<UpdateString item={storeRec.storeLogo} field="storeLogo" docRef={storeRef} />
+					</Card.ImgOverlay>
+				)}
+
 				<div className={styles.storeName}>
 					<h3>{storeRec.storeName}</h3>
 				</div>
