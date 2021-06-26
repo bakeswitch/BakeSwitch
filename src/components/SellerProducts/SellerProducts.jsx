@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import AddProduct from "./AddProduct";
 import SellerProductDisplay from "./SellerProductDisplay";
+import { db } from "../../config/firebase";
 
 export default function SellerProducts(props) {
 	const storeID = props.storeID;
 	// Takes in storeID as props
-	const storeRef = db.collection("stores").doc(storeID);
+	// const storeRef = db.collection("stores").doc(storeID);
 
 	// const [pdtRec, setPdtRec] = useState();
 	const [loading, setLoading] = useState(true);
