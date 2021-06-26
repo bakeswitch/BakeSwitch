@@ -1,4 +1,7 @@
-.productDetailCard {
+.productDetailBox {
+    justify-content: left;
     text-align: left;
-    width: 60%;
+    width: 60%; 
+    /* HOW TO MAKE THIS WORK */
+    margin-top: 1rem;
 }
