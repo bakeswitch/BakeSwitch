@@ -2,46 +2,75 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import styles from "./SearchResults.module.css";
 import { db } from "../../config/firebase";
+import { useHistory } from "react-router-dom"
+
+function ErrorCard() {
+	return (
+		<Card>
+			<p>Error loading bakeCard, bakeObj undefined</p>
+		</Card>
+	);
+}
+
+//returns array of arrays [price, qty] which is sorted by price in ascending order
+export function orderPriceAndQtyArr(bakeData) {
+	// const [orderedPnQ, setOrderedPnQ] = useState({});
+	if (bakeData != null) {
+		const { bakePriceAndQty: unorderedPnQ } = bakeData;
+		const unorderedKeys = Object.keys(unorderedPnQ);
+		const orderedPnQArr = unorderedKeys
+			.sort(function(a, b){return a-b}) 			//sort keys in ascending order [1,2,3]
+			.map(price => [price, unorderedPnQ[price]]); //place them in nested array [1:q, 2:q, 3:q]
+		// alert(orderedPnQArr.toString());
+		return orderedPnQArr;
+	} else {
+		return alert("bakeData is empty");
+	}
+}
 
 function createColCard(bakeID) {
 	const [bakeData, setBakeData] = useState();
-	const [orderedPriceAndQty, setOrderedPriceAndQty] = useState({});
+	const [orderedPriceAndQtyArr, setOrderedPriceAndQtyArr] = useState([["default_price","default_qty"]]);
 	const [isLoading, setIsLoading] = useState(false);
 	const bakeRef = db.collection("bakes").doc(bakeID);
+	const history = useHistory();
 	
-	async function fillBakeData(bakeID) {
+	function fillBakeData() {
 		bakeRef.get()
 			.then((snapshot) => {
 				if (snapshot && snapshot.exists) {
 					setBakeData(snapshot.data());
-					// alert("bakeData set");
+					alert("bakeData set");
 				} else {
 					alert('snapshot doesnt exist');
 				}
 			}).catch((err) => alert("setBakeObj error: " + err));
 	}
 
-	function fillOrderedPriceAndQty(bakeData) {
-		if (bakeData != null) {
-			// alert(JSON.stringify(bakeData)); //testline
-			const { bakePriceArr: orderedPriceArr, bakePriceAndQty: unorderedMapPriceAndQty } = bakeData;
-			//assumes bakePriceArr is sorted already in asending order!
-			orderedPriceArr.forEach(price => { //may need to sort first
-				const respQty = unorderedMapPriceAndQty[price];
-				setOrderedPriceAndQty((prevOrderedPriceAndQty) => ({
-					...prevOrderedPriceAndQty,
-					[price]: respQty
-				}));
-			});
-		} else {
-			alert("bakeData is empty");
-		}
-	}
+	// function fillOrderedPriceAndQty(bakeData) {
+	// 	if (bakeData != null) {
+	// 		// alert(JSON.stringify(bakeData)); //testline
+	// 		const { bakePriceArr: orderedPriceArr, bakePriceAndQty: unorderedMapPriceAndQty } = bakeData;
+	// 		//assumes bakePriceArr is sorted already in asending order!
+	// 		orderedPriceArr.forEach(price => { //may need to sort first
+	// 			const respQty = unorderedMapPriceAndQty[price];
+	// 			setOrderedPriceAndQty((prevOrderedPriceAndQty) => ({
+	// 				...prevOrderedPriceAndQty,
+	// 				[price]: respQty
+	// 			}));
+	// 		});
+	// 	} else {
+	// 		alert("bakeData is empty");
+	// 	}
+	// }
 
 	function getRealTimeUpdates() {
 		bakeRef.onSnapshot((snapshot) => {
 			if (snapshot && snapshot.exists) {
-				fillOrderedPriceAndQty(snapshot.data());
+				// alert(JSON.stringify(snapshot.data())); //runs here
+				const orderedPnQArr = orderPriceAndQtyArr(snapshot.data());
+				// alert(JSON.stringify(orderedPnQ)); //Doesnt run here
+				setOrderedPriceAndQtyArr(orderedPnQArr);
 			} else {
 				alert("snapshot doesnt exist for realtime update");
 			}
@@ -49,26 +78,32 @@ function createColCard(bakeID) {
 	}
 	
 	useEffect(() => {
-		setIsLoading(true);
-		fillBakeData(bakeID);
-		getRealTimeUpdates();
-		setIsLoading(false);
+		try {
+			setIsLoading(true);
+			fillBakeData();
+			getRealTimeUpdates();
+		} finally {
+			setIsLoading(false);
+		}
 	},[]);
 	
-	if (bakeData == null) {
-		return <p>Error loading bakeCard, bakeObj undefined</p>;
+	if (!bakeData) { 
+		return ErrorCard() 
 	}
 	
 	//pass in default values in case can't read fields
-	const { bakeName ='default_bake_name', 
-			storeID  ='default_store_id',
-			bakeDesc = 'default_bake_desc',
-			bakePhotoURL = 'default_bake_photo' } = bakeData;
+	const { bakeName 		= 'default_bake_name', 
+			storeID  		= 'default_store_id',
+			bakeDesc 		= 'default_bake_desc',
+			bakePhotoURL 	= 'default_bake_photo' } = bakeData;
 	
+	function handleOnClick() {
+		history.push(`/bake-product/${bakeID}`);
+	}
 	
 	return !isLoading && ( 
 		<Col>
-			<Card className={styles.card}>
+			<Card className={styles.card} onClick={handleOnClick}>
 				<Card.Img
 					className={styles.cardImg}
 					variant="top"
@@ -83,7 +118,7 @@ function createColCard(bakeID) {
 					</Card.Text>
 					<Card.Text className={styles.cardFooter}>
 						<p>
-							from S${Object.keys(orderedPriceAndQty)[0]} dollars onwards
+							from S${orderedPriceAndQtyArr[0][0]} dollars onwards
 							<br />
 							by <Card.Link>{storeID}</Card.Link>
 						</p>
@@ -113,7 +148,8 @@ export default function SearchResults() {
 	};
 
 	//REPLACE W SEARCH RESULTS WHEN CODE IS READY
-	const searchResultsBakeIDArr = ["bake_1234", "bake_4213","bake_2222"];
+	const searchResultsBakeIDArr = ["bake_1234", "bake_4213" ];
+	// ,"bake_2222","bake_1234", "bake_4213","bake_2222","bake_1234","bake_4213","bake_2222","bake_1234"];
 
 	return (
 		!isLoading && (
