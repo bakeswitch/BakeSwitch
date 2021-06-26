@@ -82,7 +82,7 @@ function LogInBox() {
 
 	return (
 		<div className={styles.mainBox}>
-			<h1>Log In</h1>
+			<h1>Login</h1>
 			<div className={styles.googleLogIn}>
 				<GoogleButton label="Continue with Google" onClick={handleGoogleLogIn} />
 			</div>
