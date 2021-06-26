@@ -28,6 +28,7 @@ export default function AddProduct(props) {
 		setErr("");
 		setMsg("");
 		try {
+			const sortedPriceArr = priceArr.sort();
 			db.collection("bakes")
 				.add({
 					storeID: storeID,
@@ -41,7 +42,7 @@ export default function AddProduct(props) {
 					bakePhotoURL: photoURL.current.value,
 					bakeTags: tags,
 					bakePriceAndQty: pricing,
-					bakePriceArr: priceArr.sort(),
+					bakePriceArr: sortedPriceArr,
 					itemPromo: pdtPromo.current.value,
 				})
 				.then(() => {

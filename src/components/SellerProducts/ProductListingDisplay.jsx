@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../../config/firebase";
 import { Card, Button, Modal } from "react-bootstrap";
 import { FormControlLabel, Switch } from "@material-ui/core";
+import ListingContents from "./ListingContents";
 import styles from "./SellerProducts.module.css";
 
 export default function ProductListingDisplay(props) {
@@ -61,7 +62,9 @@ export default function ProductListingDisplay(props) {
 					<Modal.Header>
 						<Modal.Title>{bakeRec.bakeName}</Modal.Title>
 					</Modal.Header>
-					<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+					<Modal.Body>
+						<ListingContents bakeRec={bakeRec} />
+					</Modal.Body>
 					<Modal.Footer>
 						<Button variant="danger" size="sm" onClick={() => setConfDelete(true)}>
 							Delete listing
