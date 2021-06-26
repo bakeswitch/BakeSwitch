@@ -30,8 +30,8 @@ export default function AddProduct(props) {
 		try {
 			db.collection("bakes")
 				.add({
-					bakeStoreUID: storeID,
-					bakeStoreName: storeRec.storeName,
+					storeID: storeID,
+					storeName: storeRec.storeName,
 					availabilityStart: storeRec.availabilityStart,
 					availabilityEnd: storeRec.availabilityEnd,
 					isAvailable: true,
@@ -67,7 +67,7 @@ export default function AddProduct(props) {
 		<div>
 			<Button
 				variant="warning"
-				className="mt-3"
+				className="mt-4 mb-2"
 				onClick={() => setShowForm(true)}
 				disabled={showForm}
 			>

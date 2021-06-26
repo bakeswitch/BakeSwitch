@@ -1,27 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import ProductListingDisplay from "./ProductListingDisplay";
 import AddProduct from "./AddProduct";
-import SellerProductDisplay from "./SellerProductDisplay";
+import { Row, Col } from "react-bootstrap";
 import { db } from "../../config/firebase";
 
-export default function SellerProducts(props) {
+export default function SellerProductDisplay(props) {
 	const storeID = props.storeID;
-	// Takes in storeID as props
-	// const storeRef = db.collection("stores").doc(storeID);
-
-	// const [pdtRec, setPdtRec] = useState();
+	const [bakeIDArr, setBakeIDArr] = useState([]);
 	const [loading, setLoading] = useState(true);
 
-	// useEffect(() => {
-	// 	pdtRec
-	// 		.get()
-	// 		.then((snapshot) => setPdteRec(snapshot.data()))
-	// 		.then(() => setLoading(false));
-	// }, []);
+	useEffect(() => {
+		db.collection("bakes")
+			.where("storeID", "==", storeID)
+			.get()
+			.then((querySnapshot) => querySnapshot.forEach((doc) => bakeIDArr.push(doc.id)))
+			.then(() => setBakeIDArr(bakeIDArr))
+			.then(() => setLoading(false));
+	}, []);
 
 	return (
-		<div>
-			<SellerProductDisplay storeID={storeID} />
+		<div className="mt-5 mb-4">
+			<h3>My Product Listings</h3>
+
 			<AddProduct storeID={storeID} />
+
+			{!loading && (
+				<Row sm={1} md={2} lg={3} className="mb-3 mt-4">
+					{bakeIDArr.map((bakeID) => (
+						<Col>
+							<ProductListingDisplay bakeID={bakeID} key={bakeID} />
+						</Col>
+					))}
+				</Row>
+			)}
 		</div>
 	);
 }
