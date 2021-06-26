@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import { db } from "../config/firebase";
 
 export function setupBakeDoc() {
-    const bakeRef = db.collection("bakes").doc("bake_4213");
+    const bakeRef = db.collection("bakes").doc("bake_2222");
     const bakeDocObj = ({
-        isAvailable     : true,
-        bakeName        : "Strawberry Cake",
-        bakeDesc        : "yum yumz",
-        bakePhotoURL    : "www.somePhotoURL.com/cookie/",
-        bakeAllergens   : "Contains Peanut, Hazelnut, may contain traces of Ginger",
+        isAvailable     : false,
+        bakeName        : "Assorted Cupcakes",
+        bakeDesc        : "Variety of cupcakes, mix n match! Order in bulk for parties or gatherings. Contact for more detail.",
+        bakePhotoURL    : "https://media.istockphoto.com/photos/different-flavours-cupcakes-picture-id1251444635?b=1&k=6&m=1251444635&s=170667a&w=0&h=jrfRMjs40vlFO9oKNsSrelDcMyRF3MIF-VuXLBUoD3M=",
+        bakeAllergens   : "Depends on cupcake flavor",
         bakePriceAndQty : ({ 
-                            7: "slice of cake",
-                            40: "whole cake"
+                            3: "1 cupcake",
+                            9.5: "small box of 4 cupcakes",
+                            25: "large box of 12 cupcakes"
                         }),
-        bakeTags        : ["tag1", "tag2", "tag3"],
+        bakePriceArr    : [3,9.5,25],
+        bakeTags        : ["strawberry", "chocolate", "banana"],
         storeID         : "store_1234",
         storeName       : "Samway"
     })

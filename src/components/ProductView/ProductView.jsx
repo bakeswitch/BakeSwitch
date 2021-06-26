@@ -56,30 +56,39 @@ export default function ProductView(props) {
 
     function setBakeDocAndStoreDoc() {
         //set bakedoc
-        setIsLoading(true);
-        bakeRef.get().then(doc => {         
-            if (doc && doc.exists) {
+        bakeRef.get().then(snapshot => {
+            setIsLoading(true);
+            setBakeDoc(snapshot)
+        }).catch(err => alert("unable to set bake data, err :" +  err))
+        .finally(()=> setIsLoading(false))
+        .then(() => {
+            setIsLoading(true);
+            setStoreDoc()
+        })
+        .catch(err => alert("unable to retrieve store data, err :" +  err))
+        .finally(()=> setIsLoading(false));
+
+        function setStoreDoc() {
+            const storeID = bakeData.storeID;
+            const storeRef = db.collection("stores").doc(storeID);
+            storeRef.get().then(doc => {        
+                if (doc && doc.exists) {
+                    setStoreData(doc.data())
+                    alert("storeDoc set");
+                } else {
+                    alert("storeID invalid? unable to load doc");
+                }
+            })
+        }
+
+        function setBakeDoc(snapshot) {     
+            if (snapshop && snapshop.exists) {
                 setBakeData(doc.data())
                 alert("bakeDoc set");
             } else {
                 return alert("bakeID invalid? unable to load doc");
             }
-        }).catch(err => alert("unable to set bake data, err :" +  err))
-        .finally(()=> setIsLoading(false));
-
-        //set storedoc
-        setIsLoading(true);
-        const storeID = bakeData.storeID;
-        const storeRef = db.collection("stores").doc(storeID);
-        storeRef.get().then(doc => {        
-            if (doc && doc.exists) {
-                setStoreData(doc.data())
-                alert("storeDoc set");
-            } else {
-                alert("storeID invalid? unable to load doc");
-            }
-        }).catch(err => alert("unable to retrieve store data, err :" +  err))
-        .finally(()=> setIsLoading(false));
+        }
     }
 
     useEffect(setBakeDocAndStoreDoc,[]);

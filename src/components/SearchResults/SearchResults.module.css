@@ -9,20 +9,24 @@
 }
 
 .card {
-    height: 350px;
+    height: 25rem;
     text-align: left;
     margin-bottom: 2rem;
     /* background-color:rgba(233, 233, 233, 0.932); */
 }
 
 .cardImg {
-    height: 50%;
-
-    /* border-radius:1rem; */
+    /* Im hard coding this to maintain aspect ratio 6:4, make it responsive */
+    height: 184px; 
 }
 
 .cardBody {
     background-color:rgba(233, 233, 233, 0.932);
+}
+
+.cardFooter{
+    position:absolute;
+    bottom: 0px;
 }
 
 .itemDescTruncate {
@@ -33,10 +37,20 @@
     text-overflow: ellipsis;
   }
 
-  .itemDescTruncate:hover {
+  .maxLines {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+  }
+
+  /* .itemDescTruncate:hover {
     white-space: normal;
     overflow: visible;
     position: absolute;
     background-color:rgba(233, 233, 233, 0.932);
     height: 25%;
-  }
+  } */
