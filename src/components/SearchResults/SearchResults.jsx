@@ -47,23 +47,6 @@ function createColCard(bakeID) {
 			}).catch((err) => alert("setBakeObj error: " + err));
 	}
 
-	// function fillOrderedPriceAndQty(bakeData) {
-	// 	if (bakeData != null) {
-	// 		// alert(JSON.stringify(bakeData)); //testline
-	// 		const { bakePriceArr: orderedPriceArr, bakePriceAndQty: unorderedMapPriceAndQty } = bakeData;
-	// 		//assumes bakePriceArr is sorted already in asending order!
-	// 		orderedPriceArr.forEach(price => { //may need to sort first
-	// 			const respQty = unorderedMapPriceAndQty[price];
-	// 			setOrderedPriceAndQty((prevOrderedPriceAndQty) => ({
-	// 				...prevOrderedPriceAndQty,
-	// 				[price]: respQty
-	// 			}));
-	// 		});
-	// 	} else {
-	// 		alert("bakeData is empty");
-	// 	}
-	// }
-
 	function getRealTimeUpdates() {
 		bakeRef.onSnapshot((snapshot) => {
 			if (snapshot && snapshot.exists) {
@@ -148,8 +131,7 @@ export default function SearchResults() {
 	};
 
 	//REPLACE W SEARCH RESULTS WHEN CODE IS READY
-	const searchResultsBakeIDArr = ["bake_1234", "bake_4213" ];
-	// ,"bake_2222","bake_1234", "bake_4213","bake_2222","bake_1234","bake_4213","bake_2222","bake_1234"];
+	const searchResultsBakeIDArr = ["bake_1234", "bake_4213", "bake_2222","bake_1234", "bake_4213","bake_2222","bake_1234","bake_4213","bake_2222","bake_1234"];
 
 	return (
 		!isLoading && (
