@@ -40,7 +40,7 @@ function createColCard(bakeID) {
 			.then((snapshot) => {
 				if (snapshot && snapshot.exists) {
 					setBakeData(snapshot.data());
-					alert("bakeData set");
+					// alert("bakeData set");
 				} else {
 					alert('snapshot doesnt exist');
 				}

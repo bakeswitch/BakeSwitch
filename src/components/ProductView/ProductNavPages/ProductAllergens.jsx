@@ -4,8 +4,20 @@ import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import styles from "./ProductNavPages.module.css";
 
-export default function ProductAllergens() {
+
+export default function ProductAllergens(props) {
+    const bakeData = props.bakeData;
+    
+    if (!bakeData) {
+        return 
+            <Container className={styles.productDetailBox}>
+                <h3> Sorry, we are unable to load the allergens </h3>
+            </Container>
+    }
+
+
     const [productAllergens, setProductAllergens] = useState(["hazelnut", "oat", "milk"]);
+
 
     return (
         <Container className={styles.cardDetailsBox}>

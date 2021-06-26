@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Table, Container } from "react-bootstrap";
 import styles from "./ProductNavPages.module.css";
-import { ErrorTab } from "./ProductNavPages";
+
 
 export default function ProductDetails(props) {
     const bakeData = props.bakeData;
-    const orderedPriceAndQty = props.orderedPriceAndQty;
+    const orderedPnQArr = props.orderedPnQArr;
 
-    if (!bakeData) { 
-        return ErrorTab() 
+    if (!(bakeData && orderedPnQArr)) { 
+        return 
+            <Container className={styles.productDetailBox}>
+                <h3> Sorry, we are unable to load the product details </h3>
+            </Container>
     }
 
     const { bakeDesc  = 'default_bake_desc',
@@ -32,10 +35,10 @@ export default function ProductDetails(props) {
                                 <th>Per unit Price</th>
                                 <th>Group</th>
                             </tr>
-                            {Object.entries(orderedPriceAndQty).map(keyValuePair => {
-                                <tr>
-                                    <td>S${keyValuePair[0]}</td>
-                                    <td>{keyValuePair[1]}</td>
+                            {(orderedPnQArr).map(priceAndQtyArr => {
+                                return <tr>
+                                    <td>S${priceAndQtyArr[0]}</td>
+                                    <td>{priceAndQtyArr[1]}</td>
                                 </tr>
                             })}
 

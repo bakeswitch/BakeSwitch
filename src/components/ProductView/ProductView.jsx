@@ -6,6 +6,7 @@ import { AiFillStar } from "react-icons/ai";
 import { FaHeart, FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import { db } from "../../config/firebase";
+import { orderPriceAndQtyArr } from "../SearchResults/SearchResults"; //REPOSITION HELPER FUNCTION AND MODIFY IMPORT LOC
 
 function ErrorCard(errString) {
     return (
@@ -38,18 +39,17 @@ export default function ProductView(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [bakeData, setBakeData] = useState();
     const [storeData, setStoreData] = useState();
+    const [indexPair, setIndexPair] = useState(0);
     const [radioValue, setRadioValue] = useState('1');
     //RADIO DOESNT WORK, call it aft storeData defined
+
+    //find way to add storeData?.storeDeliveryBool && storeData?.storeSelfCollectionBool
     const radios = [
-        { name: 'Delivery', value: '1', disabled: storeData?.storeDeliveryBool},
-        { name: 'Self-Collection', value: '2', disabled: storeData?.storeSelfCollectionBool },
+        { name: 'Delivery', value: '1', disabled: false },
+        { name: 'Self-Collection', value: '2', disabled: false},
     ];
 
     const [qty, setQty] = useState(1); //for qty of item group
-    function handleOnQtySelect(e) {
-        // do something to update price;
-        return;
-    }
 
     function fillBakeData() {
         //set bakedoc
@@ -57,7 +57,7 @@ export default function ProductView(props) {
             setIsLoading(true);
             if (snapshot && snapshot.exists) {
                 setBakeData(snapshot.data())
-                alert("bakeDoc set");
+                // alert("bakeData set");
             } else {
                 return alert("bakeID invalid? unable to load doc");
             }
@@ -72,7 +72,7 @@ export default function ProductView(props) {
             setIsLoading(true);    
             if (snapshot && snapshot.exists) {
                 setStoreData(snapshot.data())
-                alert("storeDoc set");
+                // alert("storeData set" + JSON.stringify(snapshot.data()));
             } else {
                 alert("storeID invalid? unable to load doc");
             }
@@ -107,9 +107,10 @@ export default function ProductView(props) {
             // bakeDesc 		= 'default_bake_desc',
             isAvailable     = 'default_is_available',
             storeName       = 'default_store_name',     } = bakeData;
+    const   orderedPnQArr = orderPriceAndQtyArr(bakeData);
 
     return !isLoading && (
-        <>
+        <>  
             <Row className={styles.row}>
                 <Col xs={12} md={6} className="p-4">
                     <Card border="light">
@@ -152,13 +153,15 @@ export default function ProductView(props) {
                             </ButtonGroup>
                         </dd>
                         <label for="qty-select">Choose quantity:</label>
-                        <select onSelect={handleOnQtySelect} id="qty-select" className="ms-2" style={{maxWidth: "24rem"}}>
-                            <option value="Box of 5">Box of 2</option>
-                            <option value="Box of 10">Box of 10</option>
-                            <option value="Tub of 50">Tub of 50</option>
+                        <select onChange={e => setIndexPair(e.target.value)} id="qty-select" className="ms-2" style={{maxWidth: "24rem"}}>
+                            {orderedPnQArr.map((pnqPair, index) => {
+                                return <option value={index}>
+                                    {pnqPair[1]}
+                                </option>
+                            })}
                         </select>
                     </dl>
-                    <h3 className="font-weight-bold me-2 mt-5">$8</h3>
+                    <h3 className="font-weight-bold me-2 mt-5">${orderedPnQArr[indexPair][0]}</h3>
                     
                     <Row>
                         <Col sm={8}>
@@ -179,8 +182,8 @@ export default function ProductView(props) {
             </Row>
             <ProductNavPages 
                 bakeData = {bakeData} 
-                storeDoc = {storeData}
-                // orderedPriceAndQty = {orderedPriceAndQty}
+                storeData = {storeData}
+                orderedPnQArr = {orderedPnQArr}
             />
         </>
     )
