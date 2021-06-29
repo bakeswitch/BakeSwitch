@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 import HeaderBrand from "./HeaderBrand";
 import AboutUsTab from "./AboutUsTab";
 import Tab from "./OtherTabs";
@@ -18,7 +18,7 @@ function Header() {
 			<HeaderBrand />
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse>
-				<SearchBar />
+				{/* <SearchBar /> */}
 				<Nav className="ms-auto">
 					<AboutUsTab />
 					<Tab hrefVal="/bakers" tabName="Bakers" />

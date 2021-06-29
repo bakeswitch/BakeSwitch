@@ -12,7 +12,7 @@ import SignUp from "./SignUp";
 import SignUpSeller from "./SignUpSeller";
 import OrderCart from "./OrderCart";
 import ProfileSettings from "./ProfileSettings";
-import Chats from "./Chats";
+// import Chats from "./Chats";
 import Favourited from "./Favourited";
 import ForgotPassword from "./ForgotPassword";
 import Store from "./Store";
@@ -31,7 +31,7 @@ function Webpages() {
 			<PrivateRoute exact path="/sign-up-seller" component={SignUpSeller} />
 			<PrivateRoute exact path="/order-cart" component={OrderCart} />
 			<PrivateRoute exact path="/profile-settings" component={ProfileSettings} />
-			<PrivateRoute exact path="/chats" component={Chats} />
+			{/* <PrivateRoute exact path="/chats" component={Chats} /> */}
 			<PrivateRoute exact path="/favourited" component={Favourited} />
 			<PrivateRoute path="/store" component={Store} />
 			<Route
