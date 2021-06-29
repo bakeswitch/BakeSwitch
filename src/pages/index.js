@@ -21,7 +21,7 @@ import Temporary from "../Temporary"; //delete when done testing
 function Webpages() {
 	return (
 		<Switch>
-			<Route exact path="/" component={Home} />
+			<Route exact path="/" component={Home} /> 
 			<Route exact path="/about" component={About} />
 			<Route exact path="/bakers" component={Bakers} />
 			<Route exact path="/bakes" component={Bakes} />

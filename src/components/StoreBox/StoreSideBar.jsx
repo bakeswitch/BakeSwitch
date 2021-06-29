@@ -18,7 +18,7 @@ const SideBar = props => {
             <Nav className="col-md-12 d-none d-md-block bg-light sideBar"
             activeKey="/home"
             onSelect={selectedKey => {
-                alert(`selected ${selectedKey}`);
+                // alert(`selected ${selectedKey}`);
                 history.push(`/store/${selectedKey}`);
             }}>
                 {/* className={styles.sideBarSticky}>My Store</div> */}
