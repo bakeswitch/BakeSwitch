@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
+import PricingOptionsDisplay from "./PricingOptionsDisplay";
 
 export default function AddPricingInfo(props) {
 	const [pricingObj, setPricingObj] = useState({});
@@ -26,7 +27,7 @@ export default function AddPricingInfo(props) {
 	}, [pricingObj]);
 
 	return (
-		<Form.Group className="mt-4" controlId="formPriceNQty">
+		<Form.Group className="mt-4">
 			<Form.Label>Product Pricing</Form.Label>
 			<InputGroup>
 				<InputGroup.Text>Pricing</InputGroup.Text>
@@ -49,20 +50,18 @@ export default function AddPricingInfo(props) {
 				combination (e.g. Qty: Box of 4, Price($): 12). Please confirm your pricing options before
 				proceeding.
 			</Form.Text>
-			<div className="mt-2">
-				<Form.Text>
-					<strong>
-						Pricing options (Price: Qty):
-						{JSON.stringify(pricingObj)}
-					</strong>
-				</Form.Text>
+			<div className="mt-1 mb-2">
+				<Button className="mt-2" onClick={handleAdd} size="sm">
+					Add another option
+				</Button>
+				<Button className="mt-2 ms-3" variant="warning" onClick={handleConfirm} size="sm">
+					Confirm
+				</Button>
 			</div>
-			<Button className="mt-2" onClick={handleAdd} size="sm">
-				Add another option
-			</Button>
-			<Button className="mt-2 ms-3" variant="warning" onClick={handleConfirm} size="sm">
-				Confirm
-			</Button>
+			<Form.Label>Pricing Options</Form.Label>
+			<Form.Text>
+				<PricingOptionsDisplay obj={pricingObj} />
+			</Form.Text>
 		</Form.Group>
 	);
 }

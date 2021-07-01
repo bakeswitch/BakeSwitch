@@ -27,8 +27,8 @@ export default function SellerProductDisplay(props) {
 			{!loading && (
 				<Row sm={1} md={2} lg={3} className="mb-3 mt-4">
 					{bakeIDArr.map((bakeID) => (
-						<Col>
-							<ProductListingDisplay bakeID={bakeID} key={bakeID} />
+						<Col key={bakeID}>
+							<ProductListingDisplay bakeID={bakeID} />
 						</Col>
 					))}
 				</Row>

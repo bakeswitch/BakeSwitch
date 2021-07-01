@@ -27,6 +27,7 @@ export default function ProductListingDisplay(props) {
 		bakeRef
 			.delete()
 			.then(() => {
+				setShowDetails(false);
 				alert("Product listing successfully deleted!");
 			})
 			.catch((error) => {
@@ -76,7 +77,7 @@ export default function ProductListingDisplay(props) {
 					<Modal.Body>
 						{confDelete && (
 							<div>
-								<h6>Are you sure you want to permanently delete this account?</h6>
+								<h6>Are you sure you want to permanently delete this listing?</h6>
 								<Button
 									variant="outline-primary"
 									size="sm"

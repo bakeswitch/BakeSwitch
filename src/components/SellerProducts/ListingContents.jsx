@@ -1,4 +1,5 @@
 import React from "react";
+import PricingOptionsDisplay from "./PricingOptionsDisplay";
 
 export default function ListingContents(props) {
 	const bakeRec = props.bakeRec;
@@ -18,7 +19,7 @@ export default function ListingContents(props) {
 			<h6>Sale End Date</h6>
 			<p>{bakeRec.availabilityEnd}</p>
 			<h6>Pricing Options</h6>
-			<p>{JSON.stringify(bakeRec.bakePriceAndQty)}</p>
+			<PricingOptionsDisplay obj={bakeRec.bakePriceAndQty} />
 			<h6>Product Promotion</h6>
 			<p>{bakeRec?.itemPromo ? bakeRec.itemPromo : "N.A."}</p>
 		</div>
