@@ -3,6 +3,7 @@ import { Row, Col, Card } from "react-bootstrap";
 import styles from "./SearchResults.module.css";
 import { db } from "../../config/firebase";
 import { useHistory } from "react-router-dom"
+import DisplayBakeCard from "../DisplayBakeCard";
 
 function ErrorCard() {
 	return (
@@ -85,30 +86,15 @@ function createColCard(bakeID) {
 	}
 	
 	return !isLoading && ( 
-		<Col>
-			<Card className={styles.card} onClick={handleOnClick}>
-				<Card.Img
-					className={styles.cardImg}
-					variant="top"
-					src={bakePhotoURL}
-				/>
-				<Card.Body className={styles.cardBody}>
-					<Card.Title className={styles.maxLines}>{bakeName}</Card.Title>
-					<Card.Text>
-						<p className={styles.maxLines}>
-							{bakeDesc}
-						</p>
-					</Card.Text>
-					<Card.Text className={styles.cardFooter}>
-						<p>
-							from S${orderedPriceAndQtyArr[0][0]} dollars onwards
-							<br />
-							by <Card.Link>{storeID}</Card.Link>
-						</p>
-					</Card.Text>
-				</Card.Body>
-			</Card>
-		</Col>
+		<DisplayBakeCard 
+			bakeID = {bakeID}
+			handleOnClick = {handleOnClick}
+			bakePhotoURL = {bakePhotoURL}
+			bakeName = {bakeName}
+			bakeDesc = {bakeDesc}
+			orderedPriceAndQtyArr = {orderedPriceAndQtyArr}
+			storeID = {storeID}
+		/>
 	);
 }
 
@@ -131,7 +117,7 @@ export default function SearchResults() {
 	};
 
 	//REPLACE W SEARCH RESULTS WHEN CODE IS READY
-	const searchResultsBakeIDArr = ["bake_1234", "bake_4213", "bake_2222","bake_1234", "bake_4213","bake_2222","bake_1234","bake_4213","bake_2222","bake_1234"];
+	const searchResultsBakeIDArr = ["bake_1234", "bake_4213", "bake_2222"];
 
 	return (
 		!isLoading && (
