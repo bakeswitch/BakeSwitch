@@ -15,10 +15,16 @@ export default function ProductListingDisplay(props) {
 	const [unavailable, setUnavailable] = useState(false);
 
 	useEffect(() => {
-		bakeRef
-			.get()
-			.then((snapshot) => setBakeRec(snapshot.data()))
-			.then(() => setLoading(false));
+		bakeRef.onSnapshot(function (doc) {
+			if (doc && doc.exists) {
+				setBakeRec(doc.data());
+			}
+			setLoading(false);
+		});
+		// bakeRef
+		// 	.get()
+		// 	.then((snapshot) => setBakeRec(snapshot.data()))
+		// 	.then(() => setLoading(false));
 	}, []);
 
 	const handleClose = () => setShowDetails(false);
@@ -28,7 +34,7 @@ export default function ProductListingDisplay(props) {
 			.delete()
 			.then(() => {
 				setShowDetails(false);
-				alert("Product listing successfully deleted!");
+				alert("Product listing successfully deleted");
 			})
 			.catch((error) => {
 				alert("Unsuccessful. Product listing not deleted. " + error);

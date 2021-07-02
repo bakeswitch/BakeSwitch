@@ -5,6 +5,7 @@ import UpdateString from "../UpdateInfo/UpdateString";
 
 function UpdateStorePref(props) {
 	const offersThis = props.offersThis;
+	const hasDetails = props.hasDetails;
 	const field = props.field;
 	const docRef = props.docRef;
 	const [loading, setLoading] = useState(false);
@@ -17,8 +18,8 @@ function UpdateStorePref(props) {
 		setMsg("");
 		try {
 			docRef.update({ [field]: !offersThis }).then(() => {
-				let message = "Successfully updated.";
-				if (!offersThis) {
+				let message = "Successfully updated option";
+				if (offersThis == true && !hasDetails) {
 					message = message + " Please add the details below.";
 				}
 				setMsg(message);
@@ -53,6 +54,7 @@ export default function SellerPref(props) {
 			{isOwnStore && (
 				<UpdateStorePref
 					offersThis={sellerDoc.deliveryBool}
+					hasDetails={sellerDoc?.deliveryDetails}
 					field="deliveryBool"
 					docRef={storeRef}
 				/>
@@ -72,6 +74,7 @@ export default function SellerPref(props) {
 			{isOwnStore && (
 				<UpdateStorePref
 					offersThis={sellerDoc.selfCollectionBool}
+					hasDetails={sellerDoc?.selfCollectionDetails}
 					field="selfCollectionBool"
 					docRef={storeRef}
 				/>

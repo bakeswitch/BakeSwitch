@@ -20,7 +20,7 @@ export default function UpdateDate(props) {
 		try {
 			docRef
 				.update({ [startField]: newStart.current.value, [endField]: newEnd.current.value })
-				.then(() => alert("Successfully updated. Refresh the page to view changes."));
+				.then(() => alert("Successfully updated."));
 		} catch (err) {
 			alert("" + err);
 		} finally {

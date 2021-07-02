@@ -19,11 +19,19 @@ export default function SellerProfile(props) {
 	const [key, setKey] = useState("about");
 
 	useEffect(() => {
-		// Retrieve data from document as a document snapshot. Store in storeRec variable.
-		storeRef
-			.get()
-			.then((snapshot) => setStoreRec(snapshot.data()))
-			.then(() => setLoading(false));
+		// onSnapshot provides real time updates
+		storeRef.onSnapshot(function (doc) {
+			if (doc && doc.exists) {
+				setStoreRec(doc.data());
+			}
+			setLoading(false);
+		});
+
+		// // Retrieve data from document as a document snapshot. Store in storeRec variable.
+		// storeRef
+		// 	.get()
+		// 	.then((snapshot) => setStoreRec(snapshot.data()))
+		// 	.then(() => setLoading(false));
 	}, []);
 
 	return (

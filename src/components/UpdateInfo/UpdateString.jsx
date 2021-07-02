@@ -22,9 +22,7 @@ export default function UpdateString(props) {
 		setLoading(true);
 		setUpdateItem(false);
 		try {
-			docRef
-				.update({ [field]: newVal.current.value })
-				.then(() => alert("Successfully updated. Refresh the page to view changes."));
+			docRef.update({ [field]: newVal.current.value }).then(() => alert("Successfully updated."));
 		} catch (err) {
 			alert("" + err);
 		} finally {
