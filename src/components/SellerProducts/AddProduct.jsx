@@ -15,7 +15,7 @@ export default function AddProduct(props) {
 	const pdtPromo = useRef();
 	const [tags, setTags] = useState([]);
 	const [pricing, setPricing] = useState({});
-	const [priceArr, setPriceArr] = useState([]);
+	// const [priceArr, setPriceArr] = useState([]);
 
 	const [loading, setLoading] = useState(false);
 	const [msg, setMsg] = useState("");
@@ -28,7 +28,7 @@ export default function AddProduct(props) {
 		setErr("");
 		setMsg("");
 		try {
-			const sortedPriceArr = priceArr.sort();
+			// const sortedPriceArr = priceArr.sort();
 			db.collection("bakes")
 				.add({
 					storeID: storeID,
@@ -42,7 +42,7 @@ export default function AddProduct(props) {
 					bakePhotoURL: photoURL.current.value,
 					bakeTags: tags,
 					bakePriceAndQty: pricing,
-					bakePriceArr: sortedPriceArr,
+					// bakePriceArr: sortedPriceArr,
 					itemPromo: pdtPromo.current.value,
 				})
 				.then(() => {
@@ -108,7 +108,7 @@ export default function AddProduct(props) {
 							</Form.Text>
 						</Form.Group>
 
-						<AddPricingInfo updateMap={setPricing} updateArr={setPriceArr} />
+						<AddPricingInfo updateMap={setPricing} />
 
 						<Form.Group className="mt-4" controlId="formPdtPromo">
 							<Form.Label>Promotions</Form.Label>

@@ -37,7 +37,7 @@ export default function SellerForm(props) {
 		const uid = currentUser.uid;
 		const userRef = db.collection("users").doc(uid);
 		const storeRef = await db.collection("stores").add({
-			userID: uid,
+			storeOwnerID: uid,
 		});
 		const storeID = storeRef.id;
 		db.collection("stores").doc(storeID).update(basicStoreInfo);

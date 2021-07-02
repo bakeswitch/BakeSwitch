@@ -4,7 +4,7 @@ import PricingOptionsDisplay from "./PricingOptionsDisplay";
 
 export default function AddPricingInfo(props) {
 	const [pricingObj, setPricingObj] = useState({});
-	const [priceArr, setPriceArr] = useState([]);
+	// const [priceArr, setPriceArr] = useState([]);
 	const [qty, setQty] = useState();
 	const [price, setPrice] = useState();
 
@@ -12,9 +12,9 @@ export default function AddPricingInfo(props) {
 		setPricingObj((prevObj) => {
 			return { ...prevObj, [price]: qty };
 		});
-		setPriceArr((prevArr) => {
-			return [...prevArr, price];
-		});
+		// setPriceArr((prevArr) => {
+		// 	return [...prevArr, price];
+		// });
 	}
 
 	function handleConfirm() {
@@ -23,7 +23,7 @@ export default function AddPricingInfo(props) {
 
 	useEffect(() => {
 		props.updateMap(pricingObj);
-		props.updateArr(priceArr);
+		// props.updateArr(priceArr);
 	}, [pricingObj]);
 
 	return (
