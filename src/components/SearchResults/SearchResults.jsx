@@ -87,6 +87,7 @@ function createColCard(bakeID) {
 	
 	return !isLoading && ( 
 		<DisplayBakeCard 
+			key = {"displayBakeCard_" + bakeID}
 			bakeID = {bakeID}
 			handleOnClick = {handleOnClick}
 			bakePhotoURL = {bakePhotoURL}
@@ -126,7 +127,9 @@ export default function SearchResults() {
                 <Col>bakedocarr length: {bakeDocArr.length}</Col>
                 <Col>{JSON.stringify(bakeArr)}</Col> */}
 
-				{searchResultsBakeIDArr.map((bakeID) => createColCard(bakeID))}
+				{searchResultsBakeIDArr.map((bakeID) =>
+					createColCard(bakeID)
+				)}
 			</Row>
 		)
 	);
