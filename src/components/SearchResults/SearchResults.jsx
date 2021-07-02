@@ -4,6 +4,7 @@ import styles from "./SearchResults.module.css";
 import { db } from "../../config/firebase";
 import { useHistory } from "react-router-dom"
 import DisplayBakeCard from "../DisplayBakeCard";
+import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 
 function ErrorCard() {
 	return (
@@ -13,21 +14,20 @@ function ErrorCard() {
 	);
 }
 
-//returns array of arrays [price, qty] which is sorted by price in ascending order
-export function orderPriceAndQtyArr(bakeData) {
-	// const [orderedPnQ, setOrderedPnQ] = useState({});
-	if (bakeData != null) {
-		const { bakePriceAndQty: unorderedPnQ } = bakeData;
-		const unorderedKeys = Object.keys(unorderedPnQ);
-		const orderedPnQArr = unorderedKeys
-			.sort(function(a, b){return a-b}) 			//sort keys in ascending order [1,2,3]
-			.map(price => [price, unorderedPnQ[price]]); //place them in nested array [1:q, 2:q, 3:q]
-		// alert(orderedPnQArr.toString());
-		return orderedPnQArr;
-	} else {
-		return alert("bakeData is empty");
-	}
-}
+// //RETURNS: array of arrays [price, qty], which is sorted by price in ascending order
+// export function orderPriceAndQtyArr(bakeData) {
+// 	// const [orderedPnQ, setOrderedPnQ] = useState({});
+// 	if (bakeData != null) {
+// 		const { bakePriceAndQty: unorderedPnQ } = bakeData;
+// 		const unorderedKeys = Object.keys(unorderedPnQ);
+// 		const orderedPnQArr = unorderedKeys
+// 			.sort((a, b) => a - b) 			//sort keys in ascending order [1,2,3]
+// 			.map(price => [price, unorderedPnQ[price]]); //place them in nested array [[p1,q1], [p2,q2], ...]
+// 		return orderedPnQArr;
+// 	} else {
+// 		return alert("bakeData is empty, price and qty cannot be ordered");
+// 	}
+// }
 
 function createColCard(bakeID) {
 	const [bakeData, setBakeData] = useState();
@@ -123,10 +123,12 @@ export default function SearchResults() {
 	return (
 		!isLoading && (
 			<Row xs={2} md={4} className="mb-4 mt-4">
-				{/* <Col>{JSON.stringify(bakeDetailsArr[0])}</Col>
+				{/* TEST OUPUT =>
+				<Col>{JSON.stringify(bakeDetailsArr[0])}</Col>
                 <Col>bakedocarr length: {bakeDocArr.length}</Col>
                 <Col>{JSON.stringify(bakeArr)}</Col> */}
 
+				{/* Resolve unique key ID error */}
 				{searchResultsBakeIDArr.map((bakeID) =>
 					createColCard(bakeID)
 				)}

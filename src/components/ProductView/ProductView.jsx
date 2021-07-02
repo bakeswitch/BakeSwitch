@@ -6,7 +6,7 @@ import { AiFillStar } from "react-icons/ai";
 import { FaHeart, FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import { db } from "../../config/firebase";
-import { orderPriceAndQtyArr } from "../SearchResults/SearchResults"; //REPOSITION HELPER FUNCTION AND MODIFY IMPORT LOC
+import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 
 function ErrorCard(errString) {
     return (
