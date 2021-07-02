@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import styles from "./SellerProfile.module.css";
-import UpdateString from "../UpdateInfo/UpdateString";
+import UpdateString from "../helperComponents/UpdateString";
 
 export default function SellerAbout(props) {
 	const sellerDoc = props.sellerDoc;

@@ -2,41 +2,37 @@ import React from "react";
 import styles from "./DisplayBakeCard.module.css";
 import { Row, Col, Card } from "react-bootstrap";
 
-// -- example call -- 
-// <DisplayBakeCard 
-    // 	bakeID = {bakeID}
-    // 	handleOnClick = {handleOnClick}
-    // 	bakePhotoURL = {bakePhotoURL}
-    // 	bakeName = {bakeName}
-    // 	bakeDesc = {bakeDesc}
-    // 	orderedPriceAndQtyArr = {orderedPriceAndQtyArr}
-    // 	storeID = {storeID}
-// />
 export default function DisplayBakeCard(props) {
+	const {
+		bakeID = "defaultBakeID",
+		handleOnClick = () => alert("defaultHandleOnClick"),
+		bakePhotoURL = "defaultURL",
+		bakeName = "defaultBakeName",
+		bakeDesc = "defaultBakeDescription",
+		orderedPriceAndQtyArr = [["defaultPrice", "defaultQty"]],
+		storeID = "defaultStoreID"
+	} = props;
+
 	return (
-	<Col>
-		<Card className={styles.card} onClick={props.handleOnClick}>
-			<Card.Img
-				className={styles.cardImg}
-				variant="top"
-				src={props.bakePhotoURL}
-			/>
-			<Card.Body className={styles.cardBody}>
-				<Card.Title className={styles.maxLines}>{props.bakeName}</Card.Title>
-				<Card.Text>
-					<p className={styles.maxLines}>
-						{props.bakeDesc}
-					</p>
-				</Card.Text>
-				<Card.Text className={styles.cardFooter}>
-					<p>
-						from S${props.orderedPriceAndQtyArr[0][0]} dollars onwards
+		<Col key={"col_" + bakeID}>
+			<Card key={"card_" + bakeID} className={styles.card} onClick={handleOnClick}>
+				<Card.Img key={"img_" + bakeID}
+					className={styles.cardImg}
+					variant="top"
+					src={bakePhotoURL}
+				/>
+				<Card.Body key={"body_" + bakeID} className={styles.cardBody}>
+					<Card.Title key={"title_" + bakeID} className={styles.max2Lines}>{bakeName}</Card.Title>
+					<Card.Text key={"desc_" + bakeID} className={styles.max3Lines}>
+							{bakeDesc}
+					</Card.Text>
+					<Card.Text key={"footer_" + bakeID} className={styles.cardFooter}>
+						from S${orderedPriceAndQtyArr[0][0]} dollars onwards
 						<br />
-						by <Card.Link>{props.storeID}</Card.Link>
-					</p>
-				</Card.Text>
-			</Card.Body>
-		</Card>
-	</Col>
+						by <Card.Link key={"store_" + bakeID}>{storeID}</Card.Link>
+					</Card.Text>
+				</Card.Body>
+			</Card>
+		</Col>
 	)
 }

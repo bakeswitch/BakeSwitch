@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import styles from "./SellerProfile.module.css";
-import UpdateString from "../UpdateInfo/UpdateString";
+import UpdateString from "../helperComponents/UpdateString";
 
 function UpdateStorePref(props) {
 	const offersThis = props.offersThis;
