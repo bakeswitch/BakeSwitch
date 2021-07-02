@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import styles from "./SellerProfile.module.css";
-import UpdateString from "../UpdateInfo/UpdateString";
-import UpdateDate from "../UpdateInfo/UpdateDate";
+import UpdateString from "../helperComponents/UpdateString";
+import UpdateDate from "../helperComponents/UpdateDate";
 import { CreateBakeSale, DeleteBakeSale } from "./CreateDeleteBakeSale";
 
 export default function SellerBakeSale(props) {

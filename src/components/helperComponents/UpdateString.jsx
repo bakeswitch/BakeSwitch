@@ -3,7 +3,7 @@ import { Form, InputGroup, Button } from "react-bootstrap";
 import EditIcon from "@material-ui/icons/Edit";
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
-import styles from "./UpdateInfo.module.css";
+import styles from "./helperComponents.module.css";
 
 // Takes in 3 compulsory props (item, field, docRef), 1 optional prop (isTextArea - for store description)
 // This is only to be used for fields that are non-mandatory.

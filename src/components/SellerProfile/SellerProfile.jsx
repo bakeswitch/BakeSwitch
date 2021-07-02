@@ -5,7 +5,7 @@ import SellerAbout from "./SellerAbout";
 import SellerBakeSale from "./SellerBakeSale";
 import SellerContact from "./SellerContact";
 import SellerPref from "./SellerPref";
-import UpdateString from "../UpdateInfo/UpdateString";
+import UpdateString from "../helperComponents/UpdateString";
 import styles from "./SellerProfile.module.css";
 
 export default function SellerProfile(props) {

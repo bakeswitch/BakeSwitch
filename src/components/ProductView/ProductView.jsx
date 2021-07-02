@@ -2,35 +2,37 @@ import React, { useState, useEffect } from "react";
 import styles from "./ProductView.module.css";
 import { FormControl, Badge, InputGroup, ButtonGroup, ToggleButton, Card, Nav, Row , Col, Button, Dropdown, DropdownButton } from "react-bootstrap"
 import ProductNavPages from "./ProductNavPages";
-import { AiFillStar } from "react-icons/ai";
+
 import { FaHeart, FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import { db } from "../../config/firebase";
 import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
+import ErrorCard from "../helperComponents/ErrorCard";
+import RatingOutOf5 from "../helperComponents/RatingOutOf5.jsx";
 
-function ErrorCard(errString) {
-    return (
-        <Card>
-            <h3> Sorry, we are unable to find the page you are looking for </h3>
-            <p> Error: {errString} </p>
-        </Card>
-    )
-}
+// function ErrorCard(errString) {
+//     return (
+//         <Card>
+//             <Card.Title> Sorry, we are unable to find the page you are looking for </Card.Title>
+//             <Card.Text> Error: {errString} </Card.Text>
+//         </Card>
+//     )
+// }
 
-function generateRating(num) {
-    const numOfFilledStarsArr = Array.from(Array(num).keys());
-    const numOfEmptyStarsArr = Array.from(Array(5 - num).keys());
-    if (![0,1,2,3,4,5].includes(num)) {
-        return alert("num not btw 0 and 5");
-    } else {
-        return (
-            <>  
-                {numOfFilledStarsArr.map(x => <AiFillStar className="text-warning mr-1" />)}
-                {numOfEmptyStarsArr.map(x => <AiFillStar className="text-secondary mr-1" />)}
-            </>
-        )                                 
-    }    
-}
+// function RatingOutOf5(num) {
+//     const numOfFilledStarsArr = Array.from(Array(num).keys());
+//     const numOfEmptyStarsArr = Array.from(Array(5 - num).keys());
+//     if (![0,1,2,3,4,5].includes(num)) {
+//         return alert("num not btw 0 and 5");
+//     } else {
+//         return (
+//             <>  
+//                 {numOfFilledStarsArr.map(x => <AiFillStar className="text-warning mr-1" />)}
+//                 {numOfEmptyStarsArr.map(x => <AiFillStar className="text-secondary mr-1" />)}
+//             </>
+//         )                                 
+//     }    
+// }
 
 
 export default function ProductView(props) {
@@ -122,7 +124,7 @@ export default function ProductView(props) {
                         {bakeName} <span className="badge bg-success mr-2">new</span>
                     </h4>
                     <div className="mb-3">
-                        {generateRating(4)}|{" "}
+                        {RatingOutOf5(4)}|{" "}
                         <span className="text-muted small">
                             42 ratings and 4 reviews
                         </span>

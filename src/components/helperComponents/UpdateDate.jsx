@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Form, InputGroup, Button } from "react-bootstrap";
-import styles from "./UpdateInfo.module.css";
+import styles from "./helperComponents.module.css";
 
 // Takes in 3 compulsory props (start, end, docRef)
 // Both start and end dates are compulsory fields to fill in

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Profile.module.css";
 import { Image, Card, Button, Table } from "react-bootstrap";
-import UpdateString from "../UpdateInfo/UpdateString";
+import UpdateString from "../helperComponents/UpdateString";
 
 function BuyerProfile(props) {
 	const userRef = props.userRef;

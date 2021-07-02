@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav } from "react-bootstrap";
+import { Nav, Card, Badge, Button } from "react-bootstrap";
 import { BiStore, BiReceipt } from "react-icons/bi";
 import { ImStatsDots } from "react-icons/im";
 import { GiCookie } from "react-icons/gi"
@@ -14,7 +14,10 @@ const SideBar = props => {
 
     return (
         <>
-            <h2 className="mt-3 mb-3"><i><BiStore /></i> My Store</h2> 
+            <h2 className="mt-3 mb-3 ms-2 justify-content-center">
+                <BiStore size={30} color="black"/> My Store
+            </h2> 
+            {/* <hr className="p-1 bg-dark"/> */}
             <Nav className="col-md-12 d-none d-md-block bg-light sideBar"
             activeKey="/home"
             onSelect={selectedKey => {
