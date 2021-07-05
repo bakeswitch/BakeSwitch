@@ -8,8 +8,8 @@ export default function Temporary() {
         <div>
             <h1>temp page for running js code</h1>
             <ButtonGroup >
-                <Button className="me-2" onClick={() => setupBakeDoc()}>Update BakeDoc</Button>
-                <Button className="me-2 sucess" onClick={() => setupStoreDoc()}>Update StoreDoc</Button>
+                <Button variant="primary" className="me-2" onClick={() => setupBakeDoc()}>Update BakeDoc</Button>
+                <Button variant="secondary" className="me-2 sucess" onClick={() => setupStoreDoc()}>Update StoreDoc</Button>
             </ButtonGroup>
         </div>
     )
