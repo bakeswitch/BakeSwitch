@@ -1,3 +1,29 @@
+.card {
+	text-align: left;
+}
+
+@media (min-width: 768px) {
+	.card {
+		height: 28rem;
+	}
+}
+
+.max2Lines {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2; /* number of lines to show */
+	-webkit-box-orient: vertical;
+}
+
+.max3Lines {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /* number of lines to show */
+	-webkit-box-orient: vertical;
+}
+
 .delConfButton {
 	margin: 0.75rem 1.5rem 2rem;
 }

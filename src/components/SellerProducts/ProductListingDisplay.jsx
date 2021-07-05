@@ -46,11 +46,11 @@ export default function ProductListingDisplay(props) {
 	return (
 		!loading && (
 			<div className="mt-2">
-				<Card>
+				<Card className={styles.card}>
 					<Card.Img variant="top" src={bakeRec.bakePhotoURL} />
 					<Card.Body>
-						<Card.Title>{bakeRec.bakeName}</Card.Title>
-						<Card.Text>{bakeRec.bakeDesc}</Card.Text>
+						<Card.Title className={styles.max2Lines}>{bakeRec.bakeName}</Card.Title>
+						<Card.Text className={styles.max3Lines}>{bakeRec.bakeDesc}</Card.Text>
 						<Button variant="primary" size="sm" onClick={() => setShowDetails(true)}>
 							View more details
 						</Button>
