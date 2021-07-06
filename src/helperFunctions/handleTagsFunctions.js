@@ -1,0 +1,16 @@
+export const globalTagList = [
+    "Assortment",
+    "Banana",
+	"Berry",
+	"Brownie",
+	"Citrus",
+	"Coffee",
+	"Cheese",
+	"Cookie",
+    "Chocolate",
+    "Cupcake",
+	"Cake",
+	"Pastry",
+    "Strawberry",
+	"Tart",
+];

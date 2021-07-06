@@ -10,31 +10,6 @@ import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 import ErrorCard from "../helperComponents/ErrorCard";
 import RatingOutOf5 from "../helperComponents/RatingOutOf5.jsx";
 
-// function ErrorCard(errString) {
-//     return (
-//         <Card>
-//             <Card.Title> Sorry, we are unable to find the page you are looking for </Card.Title>
-//             <Card.Text> Error: {errString} </Card.Text>
-//         </Card>
-//     )
-// }
-
-// function RatingOutOf5(num) {
-//     const numOfFilledStarsArr = Array.from(Array(num).keys());
-//     const numOfEmptyStarsArr = Array.from(Array(5 - num).keys());
-//     if (![0,1,2,3,4,5].includes(num)) {
-//         return alert("num not btw 0 and 5");
-//     } else {
-//         return (
-//             <>  
-//                 {numOfFilledStarsArr.map(x => <AiFillStar className="text-warning mr-1" />)}
-//                 {numOfEmptyStarsArr.map(x => <AiFillStar className="text-secondary mr-1" />)}
-//             </>
-//         )                                 
-//     }    
-// }
-
-
 export default function ProductView(props) {
     const bakeID = props.bakeID;
     const bakeRef = db.collection("bakes").doc(bakeID);

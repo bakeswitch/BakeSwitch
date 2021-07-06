@@ -9,7 +9,7 @@ export const bakeDocObj_1 = {
         13: "Box of 15",
         9.5: "Box of 5"
     },
-    bakeTags        : ["cupcake", "assortment", "chocolate"],
+    bakeTags        : ["Cupcake", "Assortment", "Chocolate"],
     itemPromo       : "",
     //DENORM DATA
     numOfReviews    : 2,
@@ -31,12 +31,12 @@ export const bakeDocObj_2 = {
         9.5: "small box of 4 cupcakes",
         25: "large box of 12 cupcakes",
     },
-    bakeTags: ["strawberry", "chocolate", "banana"],
+    bakeTags: ["Strawberry", "Chocolate", "Banana"],
     itemPromo: "Buy 3 get 1 free",
     //DENORM DATA
     numOfReviews    : 3,
     numOfStars      : 11,
-    storeID: "store_00021",
+    storeID: "store_0001",
     storeName: "TomTakes",
 };
 
@@ -48,9 +48,9 @@ export const bakeDocObj_3 = {
     bakeAllergens   : "Ginger, Almond",
     bakePriceAndQty : {
         40: "1 Whole Cake",
-        1: "1 Slice of Cake",
+        7: "1 Slice of Cake",
     },
-    bakeTags        : ["cake", "strawberry", "sweet"],
+    bakeTags        : ["Cake", "Strawberry", "Sweet"],
     itemPromo       : "nil",
     //DENORM DATA
     numOfReviews    : 3,
