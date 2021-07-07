@@ -11,7 +11,6 @@ export default function BakersPage() {
 	const [searchWord, setSearchWord] = useState("");
 	const [prevSearchWord, setPrevSearchWord] = useState("");
 	const [searchedStoreIDArr, setSearchedStoreIDArr] = useState([]);
-	const [searchResults, setSearchResults] = useState();
 
 	// Clears searchedStoreID array whenever user types in the search bar
 	// Goes back to the default results display showing all bakers when user edits the search
@@ -38,15 +37,6 @@ export default function BakersPage() {
 		}
 	}
 
-	useEffect(() =>
-		setSearchResults(
-			searchedStoreIDArr.map((storeID) => (
-				<BakerCard storeID={storeID} key={storeID + "_searched"} />
-			)),
-			[searchedStoreIDArr]
-		)
-	);
-
 	useEffect(() => {
 		db.collection("stores")
 			.where("storeName", "!=", false)
@@ -67,7 +57,10 @@ export default function BakersPage() {
 					</InputGroup>
 				</Form.Group>
 				{showDefault && storeIDArr.map((storeID) => <BakerCard storeID={storeID} key={storeID} />)}
-				{!showDefault && searchResults}
+				{!showDefault &&
+					searchedStoreIDArr.map((storeID) => (
+						<BakerCard storeID={storeID} key={storeID + "_searched"} />
+					))}
 			</div>
 		)
 	);
