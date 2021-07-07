@@ -56,7 +56,7 @@ export default function SellerProfile(props) {
 				</div>
 
 				<Card.Body>
-					<Tabs activeKey={key} onSelect={(k) => setKey(k)}>
+					<Tabs activeKey={key} onSelect={(k) => setKey(k)} transition={false}>
 						<Tab eventKey="about" title="About">
 							<SellerAbout sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
 						</Tab>
