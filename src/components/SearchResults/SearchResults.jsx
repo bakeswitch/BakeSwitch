@@ -11,6 +11,7 @@ function createColCard(bakeID) {
 	const [bakeData, setBakeData] = useState();
 	const [orderedPriceAndQtyArr, setOrderedPriceAndQtyArr] = useState([["default_price","default_qty"]]);
 	const [isLoading, setIsLoading] = useState(false);
+
 	const bakeRef = db.collection("bakes").doc(bakeID);
 	const history = useHistory();
 	
@@ -47,6 +48,7 @@ function createColCard(bakeID) {
 		} finally {
 			setIsLoading(false);
 		}
+		//use return clearnup function instead?
 	},[]);
 	
 	if (!bakeData) { 
@@ -77,26 +79,56 @@ function createColCard(bakeID) {
 	);
 }
 
-export default function SearchResults() {
-	const [bakeIDArr, setBakeIDArr] = useState([]); //array of bakeID strings
+export default function SearchResults(props) {
+	const [bakeIDArr, setBakeIDArr] = useState(["bake_0001"]); //array of bakeID strings
+	// const [tempIDArr, setTempIDArr] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const bakeRef = db.collection("bakes");
+	const { searchTag } = props; 	//is this code killing it cos its a constant not a variable
 
 	function fillBakeIDArr() {
-		setBakeIDArr([]);
+		setBakeIDArr([]); //async - reset bakeIDArr
 		setIsLoading(true);
 
-		//Search by quering and get the list of bake_id
-		// const bakeCollection = db.collection("bakes").where("store");
+		//Search by querying and get the list of bake_id
+		alert("searchTag: " + searchTag); //TESTLINE runs here
+		const queryResults = bakeRef.where("bakeTags", "array-contains", searchTag);
+		alert('run here');
+		queryResults.get()    
+			.then((querySnapshot) => {
+				//alert("smth");
+				querySnapshot.forEach((doc) => {
+					// doc.data() is never undefined for query doc snapshots
+					// alert("docID: " + doc.id);
+					
+					alert("runs here"); //DOES NOT RUN HERE
+					
+					setBakeIDArr((prevArr) => {
+						alert([...prevArr, doc.id]);
+						return [...prevArr, doc.id];
+					});
+				});
+			})
+			.catch((error) => {
+				alert("Error filtering bakeID from bakeTag: " + error);
+			})
+			.finally(() => setIsLoading(false));
 	}
 
-	const itemDetails = {
-		title: "Chocolate Cookies",
-		price: "$12",
-		sellerName: "seller123",
-	};
+	useEffect(() => {
+		if (searchTag != "") {
+			alert("searchtagged changed");
+			fillBakeIDArr();
+		}
+							//Unchecked runtime.lastError: The message port closed before a response was received.
+		return (() => {
+			setBakeIDArr([]); //solves the error: cant set up react hook on unmounted component
+		})
+	}, [searchTag]);
+
 
 	//REPLACE W SEARCH RESULTS WHEN CODE IS READY
-	const searchResultsBakeIDArr = ["bake_0001", "bake_0002", "bake_0003"];
+	// const searchResultsBakeIDArr = ["bake_0001", "bake_0002", "bake_0003"];
 
 	return (
 		!isLoading && (
@@ -107,9 +139,11 @@ export default function SearchResults() {
                 <Col>{JSON.stringify(bakeArr)}</Col> */}
 
 				{/* Resolve unique key ID error */}
-				{searchResultsBakeIDArr.map((bakeID) =>
+				{bakeIDArr.map((bakeID) =>
 					createColCard(bakeID)
 				)}
+				<Col>searchTag:{searchTag}</Col>
+				<Col>bakeIDArr:{JSON.stringify(bakeIDArr)}</Col>
 			</Row>
 		)
 	);
