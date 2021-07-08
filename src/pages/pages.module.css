@@ -1,6 +1,6 @@
 .contentBox {
 	width: 75%;
-	margin:auto;	
+	margin: auto;
 }
 
 /* LogIn */
@@ -35,4 +35,16 @@
 
 .replyButtons {
 	margin: 1.5rem;
+}
+
+/* About page  */
+.questionBox {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	text-align: left;
+}
+
+.questionItem {
+	margin-top: 1rem;
 }

@@ -13,7 +13,7 @@ import SignUpSeller from "./SignUpSeller";
 import OrderCart from "./OrderCart";
 import ProfileSettings from "./ProfileSettings";
 // import Chats from "./Chats";
-import Favourited from "./Favourited";
+// import Favourited from "./Favourited";
 import ForgotPassword from "./ForgotPassword";
 import Store from "./Store";
 import Temporary from "../Temporary"; //delete when done testing
@@ -21,7 +21,7 @@ import Temporary from "../Temporary"; //delete when done testing
 function Webpages() {
 	return (
 		<Switch>
-			<Route exact path="/" component={Home} /> 
+			<Route exact path="/" component={Home} />
 			<Route exact path="/about" component={About} />
 			<Route exact path="/bakers" component={Bakers} />
 			<Route exact path="/bakes" component={Bakes} />
@@ -32,7 +32,7 @@ function Webpages() {
 			<PrivateRoute exact path="/order-cart" component={OrderCart} />
 			<PrivateRoute exact path="/profile-settings" component={ProfileSettings} />
 			{/* <PrivateRoute exact path="/chats" component={Chats} /> */}
-			<PrivateRoute exact path="/favourited" component={Favourited} />
+			{/* <PrivateRoute exact path="/favourited" component={Favourited} /> */}
 			<PrivateRoute path="/store" component={Store} />
 			<Route
 				exact
