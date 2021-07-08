@@ -3,11 +3,14 @@ import { Row, Col, Card } from "react-bootstrap";
 import styles from "./SearchResults.module.css";
 import { db } from "../../config/firebase";
 import { useHistory } from "react-router-dom"
-import DisplayBakeCard from "../DisplayBakeCard";
+// import DisplayBakeCard from "../DisplayBakeCard";
+import BakeCard from "../DisplayBakeCard";
 import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
+
 import ErrorCard from "../helperComponents/ErrorCard";
 
-function createColCard(bakeID) {
+export function DisplayBakeCard(bakeID) {
+	alert('runs here in dbc');
 	const [bakeData, setBakeData] = useState();
 	const [orderedPriceAndQtyArr, setOrderedPriceAndQtyArr] = useState([["default_price","default_qty"]]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -41,15 +44,14 @@ function createColCard(bakeID) {
 	}
 	
 	useEffect(() => {
-		try {
-			setIsLoading(true);
-			fillBakeData();
-			getRealTimeUpdates();
-		} finally {
+		setIsLoading(true);
+		fillBakeData();
+		getRealTimeUpdates();
+		return (() => {
+			setBakeData([]);
 			setIsLoading(false);
-		}
-		//use return clearnup function instead?
-	},[]);
+		})
+	},[bakeID]);
 	
 	if (!bakeData) { 
 		return ErrorCard("no bake data") 
@@ -66,7 +68,7 @@ function createColCard(bakeID) {
 	}
 	
 	return !isLoading && ( 
-		<DisplayBakeCard 
+		<BakeCard 
 			key = {"displayBakeCard_" + bakeID}
 			bakeID = {bakeID}
 			handleOnClick = {handleOnClick}
@@ -90,29 +92,28 @@ export default function SearchResults(props) {
 		setBakeIDArr([]); //async - reset bakeIDArr
 		setIsLoading(true);
 
-		//Search by querying and get the list of bake_id
-		alert("searchTag: " + searchTag); //TESTLINE runs here
+		// alert("searchTag: " + searchTag); //TESTLINE runs here
 		const queryResults = bakeRef.where("bakeTags", "array-contains", searchTag);
-		alert('run here');
-		queryResults.get()    
-			.then((querySnapshot) => {
-				//alert("smth");
-				querySnapshot.forEach((doc) => {
-					// doc.data() is never undefined for query doc snapshots
-					// alert("docID: " + doc.id);
+		// alert('run here'); //runs here
+		// queryResults.get()    
+		// 	.then((querySnapshot) => {
+		// 		//alert("smth");
+		// 		querySnapshot.forEach((doc) => {
+		// 			// doc.data() is never undefined for query doc snapshots
+		// 			// alert("docID: " + doc.id);
 					
-					alert("runs here"); //DOES NOT RUN HERE
+		// 			alert("runs here"); 
 					
-					setBakeIDArr((prevArr) => {
-						alert([...prevArr, doc.id]);
-						return [...prevArr, doc.id];
-					});
-				});
-			})
-			.catch((error) => {
-				alert("Error filtering bakeID from bakeTag: " + error);
-			})
-			.finally(() => setIsLoading(false));
+		// 			setBakeIDArr((prevArr) => {
+		// 				alert([...prevArr, doc.id]);
+		// 				return [...prevArr, doc.id];
+		// 			});
+		// 		});
+		// 	})
+		// 	.catch((error) => {
+		// 		alert("Error filtering bakeID from bakeTag: " + error);
+		// 	})
+		// 	.finally(() => setIsLoading(false));
 	}
 
 	useEffect(() => {
@@ -139,8 +140,11 @@ export default function SearchResults(props) {
                 <Col>{JSON.stringify(bakeArr)}</Col> */}
 
 				{/* Resolve unique key ID error */}
-				{bakeIDArr.map((bakeID) =>
-					createColCard(bakeID)
+				{alert(JSON.stringify(bakeIDArr))}
+				{bakeIDArr.map((bakeID) => 
+					<Col key={"col_" + bakeID}>
+						{DisplayBakeCard(bakeID)}
+					</Col>
 				)}
 				<Col>searchTag:{searchTag}</Col>
 				<Col>bakeIDArr:{JSON.stringify(bakeIDArr)}</Col>
