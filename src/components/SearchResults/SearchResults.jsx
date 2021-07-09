@@ -3,14 +3,13 @@ import { Row, Col, Card } from "react-bootstrap";
 import styles from "./SearchResults.module.css";
 import { db } from "../../config/firebase";
 import { useHistory } from "react-router-dom"
-// import DisplayBakeCard from "../DisplayBakeCard";
-import BakeCard from "../DisplayBakeCard";
+import BakeCard from "../BakeCard";
 import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 
 import ErrorCard from "../helperComponents/ErrorCard";
 
-export function DisplayBakeCard(bakeID) {
-	alert('runs here in dbc');
+export function displayBakeCard(bakeID) {
+	// alert('runs here in dbc');
 	const [bakeData, setBakeData] = useState();
 	const [orderedPriceAndQtyArr, setOrderedPriceAndQtyArr] = useState([["default_price","default_qty"]]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -44,14 +43,18 @@ export function DisplayBakeCard(bakeID) {
 	}
 	
 	useEffect(() => {
-		setIsLoading(true);
-		fillBakeData();
-		getRealTimeUpdates();
-		return (() => {
-			setBakeData([]);
+		try {
+			setIsLoading(true);
+			fillBakeData();
+			getRealTimeUpdates();
+		} finally {
 			setIsLoading(false);
-		})
-	},[bakeID]);
+		}
+		// return (() => {
+		// 	setBakeData([]);
+		// 	setIsLoading(false);
+		// })
+	},[]);
 	
 	if (!bakeData) { 
 		return ErrorCard("no bake data") 
@@ -89,31 +92,34 @@ export default function SearchResults(props) {
 	const { searchTag } = props; 	//is this code killing it cos its a constant not a variable
 
 	function fillBakeIDArr() {
-		setBakeIDArr([]); //async - reset bakeIDArr
-		setIsLoading(true);
+		setBakeIDArr([]); //async - reset bakeIDArr //THIS CODE IS BREAKING - causing rerender
+		// setIsLoading(true);
 
 		// alert("searchTag: " + searchTag); //TESTLINE runs here
+		/*
 		const queryResults = bakeRef.where("bakeTags", "array-contains", searchTag);
-		// alert('run here'); //runs here
-		// queryResults.get()    
-		// 	.then((querySnapshot) => {
-		// 		//alert("smth");
-		// 		querySnapshot.forEach((doc) => {
-		// 			// doc.data() is never undefined for query doc snapshots
-		// 			// alert("docID: " + doc.id);
+		alert('run here'); //runs here
+		queryResults.get()    
+			.then((querySnapshot) => {
+				//alert("smth");
+				querySnapshot.forEach((doc) => {
+					// doc.data() is never undefined for query doc snapshots
+					// alert("docID: " + doc.id);
 					
-		// 			alert("runs here"); 
+					alert("runs here"); 
 					
-		// 			setBakeIDArr((prevArr) => {
-		// 				alert([...prevArr, doc.id]);
-		// 				return [...prevArr, doc.id];
-		// 			});
-		// 		});
-		// 	})
-		// 	.catch((error) => {
-		// 		alert("Error filtering bakeID from bakeTag: " + error);
-		// 	})
-		// 	.finally(() => setIsLoading(false));
+					setBakeIDArr((prevArr) => {
+						alert([...prevArr, doc.id]);
+						return [...prevArr, doc.id];
+					});
+				});
+			})
+			.catch((error) => {
+				alert("Error filtering bakeID from bakeTag: " + error);
+			})
+			.finally(() => setIsLoading(false));
+		*/
+		// setIsLoading(false);
 	}
 
 	useEffect(() => {
@@ -122,33 +128,38 @@ export default function SearchResults(props) {
 			fillBakeIDArr();
 		}
 							//Unchecked runtime.lastError: The message port closed before a response was received.
-		return (() => {
-			setBakeIDArr([]); //solves the error: cant set up react hook on unmounted component
-		})
+		// return (() => {
+		// 	setBakeIDArr([]); //solves the error: cant set up react hook on unmounted component
+		// })
 	}, [searchTag]);
 
 
 	//REPLACE W SEARCH RESULTS WHEN CODE IS READY
 	// const searchResultsBakeIDArr = ["bake_0001", "bake_0002", "bake_0003"];
 
-	return (
-		!isLoading && (
+	if (isLoading) {
+		return (
+			<Row  xs={2} md={4} className="mb-4 mt-4">
+				loading...
+			</Row>
+		);
+	} else {
+		return (
 			<Row xs={2} md={4} className="mb-4 mt-4">
 				{/* TEST OUPUT =>
 				<Col>{JSON.stringify(bakeDetailsArr[0])}</Col>
-                <Col>bakedocarr length: {bakeDocArr.length}</Col>
-                <Col>{JSON.stringify(bakeArr)}</Col> */}
+				<Col>bakedocarr length: {bakeDocArr.length}</Col>
+				<Col>{JSON.stringify(bakeArr)}</Col> */}
 
 				{/* Resolve unique key ID error */}
-				{alert(JSON.stringify(bakeIDArr))}
 				{bakeIDArr.map((bakeID) => 
 					<Col key={"col_" + bakeID}>
-						{DisplayBakeCard(bakeID)}
+						{displayBakeCard(bakeID)}
 					</Col>
 				)}
-				<Col>searchTag:{searchTag}</Col>
-				<Col>bakeIDArr:{JSON.stringify(bakeIDArr)}</Col>
+				{/* <Col>searchTag:{searchTag}</Col>
+				<Col>bakeIDArr:{JSON.stringify(bakeIDArr)}</Col> */}
 			</Row>
-		)
-	);
+		);
+	}
 }

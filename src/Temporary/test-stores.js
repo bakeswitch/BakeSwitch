@@ -45,3 +45,27 @@ export const storeDocObj_2 = {
     // storeReviews	        : SUBCOLLECTION,
     // storeBakes	        : SUBCOLLECTION,
 };
+
+export const storeDocObj_3 = {
+    storeName       : "codCakes",
+    storeDesc       : "fishy fishy business",
+    storeLogo       : "https://images.pexels.com/photos/2127969/pexels-photo-2127969.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    isAvailable	    : true,
+    availabilityStart       : "2021-01-01",
+    availabilityEnd         : "2021-12-25",
+    bakeSaleDesc            : "",
+    bakeSalePromo	        : "",
+    deliveryBool	        : true,
+    deliveryDetails         : "Choa Chu Kang",
+    selfCollectionBool	    : true,
+    selfCollectionDetails   :"Near Choa Chu Kang MRT",
+    email        	        : "fishybusiness@gmail.com",
+    phoneNum                : "",
+    teleHandle	            : "",
+    instaLink	            : "",
+    fbLink	                : "",
+    websiteLink	            : "",
+    storeOwnerID	        : "user_0001"
+    // storeReviews	        : SUBCOLLECTION,
+    // storeBakes	        : SUBCOLLECTION,
+};

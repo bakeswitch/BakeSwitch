@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { db } from "../config/firebase";
 import { bakeDocObj_1, bakeDocObj_2, bakeDocObj_3 } from "./test-bakes";
-import { storeDocObj_1, storeDocObj_2 } from "./test-stores";
+import { storeDocObj_1, storeDocObj_2, storeDocObj_3 } from "./test-stores";
 
 export function setupBakeDoc() {
 	//modify object and name before pressing button
@@ -15,8 +15,8 @@ export function setupBakeDoc() {
 
 export function setupStoreDoc() {
 	//modify object and name before pressing button
-	const storeRef = db.collection("stores").doc("store_0002"); //modify name
-	const storeDocObj = storeDocObj_2;							//modify obj
+	const storeRef = db.collection("stores").doc("store_0003"); //modify name
+	const storeDocObj = storeDocObj_3;							//modify obj
 	storeRef
 		.set(storeDocObj)
 		.then(() => alert("store successfully written to db"))
