@@ -55,3 +55,18 @@ export function setupStoreDoc() {
 		.then(() => alert("successfully written to db"))
 		.catch(() => alert("error writing to db"));
 }
+
+export function setupOrdersDoc() {
+	const ordersRef = db.collection("orders");
+	const orderDocObj = {
+		isApproved: 0,
+		userID: "Wq33g2sv1Qbkj3RvxARGS419oNC2",
+		userContact: { email: "bakeswitch@gmail.com", number: "87654321" },
+		storeID: "RBhzVRjDNZKMWOhUPPCm",
+		orderBody: "Chocolate cookie: 1 x (Box of 5), Strawberry tart: 3 x (Box of 10)",
+	};
+	ordersRef
+		.add(orderDocObj)
+		.then(() => alert("successfully written to db"))
+		.catch(() => alert("error writing to db"));
+}

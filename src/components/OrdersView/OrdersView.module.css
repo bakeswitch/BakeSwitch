@@ -1,0 +1,11 @@
+.tableDetails {
+	margin: 1.75rem auto;
+}
+
+td {
+	width: 50%;
+}
+
+.ordersNum {
+	width: 15%;
+}

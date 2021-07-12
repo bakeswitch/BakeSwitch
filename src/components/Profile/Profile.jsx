@@ -3,7 +3,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../config/firebase";
 import { Button } from "react-bootstrap";
 import BuyerProfile from "./BuyerProfile";
-import BuyerOrders from "./BuyerOrders";
 import DeleteAccount from "./DeleteAccount";
 import styles from "./Profile.module.css";
 
@@ -31,7 +30,6 @@ export default function Profile() {
 		!loading && (
 			<>
 				<BuyerProfile userRef={userRef} userRec={userRec} />
-				<BuyerOrders />
 				{!userRec.isSeller && (
 					<Button
 						href="/sign-up-seller"
