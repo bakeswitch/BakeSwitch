@@ -14,8 +14,13 @@ export function displayBakeCard(bakeID) {
 	const [orderedPriceAndQtyArr, setOrderedPriceAndQtyArr] = useState([["default_price","default_qty"]]);
 	const [isLoading, setIsLoading] = useState(false);
 
+	if (bakeID == "") {
+		return "Don't load";
+	}
+
 	const bakeRef = db.collection("bakes").doc(bakeID);
 	const history = useHistory();
+
 	
 	function fillBakeData() {
 		bakeRef.get()
@@ -85,14 +90,14 @@ export function displayBakeCard(bakeID) {
 }
 
 export default function SearchResults(props) {
-	const [bakeIDArr, setBakeIDArr] = useState(["bake_0001"]); //array of bakeID strings
+	const [bakeIDArr, setBakeIDArr] = useState(["bake_0002"]); //array of bakeID strings
 	// const [tempIDArr, setTempIDArr] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const bakeRef = db.collection("bakes");
 	const { searchTag } = props; 	//is this code killing it cos its a constant not a variable
 
 	function fillBakeIDArr() {
-		setBakeIDArr([]); //async - reset bakeIDArr //THIS CODE IS BREAKING - causing rerender
+		setBakeIDArr(['bake_0001','bake_0002']); //async - reset bakeIDArr //THIS CODE IS BREAKING - causing rerender
 		// setIsLoading(true);
 
 		// alert("searchTag: " + searchTag); //TESTLINE runs here
@@ -153,7 +158,9 @@ export default function SearchResults(props) {
 
 				{/* Resolve unique key ID error */}
 				{bakeIDArr.map((bakeID) => 
-					<Col key={"col_" + bakeID}>
+					<Col 
+						// display={bakeID? 'none': 'block'} 
+						key={"col_" + bakeID}>
 						{displayBakeCard(bakeID)}
 					</Col>
 				)}
