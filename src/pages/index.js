@@ -44,7 +44,7 @@ function Webpages() {
 				path="/bake-product/:id"
 				render={({ match }) => <BakeProduct bakeID={match.params.id} />}
 			/>
-			{/* delete when done testing */}
+			{/* Use to add and maintain firestore documents easily*/}
 			<PrivateRoute path="/temporary" component={Temporary} />
 		</Switch>
 	);

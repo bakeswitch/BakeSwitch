@@ -9,7 +9,7 @@ import Information from "./StoreInformation";
 function StorePages(props) {
 	return (
 		<Switch>
-			<Route path="/store/dashboard" component={Dashboard} />
+			<Route exact path="/store/dashboard" component={Dashboard} />
 			<Route exact path="/store/information" component={Information} />
 			<Route exact path="/store/orders" component={Orders} />
 			<Route exact path="/store/products" component={Products} />

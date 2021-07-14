@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Input, MenuItem, Select, Chip } from "@material-ui/core";
 import { Form } from "react-bootstrap";
 import { makeStyles } from "@material-ui/core/styles";
+import { globalTagList } from "../../helperFunctions/handleTagsFunctions";
 
 const useStyles = makeStyles(() => ({
 	chips: {
@@ -13,18 +14,7 @@ const useStyles = makeStyles(() => ({
 	},
 }));
 
-const categories = [
-	"Cookie",
-	"Cake",
-	"Brownie",
-	"Pastry",
-	"Tart",
-	"Chocolate",
-	"Berry",
-	"Citrus",
-	"Coffee",
-	"Cheese",
-];
+const categories = globalTagList;
 
 export default function AddTags(props) {
 	const classes = useStyles();

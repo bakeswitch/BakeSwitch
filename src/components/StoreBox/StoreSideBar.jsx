@@ -19,7 +19,7 @@ const SideBar = props => {
             </h2> 
             {/* <hr className="p-1 bg-dark"/> */}
             <Nav className="col-md-12 d-none d-md-block bg-light sideBar"
-            activeKey="/home"
+            activeKey="/home" //uncessary prop, delete?
             onSelect={selectedKey => {
                 // alert(`selected ${selectedKey}`);
                 history.push(`/store/${selectedKey}`);

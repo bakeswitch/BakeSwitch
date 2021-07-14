@@ -3,38 +3,25 @@ import { Row, Col, Card } from "react-bootstrap";
 import styles from "./SearchResults.module.css";
 import { db } from "../../config/firebase";
 import { useHistory } from "react-router-dom"
-import DisplayBakeCard from "../DisplayBakeCard";
+import BakeCard from "../BakeCard";
 import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 
-function ErrorCard() {
-	return (
-		<Card>
-			<p>Error loading bakeCard, bakeObj undefined</p>
-		</Card>
-	);
-}
+import ErrorCard from "../helperComponents/ErrorCard";
 
-// //RETURNS: array of arrays [price, qty], which is sorted by price in ascending order
-// export function orderPriceAndQtyArr(bakeData) {
-// 	// const [orderedPnQ, setOrderedPnQ] = useState({});
-// 	if (bakeData != null) {
-// 		const { bakePriceAndQty: unorderedPnQ } = bakeData;
-// 		const unorderedKeys = Object.keys(unorderedPnQ);
-// 		const orderedPnQArr = unorderedKeys
-// 			.sort((a, b) => a - b) 			//sort keys in ascending order [1,2,3]
-// 			.map(price => [price, unorderedPnQ[price]]); //place them in nested array [[p1,q1], [p2,q2], ...]
-// 		return orderedPnQArr;
-// 	} else {
-// 		return alert("bakeData is empty, price and qty cannot be ordered");
-// 	}
-// }
-
-function createColCard(bakeID) {
+export function DisplayBakeCard(props) {
+	const bakeID = props.bakeID;
+		// alert('runs here in dbc');
 	const [bakeData, setBakeData] = useState();
 	const [orderedPriceAndQtyArr, setOrderedPriceAndQtyArr] = useState([["default_price","default_qty"]]);
 	const [isLoading, setIsLoading] = useState(false);
+
+	if (bakeID == "") {
+		return "Don't load";
+	}
+
 	const bakeRef = db.collection("bakes").doc(bakeID);
 	const history = useHistory();
+
 	
 	function fillBakeData() {
 		bakeRef.get()
@@ -69,10 +56,14 @@ function createColCard(bakeID) {
 		} finally {
 			setIsLoading(false);
 		}
+		// return (() => {
+		// 	setBakeData([]);
+		// 	setIsLoading(false);
+		// })
 	},[]);
 	
 	if (!bakeData) { 
-		return ErrorCard() 
+		return ErrorCard("no bake data") 
 	}
 	
 	//pass in default values in case can't read fields
@@ -86,7 +77,7 @@ function createColCard(bakeID) {
 	}
 	
 	return !isLoading && ( 
-		<DisplayBakeCard 
+		<BakeCard 
 			key = {"displayBakeCard_" + bakeID}
 			bakeID = {bakeID}
 			handleOnClick = {handleOnClick}
@@ -99,40 +90,78 @@ function createColCard(bakeID) {
 	);
 }
 
-export default function SearchResults() {
-	const [bakeIDArr, setBakeIDArr] = useState([]); //array of bakeID strings
+export default function SearchResults(props) {
+	const [bakeIDArr, setBakeIDArr] = useState(["bake_0002"]); //array of bakeID strings
+	// const [tempIDArr, setTempIDArr] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const bakeRef = db.collection("bakes");
+	const { searchTag } = props; 	//is this code killing it cos its a constant not a variable
 
 	function fillBakeIDArr() {
-		setBakeIDArr([]);
+		// setBakeIDArr(['bake_0001','bake_0002']); //async - reset bakeIDArr //THIS CODE IS BREAKING - causing rerender
 		setIsLoading(true);
 
-		//Search by quering and get the list of bake_id
-		// const bakeCollection = db.collection("bakes").where("store");
+		// alert("searchTag: " + searchTag); //TESTLINE runs here
+		
+		const queryResults = bakeRef.where("bakeTags", "array-contains", searchTag);
+		queryResults.get()    
+			.then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					// doc.data() is never undefined for query doc snapshots
+					setBakeIDArr((prevArr) => {
+						return [...prevArr, doc.id];
+					});
+				});
+			})
+			.catch((error) => {
+				alert("Error filtering bakeID from bakeTag: " + error);
+			})
+			.finally(() => setIsLoading(false));
+		
+		setIsLoading(false);
 	}
 
-	const itemDetails = {
-		title: "Chocolate Cookies",
-		price: "$12",
-		sellerName: "seller123",
-	};
+	useEffect(() => {
+		if (searchTag != "") {
+			fillBakeIDArr();
+		}
+							//Unchecked runtime.lastError: The message port closed before a response was received.
+		return (() => {
+			setBakeIDArr([]); //solves the error: cant set up react hook on unmounted component
+		})
+	}, [searchTag]);
+
 
 	//REPLACE W SEARCH RESULTS WHEN CODE IS READY
-	const searchResultsBakeIDArr = ["bake_1234", "bake_4213", "bake_2222"];
+	// const searchResultsBakeIDArr = ["bake_0001", "bake_0002", "bake_0003"];
 
-	return (
-		!isLoading && (
+	if (isLoading) {
+		return (
+			<Row  xs={2} md={4} className="mb-4 mt-4">
+				loading...
+			</Row>
+		);
+	} else {
+		return (
 			<Row xs={2} md={4} className="mb-4 mt-4">
 				{/* TEST OUPUT =>
 				<Col>{JSON.stringify(bakeDetailsArr[0])}</Col>
-                <Col>bakedocarr length: {bakeDocArr.length}</Col>
-                <Col>{JSON.stringify(bakeArr)}</Col> */}
+				<Col>bakedocarr length: {bakeDocArr.length}</Col>
+				<Col>{JSON.stringify(bakeArr)}</Col> */}
 
 				{/* Resolve unique key ID error */}
-				{searchResultsBakeIDArr.map((bakeID) =>
-					createColCard(bakeID)
+				{bakeIDArr.map((bakeID) => 
+					<Col 
+						// display={bakeID? 'none': 'block'} 
+						key={"col_" + bakeID}>
+						<DisplayBakeCard
+							bakeID = {bakeID}
+						/>
+					</Col>
 				)}
+				{/* <Col>searchTag:{searchTag}</Col>
+				<Col>bakeIDArr:{JSON.stringify(bakeIDArr)}</Col> */}
 			</Row>
-		)
-	);
+		);
+	}
 }

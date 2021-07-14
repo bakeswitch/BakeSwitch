@@ -1,18 +1,34 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./SearchBox.module.css";
 import { Form, InputGroup, Row , Col, Button } from "react-bootstrap"
+import { globalTagList } from "../../helperFunctions/handleTagsFunctions";
 
-export default function SearchBox() {
+export default function SearchBox(props) {
+    const [tag, setTag] = useState("");
     const searchRef = useRef();
+    const { setSearchTag } = props;
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (tag != "") {
+            setSearchTag(tag);
+        }
+    }
 
     return (
-        <Form className={styles.form}>
+        <Form className={styles.form} onSubmit={handleSubmit}>
             <Row className="mb-4">
                 <Form.Group as={Col} md="6" controlId="formSearchBar">
                     <Form.Label className="d-flex align-items-left">search keywords / #tags</Form.Label>
                     <InputGroup>
                         <Form.Control type="text" ref={searchRef} placeholder="search" />
-                        <Button onClick={() => alert("update" + searchRef.current.value)}>Search</Button>
+                        <Button 
+                            type="submit" 
+                            // onClick={() => }
+                            // searchRef.current.value
+                        >
+                            Search
+                        </Button>
                     </InputGroup>
                 </Form.Group>
 
@@ -30,11 +46,16 @@ export default function SearchBox() {
             <Row className="mb-4">
                 <Form.Group as={Col} controlId="formBakeCategory">
                     <Form.Label className="d-flex align-items-left">bake category</Form.Label>
-                    <Form.Control as="select" placeholder="-">
-                        <option>Choose...</option>
-                        <option>cookie</option>
-                        <option>brownie</option>
-                        <option>cake</option>
+                    <Form.Control 
+                        as="select" 
+                        placeholder="Choose tag" 
+                        onChange = {e => setTag(e.target.value)}
+                        // onChange={e => setSearchTag(e.target.value)}
+                    > 
+                            <option value="">-select tag-</option>
+                            { globalTagList.map(tag => (
+                                <option value={tag}>{tag}</option>
+                            ))}
                     </Form.Control>
                 </Form.Group>
 
