@@ -10,6 +10,7 @@ export const globalTagList = [
     "chocolate",
     "cupcake",
 	"cake",
+	"hazelnut",
 	"pastry",
     "strawberry",
 	"tart",

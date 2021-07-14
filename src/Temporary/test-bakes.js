@@ -9,7 +9,7 @@ export const bakeDocObj_1 = {
         13: "Box of 15",
         9.5: "Box of 5"
     },
-    bakeTags        : ["cupcake", "assortment", "chocolate"],
+    bakeTags        : ["hazelnut", "cookie", "chocolate"],
     itemPromo       : "",
     //DENORM DATA
     numOfReviews    : 2,
@@ -31,7 +31,7 @@ export const bakeDocObj_2 = {
         9.5: "small box of 4 cupcakes",
         25: "large box of 12 cupcakes",
     },
-    bakeTags: ["strawberry", "chocolate", "banana"],
+    bakeTags: ["strawberry", "chocolate", "banana", "assortment", "cupcake"],
     itemPromo: "Buy 3 get 1 free",
     //DENORM DATA
     numOfReviews    : 3,

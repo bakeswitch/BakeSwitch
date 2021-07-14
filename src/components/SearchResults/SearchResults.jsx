@@ -8,8 +8,9 @@ import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 
 import ErrorCard from "../helperComponents/ErrorCard";
 
-export function displayBakeCard(bakeID) {
-	// alert('runs here in dbc');
+export function DisplayBakeCard(props) {
+	const bakeID = props.bakeID;
+		// alert('runs here in dbc');
 	const [bakeData, setBakeData] = useState();
 	const [orderedPriceAndQtyArr, setOrderedPriceAndQtyArr] = useState([["default_price","default_qty"]]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -97,24 +98,17 @@ export default function SearchResults(props) {
 	const { searchTag } = props; 	//is this code killing it cos its a constant not a variable
 
 	function fillBakeIDArr() {
-		setBakeIDArr(['bake_0001','bake_0002']); //async - reset bakeIDArr //THIS CODE IS BREAKING - causing rerender
-		// setIsLoading(true);
+		// setBakeIDArr(['bake_0001','bake_0002']); //async - reset bakeIDArr //THIS CODE IS BREAKING - causing rerender
+		setIsLoading(true);
 
 		// alert("searchTag: " + searchTag); //TESTLINE runs here
-		/*
+		
 		const queryResults = bakeRef.where("bakeTags", "array-contains", searchTag);
-		alert('run here'); //runs here
 		queryResults.get()    
 			.then((querySnapshot) => {
-				//alert("smth");
 				querySnapshot.forEach((doc) => {
 					// doc.data() is never undefined for query doc snapshots
-					// alert("docID: " + doc.id);
-					
-					alert("runs here"); 
-					
 					setBakeIDArr((prevArr) => {
-						alert([...prevArr, doc.id]);
 						return [...prevArr, doc.id];
 					});
 				});
@@ -123,19 +117,18 @@ export default function SearchResults(props) {
 				alert("Error filtering bakeID from bakeTag: " + error);
 			})
 			.finally(() => setIsLoading(false));
-		*/
-		// setIsLoading(false);
+		
+		setIsLoading(false);
 	}
 
 	useEffect(() => {
 		if (searchTag != "") {
-			alert("searchtagged changed");
 			fillBakeIDArr();
 		}
 							//Unchecked runtime.lastError: The message port closed before a response was received.
-		// return (() => {
-		// 	setBakeIDArr([]); //solves the error: cant set up react hook on unmounted component
-		// })
+		return (() => {
+			setBakeIDArr([]); //solves the error: cant set up react hook on unmounted component
+		})
 	}, [searchTag]);
 
 
@@ -161,7 +154,9 @@ export default function SearchResults(props) {
 					<Col 
 						// display={bakeID? 'none': 'block'} 
 						key={"col_" + bakeID}>
-						{displayBakeCard(bakeID)}
+						<DisplayBakeCard
+							bakeID = {bakeID}
+						/>
 					</Col>
 				)}
 				{/* <Col>searchTag:{searchTag}</Col>
