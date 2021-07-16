@@ -1,6 +1,6 @@
 import React from "react";
+import styles from "./pages.module.css";
 
 export default function OrderCart() {
-	//replace with actual content
-	return <h3 style={{ padding: "5rem" }}>Order cart page in construction</h3>;
+	return <div className={styles.contentBox}></div>;
 }
