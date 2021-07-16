@@ -91,18 +91,15 @@ export function DisplayBakeCard(props) {
 }
 
 export default function SearchResults(props) {
-	const [bakeIDArr, setBakeIDArr] = useState(["bake_0002"]); //array of bakeID strings
+	const { searchTag, setIsDefault } = props; 	//is this code killing it cos its a constant not a variable
+	const [bakeIDArr, setBakeIDArr] = useState([]); //array of bakeID strings
 	// const [tempIDArr, setTempIDArr] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const bakeRef = db.collection("bakes");
-	const { searchTag } = props; 	//is this code killing it cos its a constant not a variable
 
 	function fillBakeIDArr() {
-		// setBakeIDArr(['bake_0001','bake_0002']); //async - reset bakeIDArr //THIS CODE IS BREAKING - causing rerender
 		setIsLoading(true);
 
-		// alert("searchTag: " + searchTag); //TESTLINE runs here
-		
 		const queryResults = bakeRef.where("bakeTags", "array-contains", searchTag);
 		queryResults.get()    
 			.then((querySnapshot) => {
@@ -125,9 +122,8 @@ export default function SearchResults(props) {
 		if (searchTag != "") {
 			fillBakeIDArr();
 		}
-							//Unchecked runtime.lastError: The message port closed before a response was received.
 		return (() => {
-			setBakeIDArr([]); //solves the error: cant set up react hook on unmounted component
+			setBakeIDArr([]); 
 		})
 	}, [searchTag]);
 
@@ -151,13 +147,13 @@ export default function SearchResults(props) {
 
 				{/* Resolve unique key ID error */}
 				{bakeIDArr.map((bakeID) => 
-					<Col 
-						// display={bakeID? 'none': 'block'} 
-						key={"col_" + bakeID}>
-						<DisplayBakeCard
-							bakeID = {bakeID}
-						/>
-					</Col>
+						<Col 
+							// display={bakeID? 'none': 'block'} 
+							key={"col_" + bakeID}>
+							<DisplayBakeCard
+								bakeID = {bakeID}
+							/>
+						</Col>
 				)}
 				{/* <Col>searchTag:{searchTag}</Col>
 				<Col>bakeIDArr:{JSON.stringify(bakeIDArr)}</Col> */}

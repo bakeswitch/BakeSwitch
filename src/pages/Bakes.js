@@ -1,23 +1,41 @@
 // import { Search } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import SearchBox from "../components/SearchBox";
 import SearchResults from "../components/SearchResults";
-import DefaultSearchResults from "../components/SearchResults/Categories";
+import Categories from "../components/SearchResults/Categories";
 import styles from "./pages.module.css";
 
 export default function Bakes() {
-	const [isSearching, setIsSearching] = useState(true);
+	const searchRef = useRef();
+    const [searchText, setSearchText] = useState("");
+	const [isDefault, setIsDefault] = useState(true);
 	const [searchTag, setSearchTag] = useState("");
+
+	function updateSearchBar(searchString) {
+        searchRef.current.focus();
+        setSearchText(searchString);
+    }
 
 	return (
 		<div className={styles.contentBox}>
 			<SearchBox
 				setSearchTag = {setSearchTag}
+				setIsDefault = {setIsDefault}
+				searchText = {searchText}
+				searchRef = {searchRef}
+				updateSearchBar = {updateSearchBar}
 			/>
-			<SearchResults
-				searchTag = {searchTag}
-			/>
-			{/* {isSearching ? <SearchResults /> : <DefaultSearchResults />} */}
+			{isDefault 
+				? <Categories 
+					setIsDefault = {setIsDefault}
+					setSearchTag = {setSearchTag}
+					updateSearchBar = {updateSearchBar}
+				/>
+				: <SearchResults
+					setIsDefault = {setIsDefault}
+					searchTag = {searchTag}
+				/>
+			}
 		</div>
 	);
 }
