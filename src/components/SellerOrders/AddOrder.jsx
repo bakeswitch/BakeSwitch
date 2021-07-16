@@ -15,15 +15,16 @@ export default function AddOrder(props) {
 	const orderRemarks = useRef();
 
 	const [loading, setLoading] = useState(false);
-	const [msg, setMsg] = useState("");
-	const [err, setErr] = useState("");
 	const [showForm, setShowForm] = useState(false);
 
 	function handleSubmit(event) {
 		event.preventDefault();
 		setLoading(true);
-		setErr("");
-		setMsg("");
+		if (!transferMode) {
+			setLoading(false);
+			return alert("Please choose a mode of transfer.");
+		}
+
 		try {
 			db.collection("orders")
 				.add({
@@ -34,14 +35,18 @@ export default function AddOrder(props) {
 					buyerContact: custContact.current.value,
 					modeOfTransfer: transferMode,
 					location: location.current.value,
-					transacDateTime: custDateTime.current.value,
+					transacDate: new Date(custDateTime.current.value).toLocaleDateString("en-ZA"),
+					transacTime: new Date(custDateTime.current.value).toLocaleTimeString("en-GB", {
+						hour: "2-digit",
+						minute: "2-digit",
+					}),
 					orderRemarks: orderRemarks.current.value,
 				})
 				.then(() => {
-					setMsg("Successfully added.");
+					alert("Successfully added.");
 				});
 		} catch (error) {
-			setErr("" + error);
+			alert("" + error);
 		} finally {
 			setLoading(false);
 		}
@@ -84,7 +89,7 @@ export default function AddOrder(props) {
 						</Form.Group>
 
 						<Form.Group className="mt-4" controlId="formMode">
-							<Form.Label>Mode</Form.Label>
+							<Form.Label>Mode of Transfer</Form.Label>
 							<Form.Check
 								type="radio"
 								name="mode"
@@ -103,7 +108,7 @@ export default function AddOrder(props) {
 
 						<Form.Group className="mt-4" controlId="formDateTime">
 							<Form.Label>Transaction Date & Time</Form.Label>
-							<Form.Control type="datetime-local" ref={custDateTime} />
+							<Form.Control type="datetime-local" ref={custDateTime} required />
 						</Form.Group>
 
 						<Form.Group className="mt-4" controlId="formBuyerName">
@@ -156,10 +161,25 @@ export default function AddOrder(props) {
 							Add Order
 						</Button>
 					</Form>
-					{err && <Alert variant="danger">{err}</Alert>}
-					{msg && <Alert variant="success">{msg}</Alert>}
-					<Button className="mt-4  mb-4" variant="warning" onClick={() => setShowForm(false)}>
-						Back
+					<Button
+						className="mt-4  mb-4 me-4"
+						variant="warning"
+						size="sm"
+						onClick={async () => {
+							await setShowForm(false);
+							setShowForm(true);
+							window.scrollTo(0, 0);
+						}}
+					>
+						Add Another Order
+					</Button>
+					<Button
+						className="mt-4  mb-4"
+						variant="warning"
+						size="sm"
+						onClick={() => window.location.reload()}
+					>
+						Done
 					</Button>
 				</>
 			)}
