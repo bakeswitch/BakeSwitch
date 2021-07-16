@@ -1,6 +1,14 @@
 import React from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+import SellerOrders from "../../SellerOrders";
+import styles from "./StorePages.module.css";
 
 export default function StoreOrders() {
-	//replace with actual content
-	return <h3 style={{ padding: "5rem" }}>Store Orders in construction</h3>;
+	const { userDoc } = useAuth();
+
+	return (
+		<div className={styles.contentBox}>
+			<SellerOrders storeID={userDoc.storeID} />
+		</div>
+	);
 }
