@@ -31,7 +31,7 @@ export const bakeDocObj_2 = {
         9.5: "small box of 4 cupcakes",
         25: "large box of 12 cupcakes",
     },
-    bakeTags: ["strawberry", "chocolate", "banana", "assortment", "cupcake"],
+    bakeTags: ["strawberry", "chocolate", "banana", "assortment", "cupcake", "cake"],
     itemPromo: "Buy 3 get 1 free",
     //DENORM DATA
     numOfReviews    : 3,
@@ -50,7 +50,7 @@ export const bakeDocObj_3 = {
         40: "1 Whole Cake",
         7: "1 Slice of Cake",
     },
-    bakeTags        : ["cake", "strawberry", "sweet"],
+    bakeTags        : ["cake", "strawberry", "sweet", "cake"],
     itemPromo       : "nil",
     //DENORM DATA
     numOfReviews    : 3,
