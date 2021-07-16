@@ -25,7 +25,7 @@ function Header() {
 					<Tab hrefVal="/bakes" tabName="Bakes" />
 					{!isLoggedIn && <Tab hrefVal="/log-in" tabName="Login" />}
 					{isLoggedIn && <Tab hrefVal="/order-cart" tabName="My Orders" />}
-					{isSeller && <Tab hrefVal="/store/dashboard" tabName="My Store" />}
+					{isSeller && <Tab hrefVal="/store/orders" tabName="My Store" />}
 					{isLoggedIn && <Tab hrefVal="/profile-settings" tabName="My Profile" />}
 					{/* {isLoggedIn && <MyProfileTab />} */}
 					{isLoggedIn && <LogOutTab />}
