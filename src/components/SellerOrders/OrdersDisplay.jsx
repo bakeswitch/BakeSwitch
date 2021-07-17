@@ -1,41 +1,7 @@
 import React from "react";
 import { Card, Table } from "react-bootstrap";
 import styles from "./SellerOrders.module.css";
-
-function TableRow(props) {
-	const doc = props.order;
-
-	return (
-		<tr>
-			<td className={styles.ordersNum}>
-				<ul className={styles.contentList}>
-					<li>{new Date(doc.transacDate).toLocaleDateString("en-GB")}</li>
-					<li>
-						<strong>{doc.transacTime}</strong>
-					</li>
-				</ul>
-			</td>
-			<td>
-				<ul className={styles.contentList}>
-					<li>
-						<h6>Total: ${doc.totalAmt}</h6>
-					</li>
-					<li>{doc.orderText}</li>
-				</ul>
-			</td>
-			<td className={styles.ordersNum}>
-				<ul className={styles.contentList}>
-					<li>
-						<h6>{doc.buyerName}</h6>
-					</li>
-					<li>{doc.buyerContact}</li>
-				</ul>
-			</td>
-			<td className={styles.ordersNum}>{doc.location}</td>
-			<td className={styles.ordersNum}>{doc.orderRemarks}</td>
-		</tr>
-	);
-}
+import TableRow from "./TableRow";
 
 export default function OrdersDisplay(props) {
 	const orderArr = props.orderArr;
@@ -56,7 +22,7 @@ export default function OrdersDisplay(props) {
 					</thead>
 					<tbody>
 						{orderArr.map((order) => (
-							<TableRow order={order.orderRec} key={order.id} />
+							<TableRow order={order.orderRec} orderID={order.id} key={order.id} />
 						))}
 					</tbody>
 				</Table>

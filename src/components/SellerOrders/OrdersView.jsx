@@ -41,6 +41,7 @@ export default function OrdersView(props) {
 	useEffect(() => {
 		db.collection("orders")
 			.where("storeID", "==", storeID)
+			.orderBy("transacDate")
 			.get()
 			.then((querySnapshot) =>
 				querySnapshot.forEach((doc) => allOrdersArr.push({ id: doc.id, orderRec: doc.data() }))
