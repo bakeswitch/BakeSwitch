@@ -154,9 +154,22 @@ export default function ProductView(props) {
                         <Col sm={8}>
                             <InputGroup className="mb-2" variant="dark">
                                 
-                                <FaPlusSquare size={40} onClick={() => setQty(qty + 1)}/>
+                                <FaPlusSquare 
+                                    size={40} 
+                                    onClick={() => {
+                                        if (qty + 1 > 100) {  
+                                            return alert("For orders of more than 100 items, kindly contact the seller directly");
+                                        }
+                                        return setQty(prevQty => prevQty + 1)
+                                    }}/>
                                 <FormControl value={qty} className="d-inline bg-light" readOnly/>  
-                                <FaMinusSquare size={40} onClick={() => setQty(qty - 1)} />
+                                <FaMinusSquare size={40} 
+                                    onClick={() => {
+                                        if (qty - 1 <= 0) {  
+                                            return alert("Unable to order 0 or fewer number of items");
+                                        }
+                                        return setQty(prevQty => prevQty - 1)
+                                }}/>
                             </InputGroup>
                         </Col>
                         <Col sm={12}>
