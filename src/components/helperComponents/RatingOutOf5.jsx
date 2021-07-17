@@ -1,6 +1,7 @@
 import { AiFillStar } from "react-icons/ai";
 
-export default function RatingOutOf5(num) {
+export default function RatingOutOf5(props) {
+    const { numOutOf5 : num } = props; 
     const numOfFilledStarsArr = Array.from(Array(num).keys());
     const numOfEmptyStarsArr = Array.from(Array(5 - num).keys());
     if (![0,1,2,3,4,5].includes(num)) {
@@ -13,4 +14,22 @@ export default function RatingOutOf5(num) {
             </>
         )                                 
     }    
+}
+
+export function RatingDetails(props) {
+    const { numOfRatings, numOfStars } = props;
+    const avgRatingOutOf5 = (numOfRatings != 0) 
+        ? Math.floor(numOfStars / numOfRatings)
+        : 0;
+    return (
+        <>
+            <RatingOutOf5 
+                numOutOf5 = {avgRatingOutOf5}
+            />
+            <span className="text-muted small ms-2">
+                {numOfRatings} ratings
+            </span>
+        </>
+    )
+    
 }

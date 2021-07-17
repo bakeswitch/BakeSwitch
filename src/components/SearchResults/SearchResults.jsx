@@ -8,6 +8,7 @@ import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 
 import ErrorCard from "../helperComponents/ErrorCard";
 
+//SHIFT DisplayBakeCard to helperComponents!
 export function DisplayBakeCard(props) {
 	const bakeID = props.bakeID;
 		// alert('runs here in dbc');

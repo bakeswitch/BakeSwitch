@@ -5,8 +5,8 @@ import { storeDocObj_1, storeDocObj_2, storeDocObj_3 } from "./test-stores";
 
 export function setupBakeDoc() {
 	//modify object and name before pressing button
-	const bakeRef = db.collection("bakes").doc("bake_0002"); 	//modify name
-	const bakeDocObj = bakeDocObj_2; 							//modify obj
+	const bakeRef = db.collection("bakes").doc("bake_0003"); 	//modify name
+	const bakeDocObj = bakeDocObj_3; 							//modify obj
 	bakeRef
 		.set(bakeDocObj)
 		.then(() => alert("bake successfully written to db"))

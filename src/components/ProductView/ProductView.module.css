@@ -5,3 +5,8 @@
 .itemName {
     font-size: 2rem;
 }
+
+.noFocusButton:focus {
+    outline: 0;
+    box-shadow: none;
+}
