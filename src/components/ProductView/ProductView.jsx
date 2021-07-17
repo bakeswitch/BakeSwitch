@@ -92,13 +92,13 @@ export default function ProductView(props) {
     return !isLoading && (
         <>  
             <Row className={styles.row}>
-                <Col xs={12} md={7} className="p-4">
+                <Col xs={12} md={6} className="p-4">
                     <Card border="light">
                         {/* make carousel here? */}
                         <Card.Img src={bakePhotoURL} rounded fluid />
                     </Card>
                 </Col>
-                <Col xs={12} md={5} className="p-4">
+                <Col xs={12} md={6} className="p-4">
                     <h3 className="mb-0"> 
                         {bakeName} <span className="badge bg-success mr-2">new</span>
                     </h3>
@@ -135,9 +135,7 @@ export default function ProductView(props) {
                         </dd>
                         <label for="qty-select">Choose quantity:</label>
                         <select 
-                            onChange={e => console.log((e.target))
-                                // setIndexPair(e.target.value)
-                            } 
+                            onChange={e => setIndexPair(e.target.value)} 
                             id="qty-select" 
                             className="ms-2" 
                             style={{maxWidth: "24rem"}}>
@@ -151,9 +149,16 @@ export default function ProductView(props) {
                     <h3 className="font-weight-bold me-2 mt-3">${orderedPnQArr[indexPair][0]}</h3>
                     
                     <Row>
-                        <Col sm={8}>
-                            <InputGroup className="mb-2" variant="dark">
-                                
+                        <Col sm={6} variant="dark">
+                            <InputGroup>
+                                <FaMinusSquare size={40} 
+                                    onClick={() => {
+                                        if (qty - 1 <= 0) {  
+                                            return alert("Unable to order 0 or fewer number of items");
+                                        }
+                                        return setQty(prevQty => prevQty - 1)
+                                }}/>
+                                <FormControl value={qty} className="d-inline bg-light" readOnly />  
                                 <FaPlusSquare 
                                     size={40} 
                                     onClick={() => {
@@ -162,14 +167,6 @@ export default function ProductView(props) {
                                         }
                                         return setQty(prevQty => prevQty + 1)
                                     }}/>
-                                <FormControl value={qty} className="d-inline bg-light" readOnly/>  
-                                <FaMinusSquare size={40} 
-                                    onClick={() => {
-                                        if (qty - 1 <= 0) {  
-                                            return alert("Unable to order 0 or fewer number of items");
-                                        }
-                                        return setQty(prevQty => prevQty - 1)
-                                }}/>
                             </InputGroup>
                         </Col>
                         <Col sm={12}>
