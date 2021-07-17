@@ -38,6 +38,12 @@
 }
 
 /* About page  */
+.ourStory {
+}
+
+.faq {
+}
+
 .questionBox {
 	display: flex;
 	flex-direction: column;
