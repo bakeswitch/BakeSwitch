@@ -12,8 +12,8 @@ export const bakeDocObj_1 = {
     bakeTags        : ["hazelnut", "cookie", "chocolate"],
     itemPromo       : "",
     //DENORM DATA
-    numOfReviews    : 2,
-    numOfStars      : 9.5,
+    numOfRatings    : 3,
+    numOfStars      : 8,
     storeID         : "store_0001",
     storeName       : "TomTakes",
 };
@@ -34,8 +34,8 @@ export const bakeDocObj_2 = {
     bakeTags: ["strawberry", "chocolate", "banana", "assortment", "cupcake", "cake"],
     itemPromo: "Buy 3 get 1 free",
     //DENORM DATA
-    numOfReviews    : 3,
-    numOfStars      : 11,
+    numOfRatings    : 20,
+    numOfStars      : 100,
     storeID: "store_0001",
     storeName: "TomTakes",
 };
@@ -53,8 +53,8 @@ export const bakeDocObj_3 = {
     bakeTags        : ["cake", "strawberry", "sweet", "cake"],
     itemPromo       : "nil",
     //DENORM DATA
-    numOfReviews    : 3,
-    numOfStars      : 11,
+    numOfRatings    : 0,
+    numOfStars      : 0,
     storeID         : "store_0002",
     storeName       : "bobBakes",
 }

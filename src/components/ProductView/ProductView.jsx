@@ -8,7 +8,7 @@ import { FiSend } from "react-icons/fi";
 import { db } from "../../config/firebase";
 import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 import ErrorCard from "../helperComponents/ErrorCard";
-import RatingOutOf5 from "../helperComponents/RatingOutOf5.jsx";
+import { RatingDetails } from "../helperComponents/RatingOutOf5.jsx";
 
 export default function ProductView(props) {
     const bakeID = props.bakeID;
@@ -18,13 +18,15 @@ export default function ProductView(props) {
     const [storeData, setStoreData] = useState();
     const [indexPair, setIndexPair] = useState(0);
     const [radioValue, setRadioValue] = useState('1');
+    const [isLiked, setIsLiked] = useState(false); //Link to wishlist 
+    const [modeOfTransferArrBool, setModeOfTransferArrBool] = useState([true, true]); //[delivers, canCollect]
     //RADIO DOESNT WORK, call it aft storeData defined
 
     //find way to add storeData?.storeDeliveryBool && storeData?.storeSelfCollectionBool
-    const radios = [
-        { name: 'Delivery', value: '1', disabled: false },
-        { name: 'Self-Collection', value: '2', disabled: false},
-    ];
+    // const radios = [
+    //     { name: 'Delivery', value: '1', disabled: false },
+    //     { name: 'Self-Collection', value: '2', disabled: false},
+    // ];
 
     const [qty, setQty] = useState(1); //for qty of item group
 
@@ -74,89 +76,145 @@ export default function ProductView(props) {
         getRealTimeUpdates();
 	},[]);
 
-    	
-	if (!bakeData) { 
-		return ErrorCard() 
+
+	if (!bakeData || !storeData) { 
+		return ErrorCard('no bake data or store data loaded yet');
 	}
 
     const { bakePhotoURL 	= 'default_bake_name', 
             bakeName  		= 'default_store_id',
             // bakeDesc 		= 'default_bake_desc',
             isAvailable     = 'default_is_available',
-            storeName       = 'default_store_name',     } = bakeData;
+            storeName       = 'default_store_name',     
+            numOfRatings    = 0,
+            numOfStars      = 0,} = bakeData;
+    const { deliveryBool    = true,
+            selfCollectionBool = true} = storeData;
     const   orderedPnQArr = orderPriceAndQtyArr(bakeData);
+
+    const modeOfTransfer = radioValue === "1" ? `Self-Collection` : `Delivery`;
+    const orderGenerated = 
+        `${qty}x ` +
+        `(${bakeName}) ` + 
+        `at $${orderedPnQArr[indexPair][0]} each - ` +
+        `[${modeOfTransfer}]`;
+
 
     return !isLoading && (
         <>  
             <Row className={styles.row}>
                 <Col xs={12} md={6} className="p-4">
                     <Card border="light">
+                        {/* make carousel here? */}
                         <Card.Img src={bakePhotoURL} rounded fluid />
                     </Card>
                 </Col>
                 <Col xs={12} md={6} className="p-4">
-                    <h4> 
+                    <h3 className="mb-0"> 
                         {bakeName} <span className="badge bg-success mr-2">new</span>
-                    </h4>
+                    </h3>
                     <div className="mb-3">
-                        {RatingOutOf5(4)}|{" "}
-                        <span className="text-muted small">
-                            42 ratings and 4 reviews
-                        </span>
+                        <RatingDetails 
+                            numOfRatings = {numOfRatings}
+                            numOfStars = {numOfStars}
+                        />
                     </div>
                     <dl className="row sm mb-3">
-                        <dt className="col-sm-3">Is Availabile</dt>
-                        <dd className="col-sm-9">{isAvailable ? "true" : "false"}</dd>
-                        <dt className="col-sm-3">Sold by</dt>
-                        <dd className="col-sm-9">{storeName}</dd>
-                        <dt className="col-sm-3">Obtain by</dt>
-                        <dd className="col-sm-9">
+                        <dt className="col-sm-4">Is Availabile</dt>
+                        <dd className="col-sm-8 p-0">{isAvailable ? "true" : "false"}</dd>
+                        <dt className="col-sm-4">Sold by</dt>
+                        <dd className="col-sm-8 p-0">{storeName}</dd>
+                        <dt className="col-sm-4">Obtain by</dt>
+                        <dd className="col-sm-8 p-0">
                             <ButtonGroup className="mb-2">
-                                {radios.map((radio, idx) => (
                                 <ToggleButton className="p-0 me-4"
-                                    key={idx}
-                                    id={`radio-${idx}`}
-                                    type="radio"
+                                    key='collection'
+                                    id='radio-collection'
+                                    type='radio'
+                                    variant='white'
+                                    name='radio'
+                                    value='1'
+                                    checked={radioValue === '1'}
+                                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                    disabled={!selfCollectionBool}
+                                >
+                                    Self-Collection
+                                </ToggleButton>
+                                <ToggleButton className="p-0 me-4"
+                                    key='delivery'
+                                    id='radio-delivery'
+                                    type='radio'
                                     variant="white"
                                     name="radio"
-                                    value={radio.value}
-                                    checked={radioValue === radio.value}
+                                    value='2'
+                                    checked={radioValue === '2'}
                                     onChange={(e) => setRadioValue(e.currentTarget.value)}
-                                    disabled={radio.disabled}
+                                    disabled={!deliveryBool}
                                 >
-                                    {radio.name}
+                                    Delivery
                                 </ToggleButton>
-                                ))}
                             </ButtonGroup>
                         </dd>
                         <label for="qty-select">Choose quantity:</label>
-                        <select onChange={e => setIndexPair(e.target.value)} id="qty-select" className="ms-2" style={{maxWidth: "24rem"}}>
-                            {orderedPnQArr.map((pnqPair, index) => {
-                                return <option value={index}>
+                        <select 
+                            onChange={e => setIndexPair(e.target.value)} 
+                            id="qty-select" 
+                            className="ms-2" 
+                            style={{maxWidth: "24rem"}}>
+                            {orderedPnQArr.map((pnqPair, index) => 
+                                <option value={index} key={index} readOnly>
                                     {pnqPair[1]}
                                 </option>
-                            })}
+                            )}
                         </select>
                     </dl>
-                    <h3 className="font-weight-bold me-2 mt-5">${orderedPnQArr[indexPair][0]}</h3>
+                    <h3 className="font-weight-bold me-2 mt-3">${orderedPnQArr[indexPair][0]}</h3>
                     
                     <Row>
-                        <Col sm={8}>
-                            <InputGroup className="mb-2" variant="dark">
-                                
-                                <FaPlusSquare size={40} onClick={() => setQty(qty + 1)}/>
-                                <FormControl value={qty} className="d-inline"/>  
-                                <FaMinusSquare size={40} onClick={() => setQty(qty - 1)} />
-                            
-
-                                <Button variant="primary" title="Send Order Request"><FiSend /> Send Order Request</Button>
-                                <Button variant="outline-secondary" title="Add to wishlist"><FaHeart /></Button>
+                        <Col sm={6} variant="dark">
+                            <InputGroup>
+                                <FaMinusSquare size={40} 
+                                    onClick={() => {
+                                        if (qty - 1 <= 0) {  
+                                            return alert("Unable to order 0 or fewer number of items");
+                                        }
+                                        return setQty(prevQty => prevQty - 1)
+                                }}/>
+                                <FormControl value={qty} className="d-inline bg-light" readOnly />  
+                                <FaPlusSquare 
+                                    size={40} 
+                                    onClick={() => {
+                                        if (qty + 1 > 100) {  
+                                            return alert("For orders of more than 100 items, kindly contact the seller directly");
+                                        }
+                                        return setQty(prevQty => prevQty + 1)
+                                    }}/>
                             </InputGroup>
+                        </Col>
+                        <Col sm={12}>
+                            <ButtonGroup>
+                                <Button 
+                                    className={styles.noFocusButton}
+                                    variant="primary" 
+                                    title="Send Order Request">
+                                    <FiSend /> Send Order Request
+                                </Button>
+                                <Button
+                                    className={styles.noFocusButton} 
+                                    variant="outline-secondary" 
+                                    title="Add to wishlist"
+                                    onClick={() => setIsLiked(prvBool => !prvBool)}
+                                >
+                                    <FaHeart color={isLiked?'red':'black'} />
+                                </Button>
+                            </ButtonGroup>
+                            
                         </Col>
                     </Row>
                                     
                 </Col>
             </Row>
+            <Row>{orderGenerated}</Row>
             <ProductNavPages 
                 bakeData = {bakeData} 
                 storeData = {storeData}
