@@ -19,13 +19,14 @@ export default function ProductView(props) {
     const [indexPair, setIndexPair] = useState(0);
     const [radioValue, setRadioValue] = useState('1');
     const [isLiked, setIsLiked] = useState(false); //Link to wishlist 
+    const [modeOfTransferArrBool, setModeOfTransferArrBool] = useState([true, true]); //[delivers, canCollect]
     //RADIO DOESNT WORK, call it aft storeData defined
 
     //find way to add storeData?.storeDeliveryBool && storeData?.storeSelfCollectionBool
-    const radios = [
-        { name: 'Delivery', value: '1', disabled: false },
-        { name: 'Self-Collection', value: '2', disabled: false},
-    ];
+    // const radios = [
+    //     { name: 'Delivery', value: '1', disabled: false },
+    //     { name: 'Self-Collection', value: '2', disabled: false},
+    // ];
 
     const [qty, setQty] = useState(1); //for qty of item group
 
@@ -75,9 +76,9 @@ export default function ProductView(props) {
         getRealTimeUpdates();
 	},[]);
 
-    	
-	if (!bakeData) { 
-		return ErrorCard();
+
+	if (!bakeData || !storeData) { 
+		return ErrorCard('no bake data or store data loaded yet');
 	}
 
     const { bakePhotoURL 	= 'default_bake_name', 
@@ -87,7 +88,17 @@ export default function ProductView(props) {
             storeName       = 'default_store_name',     
             numOfRatings    = 0,
             numOfStars      = 0,} = bakeData;
+    const { deliveryBool    = true,
+            selfCollectionBool = true} = storeData;
     const   orderedPnQArr = orderPriceAndQtyArr(bakeData);
+
+    const modeOfTransfer = radioValue === "1" ? `Self-Collection` : `Delivery`;
+    const orderGenerated = 
+        `${qty}x ` +
+        `(${bakeName}) ` + 
+        `at $${orderedPnQArr[indexPair][0]} each - ` +
+        `[${modeOfTransfer}]`;
+
 
     return !isLoading && (
         <>  
@@ -116,21 +127,32 @@ export default function ProductView(props) {
                         <dt className="col-sm-4">Obtain by</dt>
                         <dd className="col-sm-8 p-0">
                             <ButtonGroup className="mb-2">
-                                {radios.map((radio, idx) => (
                                 <ToggleButton className="p-0 me-4"
-                                    key={idx}
-                                    id={`radio-${idx}`}
-                                    type="radio"
+                                    key='collection'
+                                    id='radio-collection'
+                                    type='radio'
+                                    variant='white'
+                                    name='radio'
+                                    value='1'
+                                    checked={radioValue === '1'}
+                                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                    disabled={!selfCollectionBool}
+                                >
+                                    Self-Collection
+                                </ToggleButton>
+                                <ToggleButton className="p-0 me-4"
+                                    key='delivery'
+                                    id='radio-delivery'
+                                    type='radio'
                                     variant="white"
                                     name="radio"
-                                    value={radio.value}
-                                    checked={radioValue === radio.value}
+                                    value='2'
+                                    checked={radioValue === '2'}
                                     onChange={(e) => setRadioValue(e.currentTarget.value)}
-                                    disabled={radio.disabled}
+                                    disabled={!deliveryBool}
                                 >
-                                    {radio.name}
+                                    Delivery
                                 </ToggleButton>
-                                ))}
                             </ButtonGroup>
                         </dd>
                         <label for="qty-select">Choose quantity:</label>
@@ -192,6 +214,7 @@ export default function ProductView(props) {
                                     
                 </Col>
             </Row>
+            <Row>{orderGenerated}</Row>
             <ProductNavPages 
                 bakeData = {bakeData} 
                 storeData = {storeData}

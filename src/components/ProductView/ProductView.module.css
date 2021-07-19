@@ -7,6 +7,6 @@
 }
 
 .noFocusButton:focus {
-    outline: 0;
-    box-shadow: none;
+    outline: 0 !important;
+    box-shadow: none !important;
 }
