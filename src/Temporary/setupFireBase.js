@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { db } from "../config/firebase";
 import { bakeDocObj_1, bakeDocObj_2, bakeDocObj_3 } from "./test-bakes";
 import { storeDocObj_1, storeDocObj_2, storeDocObj_3 } from "./test-stores";
+import { userDocObj_1 } from "./test-users";
 
 export function setupBakeDoc() {
 	//modify object and name before pressing button
@@ -20,5 +21,15 @@ export function setupStoreDoc() {
 	storeRef
 		.set(storeDocObj)
 		.then(() => alert("store successfully written to db"))
+		.catch(() => alert("error writing to db"));
+}
+
+export function setupUserDoc() {
+	//modify object and name before pressing button
+	const userRef = db.collection("users").doc("Wq33g2sv1Qbkj3RvxARGS419oNC2"); //modify name
+	const userDocObj = userDocObj_1;							//modify obj
+	userRef
+		.set(userDocObj)
+		.then(() => alert("user successfully written to db"))
 		.catch(() => alert("error writing to db"));
 }
