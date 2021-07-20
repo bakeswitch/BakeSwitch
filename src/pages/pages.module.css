@@ -39,9 +39,13 @@
 
 /* About page  */
 .ourStory {
+	padding: 1rem 3rem 1.5rem;
 }
 
-.faq {
+.contact {
+	padding: 0.1rem 1rem;
+	width: 50%;
+	margin: 3rem auto;
 }
 
 .questionBox {
@@ -53,4 +57,5 @@
 
 .questionItem {
 	margin-top: 1rem;
+	width: 100%;
 }

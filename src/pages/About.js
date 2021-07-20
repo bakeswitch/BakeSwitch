@@ -1,12 +1,18 @@
 import React from "react";
 import styles from "./pages.module.css";
+import { Paper, Accordion, AccordionSummary, AccordionDetails } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 function QuestionBlock(props) {
 	return (
-		<div className={styles.questionItem}>
-			<h6>{props.question}</h6>
-			<p>{props.answer}</p>
-		</div>
+		<Accordion className={styles.questionItem}>
+			<AccordionSummary expandIcon={<ExpandMoreIcon />} id={props.id}>
+				<h6>{props.question}</h6>
+			</AccordionSummary>
+			<AccordionDetails>
+				<p>{props.answer}</p>
+			</AccordionDetails>
+		</Accordion>
 	);
 }
 
@@ -44,7 +50,7 @@ export default function About() {
 
 	return (
 		<div className={styles.contentBox}>
-			<div className={styles.ourStory}>
+			<Paper className={styles.ourStory} elevation={2}>
 				<h3 id="our-story" className="mt-5 mb-4">
 					Our Story
 				</h3>
@@ -65,24 +71,32 @@ export default function About() {
 					Facilisis sed odio morbi quis commodo. Gravida neque convallis a cras semper auctor neque
 					vitae.
 				</p>
-			</div>
-			<div className={styles.faq}>
+			</Paper>
+
+			<div className="mb-5">
 				<h3 id="faq" className="mt-5 mb-4">
 					FAQ
 				</h3>
 				<div className={styles.questionBox}>
 					{questionList.map((questionItem, index) => (
-						<QuestionBlock question={questionItem.qn} answer={questionItem.ans} key={index} />
+						<QuestionBlock
+							question={questionItem.qn}
+							answer={questionItem.ans}
+							key={index}
+							id={index}
+						/>
 					))}
 				</div>
 			</div>
 
-			<h3 id="contact" className="mt-5 mb-4">
-				Contact
-			</h3>
-			<p className="mb-5">
-				For enquiries and feedback, contact us at <em>bakeswitch@gmail.com</em>
-			</p>
+			<Paper className={styles.contact} elevation={4}>
+				<h3 id="contact" className="mt-2 mb-2">
+					Contact
+				</h3>
+				<p className="mb-2">
+					For enquiries and feedback, contact us at <em>bakeswitch@gmail.com</em>
+				</p>
+			</Paper>
 		</div>
 	);
 }
