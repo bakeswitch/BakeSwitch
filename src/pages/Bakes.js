@@ -32,7 +32,7 @@ export default function Bakes() {
 					updateSearchBar={updateSearchBar}
 				/>
 			) : (
-				<SearchResults searchTag={searchTag} />
+				<SearchResults searchTerm={searchTag} isTag={true} />
 			)}
 		</div>
 	);

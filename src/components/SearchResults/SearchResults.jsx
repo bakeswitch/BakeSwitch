@@ -7,7 +7,8 @@ import DisplayBakeCard from "../helperComponents/DisplayBakeCard";
 import ErrorCard from "../helperComponents/ErrorCard";
 
 export default function SearchResults(props) {
-	const { searchTag } = props; //is this code killing it cos its a constant not a variable
+	const searchTerm = props.searchTerm;
+	const isTag = props.isTag;
 	const [bakeIDArr, setBakeIDArr] = useState([]); //array of bakeID strings
 	// const [tempIDArr, setTempIDArr] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -15,8 +16,14 @@ export default function SearchResults(props) {
 
 	function fillBakeIDArr() {
 		setIsLoading(true);
+		let queryResults;
 
-		const queryResults = bakeRef.where("bakeTags", "array-contains", searchTag);
+		if (isTag) {
+			queryResults = bakeRef.where("bakeTags", "array-contains", searchTerm);
+		} else {
+			queryResults = bakeRef.where("storeID", "==", searchTerm);
+		}
+
 		queryResults
 			.get()
 			.then((querySnapshot) => {
@@ -36,13 +43,13 @@ export default function SearchResults(props) {
 	}
 
 	useEffect(() => {
-		if (searchTag != "") {
+		if (searchTerm != "") {
 			fillBakeIDArr();
 		}
 		return () => {
 			setBakeIDArr([]);
 		};
-	}, [searchTag]);
+	}, [searchTerm]);
 
 	//REPLACE W SEARCH RESULTS WHEN CODE IS READY
 	// const searchResultsBakeIDArr = ["bake_0001", "bake_0002", "bake_0003"];

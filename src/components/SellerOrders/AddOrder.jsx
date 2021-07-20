@@ -66,10 +66,10 @@ export default function AddOrder(props) {
 				<>
 					<Form onSubmit={handleSubmit}>
 						<Form.Group className="mt-4" controlId="formPdtOrdered">
-							<Form.Label>Products Ordered</Form.Label>
+							<Form.Label>Order Details</Form.Label>
 							<Form.Control
 								type="text"
-								placeholder="Enter products and their quantity"
+								placeholder="Enter products ordered, quantity, and any other order information"
 								as="textarea"
 								rows={3}
 								ref={orderProducts}

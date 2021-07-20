@@ -6,11 +6,13 @@ import SellerBakeSale from "./SellerBakeSale";
 import SellerContact from "./SellerContact";
 import SellerPref from "./SellerPref";
 import UpdateString from "../helperComponents/UpdateString";
+import SearchResults from "../SearchResults";
 import styles from "./SellerProfile.module.css";
 
 export default function SellerProfile(props) {
+	const storeID = props.storeID;
 	// Takes in storeID as props
-	const storeRef = db.collection("stores").doc(props.storeID);
+	const storeRef = db.collection("stores").doc(storeID);
 	// Pass boolean isOwnStore prop. Seller can edit info if true (accessed from StoreInformation page)
 	const isOwnStore = props.isOwnStore;
 
@@ -36,42 +38,45 @@ export default function SellerProfile(props) {
 
 	return (
 		!loading && (
-			<Card>
-				<Card.Img
-					variant="top"
-					alt="Image from store"
-					src={storeRec.storeLogo}
-					style={{ width: "100%", height: "300px" }}
-				/>
-				{isOwnStore && (
-					<UpdateString
-						item={storeRec.storeLogo}
-						field="storeLogo"
-						docRef={storeRef}
-					></UpdateString>
-				)}
+			<>
+				<Card>
+					<Card.Img
+						variant="top"
+						alt="Image from store"
+						src={storeRec.storeLogo}
+						style={{ width: "100%", height: "300px" }}
+					/>
+					{isOwnStore && (
+						<UpdateString
+							item={storeRec.storeLogo}
+							field="storeLogo"
+							docRef={storeRef}
+						></UpdateString>
+					)}
 
-				<div className={styles.storeName}>
-					<h3>{storeRec.storeName}</h3>
-				</div>
+					<div className={styles.storeName}>
+						<h3>{storeRec.storeName}</h3>
+					</div>
 
-				<Card.Body>
-					<Tabs activeKey={key} onSelect={(k) => setKey(k)} transition={false}>
-						<Tab eventKey="about" title="About">
-							<SellerAbout sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
-						</Tab>
-						<Tab eventKey="bakeSale" title="Bake Sale">
-							<SellerBakeSale sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
-						</Tab>
-						<Tab eventKey="contact" title="Contact">
-							<SellerContact sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
-						</Tab>
-						<Tab eventKey="storePref" title="Store Preferences">
-							<SellerPref sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
-						</Tab>
-					</Tabs>
-				</Card.Body>
-			</Card>
+					<Card.Body>
+						<Tabs activeKey={key} onSelect={(k) => setKey(k)} transition={false}>
+							<Tab eventKey="about" title="About">
+								<SellerAbout sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
+							</Tab>
+							<Tab eventKey="bakeSale" title="Bake Sale">
+								<SellerBakeSale sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
+							</Tab>
+							<Tab eventKey="contact" title="Contact">
+								<SellerContact sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
+							</Tab>
+							<Tab eventKey="storePref" title="Store Preferences">
+								<SellerPref sellerDoc={storeRec} isOwnStore={isOwnStore} storeRef={storeRef} />
+							</Tab>
+						</Tabs>
+					</Card.Body>
+				</Card>
+				{!isOwnStore && <SearchResults searchTerm={storeID} isTag={false} />}
+			</>
 		)
 	);
 }
