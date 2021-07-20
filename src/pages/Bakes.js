@@ -7,35 +7,33 @@ import styles from "./pages.module.css";
 
 export default function Bakes() {
 	const searchRef = useRef();
-    const [searchText, setSearchText] = useState("");
+	const [searchText, setSearchText] = useState("");
 	const [isDefault, setIsDefault] = useState(true);
 	const [searchTag, setSearchTag] = useState("");
 
 	function updateSearchBar(searchString) {
-        searchRef.current.focus();
-        setSearchText(searchString);
-    }
+		searchRef.current.focus();
+		setSearchText(searchString);
+	}
 
 	return (
 		<div className={styles.contentBox}>
 			<SearchBox
-				setSearchTag = {setSearchTag}
-				setIsDefault = {setIsDefault}
-				searchText = {searchText}
-				searchRef = {searchRef}
-				updateSearchBar = {updateSearchBar}
+				setSearchTag={setSearchTag}
+				setIsDefault={setIsDefault}
+				searchText={searchText}
+				searchRef={searchRef}
+				updateSearchBar={updateSearchBar}
 			/>
-			{isDefault 
-				? <Categories 
-					setIsDefault = {setIsDefault}
-					setSearchTag = {setSearchTag}
-					updateSearchBar = {updateSearchBar}
+			{isDefault ? (
+				<Categories
+					setIsDefault={setIsDefault}
+					setSearchTag={setSearchTag}
+					updateSearchBar={updateSearchBar}
 				/>
-				: <SearchResults
-					setIsDefault = {setIsDefault}
-					searchTag = {searchTag}
-				/>
-			}
+			) : (
+				<SearchResults searchTag={searchTag} />
+			)}
 		</div>
 	);
 }
