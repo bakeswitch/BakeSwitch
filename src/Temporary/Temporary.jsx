@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
-import { setupBakeDoc, setupStoreDoc, setupUserDoc } from "./setupFireBase";
+import { setupBakeDoc, setupStoreDoc, setupUserDoc, setupUserOrderDoc } from "./setupFireBase";
 
 export default function Temporary() {
 	return (
@@ -15,6 +15,9 @@ export default function Temporary() {
 				</Button>
 				<Button variant="success" className="me-2 sucess" onClick={() => setupUserDoc()}>
 					Update UserDoc
+				</Button>
+				<Button variant="success" className="me-2 sucess" onClick={() => setupUserOrderDoc()}>
+					Update UserOrderDoc
 				</Button>
 			</ButtonGroup>
 		</div>
