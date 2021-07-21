@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Image, Button, ListGroup, Col, Row, Breadcrumb } from "react-bootstrap";
+import { Card, Image, Button, ListGroup, Col, Row, Modal } from "react-bootstrap";
 import styles from "./UserOrderCard.module.css";
 import { db } from "../../config/firebase";
 import { useHistory } from "react-router-dom";
@@ -82,9 +82,13 @@ export function LoadUserStoreOrders(props) {
 	const { userID, storeID } = props;
 	const [userOrderData, setUserOrderData] = useState();
 	const [isLoading, setIsLoading] = useState(true);
+	const [orderTextOnModal, setOrderTextOnModal] = useState("");
 	const history = useHistory();
 	const userOrderRef = db.collection("users").doc(userID)
 							.collection("user-orders").doc(storeID);
+	const [showModal, setShowModal] = useState(false);
+
+
 	
 	// if userOrderRef has no doc?
 	useEffect(
@@ -93,7 +97,13 @@ export function LoadUserStoreOrders(props) {
 	);
 
 	function handleClickGenerate() {
-		alert(generateOrder(userOrderData));
+		const orderText = generateOrder(userOrderData)
+		alert("The following text has been copied to clipboard: \n\n" + orderText);
+		navigator.clipboard.writeText(orderText);
+
+		// setOrderTextOnModal(orderText);
+		// setShowModal(true);
+
 	}
 	
 	function fillUserOrderData() {
@@ -119,37 +129,77 @@ export function LoadUserStoreOrders(props) {
 	
 	return (
 		!isLoading && (
-			<ListGroup variant="flush" className={styles.listGroup}>
-				{/* store order header */}
-				<ListGroup.Item>
-					<Row>
-						<Col xs="auto" className="me-auto"> 
-							<span className={styles.storeName}>{storeName}</span> 
-						</Col>
-						{/* <Col>totalCost: ${totalCost}</Col> */}
-						<Col className="ms-auto" xs="auto">
-							<a className={{color: "blue"}} onClick={handleClickGenerate}>
-								Generate Order Text
-							</a>
-						</Col>
-					</Row>
-				</ListGroup.Item>
-				{orderObjArr.map(orderObj => 
-					<UserOrderCard 
-						modeOfTransfer = {orderObj.modeOfTransfer == "collection" ? "-Collection-": "-Delivery-"}
-						bakeName = {orderObj.bakeName}
-						bakeSet = {orderObj.bakeSet}
-						qty = {orderObj.qty}
-						unitprice = {orderObj.unitprice}
-						remarks = {orderObj.remarks}
-						bakePhotoURL = {orderObj.bakePhotoURL}
-					/>
-				)}
-			</ListGroup>
+			<>
+				<ModalPopUp 
+					headerText = "Order Text" 
+					bodyText = {orderTextOnModal}
+					handleClose = {() => setShowModal(false)}
+					handleShow = {() => setShowModal(true)}
+					show = {showModal}
+				/>
+				<ListGroup variant="flush" className={styles.listGroup}>
+					{/* store order header */}
+					<ListGroup.Item>
+						<Row>
+							<Col xs="auto" className="me-auto"> 
+								<span className={styles.storeName}>{storeName}</span> 
+							</Col>
+							{/* <Col>totalCost: ${totalCost}</Col> */}
+							<Col className="ms-auto" xs="auto">
+								<a className={{color: "blue"}} onClick={handleClickGenerate}>
+									Generate Order Text
+								</a>
+							</Col>
+						</Row>
+					</ListGroup.Item>
+					{orderObjArr.map(orderObj => 
+						<UserOrderCard 
+							modeOfTransfer = {orderObj.modeOfTransfer == "collection" ? "-Collection-": "-Delivery-"}
+							bakeName = {orderObj.bakeName}
+							bakeSet = {orderObj.bakeSet}
+							qty = {orderObj.qty}
+							unitprice = {orderObj.unitprice}
+							remarks = {orderObj.remarks}
+							bakePhotoURL = {orderObj.bakePhotoURL}
+						/>
+					)}
+				</ListGroup>
+			</>
 		)
 	);
 }
 
+function ModalPopUp(props) {
+	const { headerText = "defaultHeader", 
+			bodyText = "defaultBody",
+			handleClose = () => alert("defaultHandleClose"),
+			handleShow = () => alert("defaultHandleShow"),
+			show = false } = props;
+
+	return (
+	  <>
+		<Modal show={show} onHide={handleClose}>
+			<Modal.Header closeButton>
+				<Modal.Title>{headerText}</Modal.Title>
+			</Modal.Header>
+			<Modal.Body style={{fontSize:"small"}}>
+				{`why doesnt \n 
+				new lines show`}
+				{/* {bodyText} */}
+			</Modal.Body>
+			<Modal.Footer>
+				<Button variant="secondary" onClick={handleClose}>
+					Close
+				</Button>
+				<Button variant="primary" onClick={handleClose}>
+					Copy Order Text
+				</Button>
+			</Modal.Footer>
+		</Modal>
+	  </>
+	);
+  }
+  
 
 
 function generateOrder(userOrderData) {
