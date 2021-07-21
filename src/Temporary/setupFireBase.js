@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { db } from "../config/firebase";
 import { bakeDocObj_1, bakeDocObj_2, bakeDocObj_3 } from "./test-bakes";
 import { storeDocObj_1, storeDocObj_2, storeDocObj_3 } from "./test-stores";
-import { userDocObj_1, userOrderDocObj_1 } from "./test-users";
+import { userDocObj_1, userOrderDocObj_1, userOrderDocObj_2 } from "./test-users";
 
 export function setupBakeDoc() {
 	//modify object and name before pressing button
@@ -38,10 +38,10 @@ export function setupUserOrderDoc() {
 	//modify object and name before pressing button
 	const userOrderRef = db
 		.collection("users").doc("Wq33g2sv1Qbkj3RvxARGS419oNC2")
-		.collection("user-order").doc("store_0001"); //modify name (storeID)
-	const userOrderDocObj = userOrderDocObj_1;							//modify obj
+		.collection("user-orders").doc("store_0002"); //modify name (storeID)
+	const userOrderDocObj = userOrderDocObj_2;							//modify obj
 	userOrderRef
-		.set(userOrderDocObj)
-		.then(() => alert("user-order successfully written to db"))
+		.set(userOrderDocObj, { merge: true })
+		.then(() => alert("user-order successfully written to db user-orders"))
 		.catch(() => alert("error writing to db"));
 }
