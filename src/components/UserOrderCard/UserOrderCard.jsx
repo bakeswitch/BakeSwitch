@@ -38,11 +38,9 @@ function UserOrderCard(props) {
 		// 		</Card.Text>
 		// 	</Card.Body>
 		// </Card>
-	
-
 		<ListGroup.Item>
 			<Row>
-				<Col xs={2}>
+				<Col xs="auto">
 					<Image
 						variant = "left"
 						src= {bakePhotoURL}
@@ -51,23 +49,23 @@ function UserOrderCard(props) {
 						className={styles.bakeImg}
 					/>
 				</Col>
-				<Col md={10}>
+				<Col>
 					<Card className={styles.orderCard}>
 						<Card.Header as="h6" onClick={handleClick}>{bakeName}</Card.Header>
 						<Card.Body className={styles.orderDesc}>
 							<Row>
-								<Col xs="auto">
+								<Col xs="auto" className="me-auto">
 									<Card.Text className={styles.priceQtyAndMode}>
-										<h6>{qty} x ["{bakeSet}"] set</h6>
+										<h6>{qty} x ["{bakeSet}"]</h6>
 										{modeOfTransfer}<br/>
 									</Card.Text>
 
 								</Col>
-								<Col xs={7} styles={{justifyContent:"center"}}>
-									"{remarks}""
+								<Col className={styles.remarks}>
+								 	{remarks} 
 								</Col>
-								<Col className="ms-auto" as="h2" xs={2}>
-										${unitprice}
+								<Col className="ms-auto" as="h3" xs={2}>
+									${unitprice}
 								</Col>
 
 							</Row>
@@ -79,11 +77,7 @@ function UserOrderCard(props) {
 	);
 }
 
-// function orderHeader(props) {
-// 	return (
-		
-// 	)
-// }
+
 export function LoadUserStoreOrders(props) {
 	const { userID, storeID } = props;
 	const [userOrderData, setUserOrderData] = useState();
@@ -117,38 +111,36 @@ export function LoadUserStoreOrders(props) {
 
 	const { storeName = "defaultStoreName",
 			totalCost = "defaultTotalCost",
-			orderObj  = "defaultOrderObj"} = userOrderData;
-	const { modeOfTransfer 	= "defaultModeOfTransfer",
-			bakeName 		= "defaultBakeName",
-			bakeSet 		= "defaultBakeSet",
-			qty 			= 1,
-			unitprice	 	= 0,
-			remarks 		= "defaultRemarks",
-			bakePhotoURL 	= "https://cdn.pixabay.com/photo/2016/10/12/22/40/bar-1736191_1280.jpg" } = orderObj[2];
+			orderObj : orderObjArr  = [{}] 	} = userOrderData;
 	
 	return (
 		!isLoading && (
-			<ListGroup variant="flush">
+			<ListGroup variant="flush" className={styles.listGroup}>
+				{/* store order header */}
 				<ListGroup.Item>
 					<Row>
-						<Col xs={2}> {storeName} </Col>
+						<Col xs="auto" className="me-auto"> 
+							<span className={styles.storeName}>{storeName}</span> 
+						</Col>
 						{/* <Col>totalCost: ${totalCost}</Col> */}
-						<Col className="ms-auto" xs={3}>
+						<Col className="ms-auto" xs="auto">
 							<a className={{color: "blue"}} onClick={() => alert("throw modal")}>
 								Generate Order Text
 							</a>
 						</Col>
 					</Row>
 				</ListGroup.Item>
-				<UserOrderCard 
-					modeOfTransfer = {modeOfTransfer == "collection" ? "-Collection-": "-Delivery-"}
-					bakeName = {bakeName}
-					bakeSet = {bakeSet}
-					qty = {qty}
-					unitprice = {unitprice}
-					remarks = {remarks}
-					bakePhotoURL = {bakePhotoURL}
-				/>
+				{orderObjArr.map(orderObj => 
+					<UserOrderCard 
+						modeOfTransfer = {orderObj.modeOfTransfer == "collection" ? "-Collection-": "-Delivery-"}
+						bakeName = {orderObj.bakeName}
+						bakeSet = {orderObj.bakeSet}
+						qty = {orderObj.qty}
+						unitprice = {orderObj.unitprice}
+						remarks = {orderObj.remarks}
+						bakePhotoURL = {orderObj.bakePhotoURL}
+					/>
+				)}
 			</ListGroup>
 		)
 	);

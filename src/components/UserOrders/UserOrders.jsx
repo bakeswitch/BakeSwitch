@@ -47,10 +47,12 @@ export default function UserOrders() {
     return ( !isLoading && 
         <>
 			{/* storeID: {JSON.stringify(storeIDArr)} */}
-			<LoadUserStoreOrders 
-				userID = "Wq33g2sv1Qbkj3RvxARGS419oNC2"
-				storeID = "store_0001"
-			/>
+            {storeIDArr.map(storeID => 
+                <LoadUserStoreOrders
+                    userID = "Wq33g2sv1Qbkj3RvxARGS419oNC2"
+                    storeID = {storeID}
+			    />
+            )}
         </>
     )
 }

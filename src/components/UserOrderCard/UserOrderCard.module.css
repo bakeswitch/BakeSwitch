@@ -6,20 +6,34 @@
 	margin: 2rem auto;
 } */
 
+.listGroup {
+	padding-top: 3rem;
+}
+
+.storeName {
+	text-align: left;
+	background-color: white;
+	font-weight: bold;
+	color: black;
+}
+
 .priceQtyAndMode {
 	text-align: center;
 	background-color: white;
 }
 
 .bakeImg {
-	width: 125px;
-	height: 125px;
+	width: 195px;
+	height: 130px;
 	justify-content: left;
+	border-radius: 5px;
+	border: 1px solid rgb(212, 212, 212);
 	/* display: inline-block; */
 }
 
+
 .orderCard {
-	height: 125px;
+	height: 130px;
 	/* margin-left: 3rem;
 	flex-grow: 1; */
 }
@@ -28,4 +42,11 @@
 	text-align: left;
 	overflow: auto;
 	font-size: small;
+}
+
+.remarks {
+	text-align: center;
+	color: rgba(24, 12, 12, 0.637);
+	padding: 0 3rem 0;
+	justify-content: center;
 }
