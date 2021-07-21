@@ -3,7 +3,7 @@ import { Row, Col, Card } from "react-bootstrap";
 import styles from "./SearchResults.module.css";
 import { db } from "../../config/firebase";
 
-import DisplayBakeCard from "../helperComponents/DisplayBakeCard";
+import { LoadBakeCard } from "../BakeCard/LoadBakeCard";
 import ErrorCard from "../helperComponents/ErrorCard";
 
 export default function SearchResults(props) {
@@ -74,7 +74,7 @@ export default function SearchResults(props) {
 						// display={bakeID? 'none': 'block'}
 						key={"col_" + bakeID}
 					>
-						<DisplayBakeCard bakeID={bakeID} />
+						<LoadBakeCard bakeID={bakeID} />
 					</Col>
 				))}
 				{/* <Col>searchTag:{searchTag}</Col>

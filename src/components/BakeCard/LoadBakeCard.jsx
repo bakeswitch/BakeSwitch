@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import BakeCard from "../BakeCard";
+import BakeCard from ".";
 import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 import { db } from "../../config/firebase";
 import ErrorCard from "../helperComponents/ErrorCard";
 
-export default function DisplayBakeCard(props) {
+export function LoadBakeCard(props) {
 	const bakeID = props.bakeID;
 	// alert('runs here in dbc');
 	const [bakeData, setBakeData] = useState();

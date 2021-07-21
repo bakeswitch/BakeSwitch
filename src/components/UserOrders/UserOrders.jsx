@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
-import { LoadUserStoreOrders } from "../UserOrderCard/UserOrderCard.jsx";
+import UserStoreOrders from "../UserOrderCard/UserStoreOrders.jsx";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../config/firebase";
 
 
+//populates storeIDArr
 export default function UserOrders() {
 	// const [orderedPriceAndQtyArr, setOrderedPriceAndQtyArr] = useState([["default_price","default_qty"]]);
 	const [isLoading, setIsLoading] = useState(false);
     const [storeIDArr, setStoreIDArr] = useState([]);
-    const currentUser = useAuth();
+    const { currentUser } = useAuth();
     const uid = currentUser.uid;
 
     useEffect(() => {
         try {
 			setIsLoading(true);
-            fillStoreIDArr("Wq33g2sv1Qbkj3RvxARGS419oNC2"); //HARDCODING FOR TESTING - CHANGE LTR
+            // alert(uid);
+            fillStoreIDArr(uid); //HARDCODING FOR TESTING - CHANGE LTR
 			// fillStoreIDArr(uid); //arr of orders from different stores (doc name is storeID)
 		} finally {
 			setIsLoading(false);
@@ -48,8 +50,8 @@ export default function UserOrders() {
         <>
 			{/* storeID: {JSON.stringify(storeIDArr)} */}
             {storeIDArr.map(storeID => 
-                <LoadUserStoreOrders
-                    userID = "Wq33g2sv1Qbkj3RvxARGS419oNC2"
+                <UserStoreOrders
+                    userID = {uid}
                     storeID = {storeID}
 			    />
             )}
