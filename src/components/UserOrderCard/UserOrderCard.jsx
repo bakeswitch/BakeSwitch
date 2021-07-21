@@ -64,7 +64,7 @@ function UserOrderCard(props) {
 								<Col className={styles.remarks}>
 								 	{remarks} 
 								</Col>
-								<Col className="ms-auto" as="h3" xs={2}>
+								<Col className="ms-auto" as="h6" xs={2}>
 									${unitprice}
 								</Col>
 
@@ -91,6 +91,10 @@ export function LoadUserStoreOrders(props) {
 		() => fillUserOrderData(),
 		[]
 	);
+
+	function handleClickGenerate() {
+		alert(generateOrder(userOrderData));
+	}
 	
 	function fillUserOrderData() {
 		userOrderRef.get()
@@ -124,7 +128,7 @@ export function LoadUserStoreOrders(props) {
 						</Col>
 						{/* <Col>totalCost: ${totalCost}</Col> */}
 						<Col className="ms-auto" xs="auto">
-							<a className={{color: "blue"}} onClick={() => alert("throw modal")}>
+							<a className={{color: "blue"}} onClick={handleClickGenerate}>
 								Generate Order Text
 							</a>
 						</Col>
@@ -146,85 +150,29 @@ export function LoadUserStoreOrders(props) {
 	);
 }
 
-/*
-export function DisplayBakeCard(props) {
-	const bakeID = props.bakeID;
-	const [bakeData, setBakeData] = useState();
-	const [orderedPriceAndQtyArr, setOrderedPriceAndQtyArr] = useState([["default_price","default_qty"]]);
-	const [isLoading, setIsLoading] = useState(false);
 
-	if (bakeID == "") {
-		return "Don't load";
-	}
 
-	const bakeRef = db.collection("bakes").doc(bakeID);
-	const history = useHistory();
+function generateOrder(userOrderData) {
+	const { storeName = "defaultStoreName",
+			totalCost = "defaultTotalCost",
+			orderObj : orderObjArr  = [{}] 	} = userOrderData;
 
+	const greeting = `Hi ${storeName}, may I order the following at a total price of $${totalCost}, please? \n`;
+	const ordersText =  orderObjArr.map((orderObj, index) => {
+		const modeOfTransfer = orderObj.modeOfTransfer;
+		const bakeName = orderObj.bakeName;
+		const bakeSet = orderObj.bakeSet;
+		const qty = orderObj.qty;
+		const unitprice = orderObj.unitprice;
+		return `(${index + 1}) ${qty}x (${bakeSet}) of (${bakeName}) at $${unitprice} each - [${modeOfTransfer}] \n` 
+	});	
 	
-	function fillBakeData() {
-		bakeRef.get()
-			.then((snapshot) => {
-				if (snapshot && snapshot.exists) {
-					setBakeData(snapshot.data());
-					// alert("bakeData set");
-				} else {
-					alert('snapshot doesnt exist');
-				}
-			}).catch((err) => alert("setBakeObj error: " + err));
-	}
-
-	function getRealTimeUpdates() {
-		bakeRef.onSnapshot((snapshot) => {
-			if (snapshot && snapshot.exists) {
-				// alert(JSON.stringify(snapshot.data())); //runs here
-				const orderedPnQArr = orderPriceAndQtyArr(snapshot.data());
-				// alert(JSON.stringify(orderedPnQ)); //Doesnt run here
-				setOrderedPriceAndQtyArr(orderedPnQArr);
-			} else {
-				alert("snapshot doesnt exist for realtime update");
-			}
-		})
-	}
-	
-	useEffect(() => {
-		try {
-			setIsLoading(true);
-			fillBakeData();
-			getRealTimeUpdates();
-		} finally {
-			setIsLoading(false);
-		}
-		// return (() => {
-		// 	setBakeData([]);
-		// 	setIsLoading(false);
-		// })
-	},[]);
-	
-	if (!bakeData) { 
-		return ErrorCard("no bake data") 
-	}
-	
-	//pass in default values in case can't read fields
-	const { bakeName 		= 'default_bake_name', 
-			storeID  		= 'default_store_id',
-			bakeDesc 		= 'default_bake_desc',
-			bakePhotoURL 	= 'default_bake_photo' } = bakeData;
-	
-	function handleOnClick() {
-		history.push(`/bake-product/${bakeID}`);
-	}
-	
-	return !isLoading && ( 
-		<BakeCard 
-			key = {"displayBakeCard_" + bakeID}
-			bakeID = {bakeID}
-			handleOnClick = {handleOnClick}
-			bakePhotoURL = {bakePhotoURL}
-			bakeName = {bakeName}
-			bakeDesc = {bakeDesc}
-			orderedPriceAndQtyArr = {orderedPriceAndQtyArr}
-			storeID = {storeID}
-		/>
-	);
+	const ordersRemarks = orderObjArr.map((orderObj, index) => {
+		const remarks = orderObj.remarks;
+		return remarks ? `(${index + 1}) "${remarks}" \n` : ""; 
+	});
+	return greeting + ordersText.join('') + `\n` + `Additional Remarks: \n` + ordersRemarks.join('');
 }
-*/
+	// (1) 3x (Bag of 4 cookies) of (Chocolate Hazelnut Cookies) at  $4 each - [collection] 
+	// (2) 2x (Box of 20 cookies) of (Chocolate Hazelnut Cookies) at $17 each - [collection]
+	// (3) 1x (20'' Whole Cake) of (Strawberry Cake) at $40 each - [delivery]"
