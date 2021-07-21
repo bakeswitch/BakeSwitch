@@ -1,22 +1,31 @@
-.orderBox {
+/* .orderBox {
 	display: flex;
 	justify-content: center;
 	height: 150px;
 	width: 65vw;
 	margin: 2rem auto;
+} */
+
+.priceQtyAndMode {
+	text-align: center;
+	background-color: white;
 }
 
 .bakeImg {
 	width: 125px;
 	height: 125px;
+	justify-content: left;
+	/* display: inline-block; */
 }
 
 .orderCard {
-	margin-left: 3rem;
-	flex-grow: 1;
+	height: 125px;
+	/* margin-left: 3rem;
+	flex-grow: 1; */
 }
 
 .orderDesc {
 	text-align: left;
 	overflow: auto;
+	font-size: small;
 }
