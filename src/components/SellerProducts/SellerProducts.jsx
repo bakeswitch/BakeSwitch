@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductListingDisplay from "./ProductListingDisplay";
 import AddProduct from "./AddProduct";
+import MasterToggler from "./MasterToggler";
 import { Row, Col } from "react-bootstrap";
 import { db } from "../../config/firebase";
 
@@ -24,14 +25,17 @@ export default function SellerProductDisplay(props) {
 
 			<AddProduct storeID={storeID} />
 
-			{!loading && (
-				<Row sm={1} md={2} lg={3} className="mb-3 mt-4">
-					{bakeIDArr.map((bakeID) => (
-						<Col key={bakeID}>
-							<ProductListingDisplay bakeID={bakeID} />
-						</Col>
-					))}
-				</Row>
+			{!loading && bakeIDArr.length != 0 && (
+				<>
+					<MasterToggler bakeIDArr={bakeIDArr} />
+					<Row sm={1} md={2} lg={3} className="mb-3 mt-4">
+						{bakeIDArr.map((bakeID) => (
+							<Col key={bakeID}>
+								<ProductListingDisplay bakeID={bakeID} />
+							</Col>
+						))}
+					</Row>
+				</>
 			)}
 		</div>
 	);
