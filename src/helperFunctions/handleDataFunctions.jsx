@@ -5,7 +5,6 @@ import firebase from "@firebase/app";
 //PARAM: bakeData
 //RETURNS: array of arrays [price, qty], which is sorted by price in ascending order
 export function orderPriceAndQtyArr(bakeData) {
-	// const [orderedPnQ, setOrderedPnQ] = useState({});
 	if (bakeData != null) {
 		const { bakePriceAndQty: unorderedPnQ } = bakeData;
 		const unorderedKeys = Object.keys(unorderedPnQ);
@@ -64,17 +63,20 @@ export function delOrderFromUserOrders(userOrdersRef, storeName, qty, bakeSet, b
 						unitprice: unitPrice, 
 						remarks: remarks,
 						bakePhotoURL: bakePhotoURL };
-	userOrdersRef.update({
+	userOrdersRef.set({
 		storeName: storeName,
 		orderObj: firebase.firestore.FieldValue.arrayRemove(orderObj)
-	})
-	.then(() => alert('deleted order'))
+	}, {merge: true})
+	// .then(() => alert('Order has been deleted'))
 	.catch((err) => alert("unable to del userOrder: " + err));
 }
 export function delUserOrderDoc(userOrdersRef) {
 	userOrdersRef.delete()
-		.then(() => alert("userorderdoc has been deleted"))
-		.catch((err) => alert("unable to del user order doc: " + err));
+		.then(() => alert("Your orders for this store have all been deleted"))
+		.catch((err) => alert("unable to del user order doc: " + err))
+		.finally(() => {
+			setTimeout(() => window.location.reload(), 6000); //setting time so that firestore can delete the doc
+		});
 }
 
 //PARAM: orderObjArr from the userOrderData field (db.collection("users").doc(userID).collection("user-orders").doc(storeID))

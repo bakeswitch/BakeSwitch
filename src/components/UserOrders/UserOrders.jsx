@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import UserStoreOrders from "../UserOrderCard/UserStoreOrders.jsx";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../config/firebase";
+import styles from "./UserOrders.module.css"
+import { useHistory } from "react-router-dom";
 
 
 //populates storeIDArr
@@ -12,6 +14,7 @@ export default function UserOrders() {
     const [storeIDArr, setStoreIDArr] = useState([]);
     const { currentUser } = useAuth();
     const uid = currentUser.uid;
+    const history = useHistory();
 
     useEffect(() => {
         try {
@@ -49,12 +52,29 @@ export default function UserOrders() {
     return ( !isLoading && 
         <>
 			{/* storeID: {JSON.stringify(storeIDArr)} */}
-            {storeIDArr.map(storeID => 
-                <UserStoreOrders
-                    userID = {uid}
-                    storeID = {storeID}
-			    />
-            )}
+            {storeIDArr.length != 0
+                ? storeIDArr.map(storeID => 
+                    <UserStoreOrders
+                        userID = {uid}
+                        storeID = {storeID}
+                    />
+                )
+                : <Card border="dark" className={styles.callToOrderCard}>
+                    <Card.Img variant="top" src="https://cdn.pixabay.com/photo/2016/02/19/10/13/pug-1209129_1280.jpg" />
+                    <Card.Body>
+                        <Card.Title>No orders?</Card.Title>
+                        <Card.Text as="h6">
+                            Quickk!! Add some orders before mumbo goes hungry
+                        </Card.Text>
+                        <Button variant="secondary" 
+                            onClick={() => {
+                                alert('clicked');
+                                history.push("/bakes");
+                            }}>
+                            Browse Bakes
+                        </Button>
+                    </Card.Body>
+                </Card>}
         </>
     )
 }

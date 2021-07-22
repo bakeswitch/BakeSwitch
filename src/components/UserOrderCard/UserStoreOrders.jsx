@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import ErrorCard from "../helperComponents/ErrorCard";
 import UserOrderCard from "./UserOrderCard";
 import { getTotalCost } from "../../helperFunctions/handleDataFunctions";
+import { AiFillWindows } from "react-icons/ai";
 
 export default function UserStoreOrders(props) {
 	const { userID, storeID } = props;
@@ -17,17 +18,20 @@ export default function UserStoreOrders(props) {
 							.collection("user-orders").doc(storeID);
 	const [numOfStoreOrders, setNumOfStoreOrders] = useState();
 	const [showModal, setShowModal] = useState(false);
-	const [showStoreOrders, setShowStoreOrders] = useState(true);
 
-	useEffect(
-		() => fillUserOrderData(),
-		[]
-	);
+	useEffect(() => {
+		fillUserOrderData();
+		getRealTimeUpdates();
+	}, []);
 
 	useEffect(() => 
 		(userOrderData) ? setNumOfStoreOrders(userOrderData.orderObj.length) : "",
 		[userOrderData]
 	)
+
+	// useEffect(() => {
+	// 	fillUserOrderData();
+	// }, [numOfStoreOrders])
 
 	function handleClickGenerate() {
 		const orderText = generateOrder(userOrderData)
@@ -36,22 +40,33 @@ export default function UserStoreOrders(props) {
 		// setOrderTextOnModal(orderText);
 		// setShowModal(true);
 	}
-	
+
 	function fillUserOrderData() {
 		userOrderRef.get()
 			.then((snapshot) => {
 				setIsLoading(true);
 				if (snapshot && snapshot.exists) {
 					setUserOrderData(snapshot.data());
-				} else {
-					alert('snapshot doesnt exist');
-				}
+				} 
 			}).catch(err => alert("setUserOrderObj error: " + err))
 			.finally(() => setIsLoading(false));
 	}
 
+	function getRealTimeUpdates() {
+		userOrderRef.onSnapshot((snapshot) => {
+			setUserOrderData(snapshot.data()); 
+			//removed snapshot.exist conditional test so that can set it to null
+				/*
+				if (snapshot && snapshot.exists) {
+				} else {
+					alert("snapshot doesnt exist for realtime update");
+				} */
+		});
+	}
+
 	if (!userOrderData) {
-		return ErrorCard("no user order data");
+		return null;
+		// ErrorCard("no user order data");
 	}
 
 	const { storeName = "defaultStoreName",
@@ -59,7 +74,7 @@ export default function UserStoreOrders(props) {
 			orderObj : orderObjArr  = [{}] 	} = userOrderData;
 	
 	return (
-		!isLoading && showStoreOrders && (
+		!isLoading && (
 			<>
 				{/* <ModalPopUp 
 					headerText = "Order Text" 
@@ -83,7 +98,7 @@ export default function UserStoreOrders(props) {
 							</Col>
 						</Row>
 					</ListGroup.Item>
-					{orderObjArr.map(orderObj => 
+					{userOrderData.orderObj.map(orderObj => 
 						<UserOrderCard 
 							storeID = {storeID}
 							uid = {userID}
@@ -97,7 +112,7 @@ export default function UserStoreOrders(props) {
 							bakePhotoURL = {orderObj.bakePhotoURL}
 							numOfStoreOrders={numOfStoreOrders}
 							setNumOfStoreOrders = {setNumOfStoreOrders}
-							setShowStoreOrders = {setShowStoreOrders}
+							// userOrderData = {userOrderData}
 								// orderObjArr.length}
 						/>
 					)}

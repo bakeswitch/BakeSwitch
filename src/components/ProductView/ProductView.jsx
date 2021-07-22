@@ -72,7 +72,6 @@ export default function ProductView(props) {
         const userOrdersRef = db
             .collection("users").doc(uid) //samyipsh@gmail.com acct
             .collection("user-orders").doc(storeID); //modify name (storeID)
-        alert("entered");
         return writeOrderToUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitPrice, modeOfTransfer, remarks, bakePhotoURL )
     }
     
