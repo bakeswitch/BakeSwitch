@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Button, Alert, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { db } from "../../config/firebase";
 
 export default function AddOrder(props) {
