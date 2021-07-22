@@ -10,7 +10,6 @@ export default function SearchResults(props) {
 	const searchTerm = props.searchTerm;
 	const isTag = props.isTag;
 	const [bakeIDArr, setBakeIDArr] = useState([]); //array of bakeID strings
-	// const [tempIDArr, setTempIDArr] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const bakeRef = db.collection("bakes");
 

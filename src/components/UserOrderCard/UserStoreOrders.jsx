@@ -5,6 +5,7 @@ import { db } from "../../config/firebase";
 import { useHistory } from "react-router-dom";
 import ErrorCard from "../helperComponents/ErrorCard";
 import UserOrderCard from "./UserOrderCard";
+import { getTotalCost } from "../../helperFunctions/handleDataFunctions";
 
 export default function UserStoreOrders(props) {
 	const { userID, storeID } = props;
@@ -14,12 +15,19 @@ export default function UserStoreOrders(props) {
 	// const history = useHistory();
 	const userOrderRef = db.collection("users").doc(userID)
 							.collection("user-orders").doc(storeID);
+	const [numOfStoreOrders, setNumOfStoreOrders] = useState();
 	const [showModal, setShowModal] = useState(false);
+	const [showStoreOrders, setShowStoreOrders] = useState(true);
 
 	useEffect(
 		() => fillUserOrderData(),
 		[]
 	);
+
+	useEffect(() => 
+		(userOrderData) ? setNumOfStoreOrders(userOrderData.orderObj.length) : "",
+		[userOrderData]
+	)
 
 	function handleClickGenerate() {
 		const orderText = generateOrder(userOrderData)
@@ -51,7 +59,7 @@ export default function UserStoreOrders(props) {
 			orderObj : orderObjArr  = [{}] 	} = userOrderData;
 	
 	return (
-		!isLoading && (
+		!isLoading && showStoreOrders && (
 			<>
 				{/* <ModalPopUp 
 					headerText = "Order Text" 
@@ -77,13 +85,20 @@ export default function UserStoreOrders(props) {
 					</ListGroup.Item>
 					{orderObjArr.map(orderObj => 
 						<UserOrderCard 
-							modeOfTransfer = {orderObj.modeOfTransfer == "collection" ? "-Collection-": "-Delivery-"}
+							storeID = {storeID}
+							uid = {userID}
+							storeName= {storeName}
+							modeOfTransfer = {orderObj.modeOfTransfer}
 							bakeName = {orderObj.bakeName}
 							bakeSet = {orderObj.bakeSet}
 							qty = {orderObj.qty}
 							unitprice = {orderObj.unitprice}
 							remarks = {orderObj.remarks}
 							bakePhotoURL = {orderObj.bakePhotoURL}
+							numOfStoreOrders={numOfStoreOrders}
+							setNumOfStoreOrders = {setNumOfStoreOrders}
+							setShowStoreOrders = {setShowStoreOrders}
+								// orderObjArr.length}
 						/>
 					)}
 				</ListGroup>
@@ -95,8 +110,9 @@ export default function UserStoreOrders(props) {
 
 function generateOrder(userOrderData) {
 	const { storeName = "defaultStoreName",
-			totalCost = "defaultTotalCost",
+			// totalCost = "defaultTotalCost",
 			orderObj : orderObjArr  = [{}] 	} = userOrderData;
+	const totalCost = getTotalCost(orderObjArr);
 
 	const greeting = `Hi ${storeName}, may I order the following at a total price of $${totalCost}, please? \n`;
 	const ordersText =  orderObjArr.map((orderObj, index) => {

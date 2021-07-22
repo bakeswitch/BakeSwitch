@@ -27,6 +27,6 @@ export const userOrderDocObj_2 = {
     storeName   :'TomBakes', //store_0001
     totalCost	:7,
     orderObj	:[
-        {modeOfTransfer: 'delivery', bakeName: 'Strawberry Cake', bakeSet: "1 Slice of Cake", bakePhotoURL: 'https://cdn.pixabay.com/photo/2016/10/27/22/12/cake-1776661_1280.jpg', qty: 1, unitprice: 7, remarks: 'less sugar'}, 
+        {modeOfTransfer: 'delivery', bakeName: 'Strawberry Cake', bakeSet: "1 Slice of Cake", bakePhotoURL: 'https://cdn.pixabay.com/photo/2016/10/27/22/12/cake-1776661_1280.jpg', qty: 1, unitprice: 7, remarks: 'less sugar'}
     ]
 };
