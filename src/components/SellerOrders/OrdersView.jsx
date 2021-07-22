@@ -59,7 +59,7 @@ export default function OrdersView(props) {
 				{deliveryOrdersArr.length != 0 && (
 					<OrdersDisplay title="Delivery Orders" orderArr={deliveryOrdersArr} />
 				)}
-				<Button variant="info" className="mt-2 mb-2" onClick={() => setShowAll(!showAll)}>
+				<Button variant="secondary" className="mt-2 mb-2" onClick={() => setShowAll(!showAll)}>
 					View All Orders
 				</Button>
 				{showAll && !showAllLoading && <OrdersDisplay title="All Orders" orderArr={allOrdersArr} />}

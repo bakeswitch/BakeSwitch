@@ -18,6 +18,7 @@ export default function AddProduct(props) {
 
 	const [loading, setLoading] = useState(false);
 	const [showForm, setShowForm] = useState(false);
+	const [showAddAnother, setShowAddAnother] = useState(false);
 
 	function handleSubmit(event) {
 		event.preventDefault();
@@ -44,6 +45,7 @@ export default function AddProduct(props) {
 		} catch (error) {
 			alert("" + error);
 		} finally {
+			setShowAddAnother(true);
 			setLoading(false);
 		}
 	}
@@ -120,21 +122,23 @@ export default function AddProduct(props) {
 						<AddTags updateArr={setTags} />
 
 						<Button className="mt-4" variant="primary" type="submit" disabled={loading}>
-							Add Product Listing
+							List Product
 						</Button>
 					</Form>
-					<Button
-						className="mt-4  mb-4 me-4"
-						variant="secondary"
-						size="sm"
-						onClick={async () => {
-							await setShowForm(false);
-							setShowForm(true);
-							window.scrollTo(0, 0);
-						}}
-					>
-						Add Another Product
-					</Button>
+					{showAddAnother && (
+						<Button
+							className="mt-4  mb-4 me-4"
+							variant="secondary"
+							size="sm"
+							onClick={async () => {
+								await setShowForm(false);
+								setShowForm(true);
+								window.scrollTo(0, 0);
+							}}
+						>
+							Add Another Product
+						</Button>
+					)}
 					<Button
 						className="mt-4  mb-4"
 						variant="warning"
@@ -143,6 +147,7 @@ export default function AddProduct(props) {
 					>
 						Done
 					</Button>
+					<hr style={{ width: "50%" }}></hr>
 				</>
 			)}
 		</div>

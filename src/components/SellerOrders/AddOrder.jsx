@@ -16,6 +16,7 @@ export default function AddOrder(props) {
 
 	const [loading, setLoading] = useState(false);
 	const [showForm, setShowForm] = useState(false);
+	const [showAddAnother, setShowAddAnother] = useState(false);
 
 	function handleSubmit(event) {
 		event.preventDefault();
@@ -48,6 +49,7 @@ export default function AddOrder(props) {
 		} catch (error) {
 			alert("" + error);
 		} finally {
+			setShowAddAnother(true);
 			setLoading(false);
 		}
 	}
@@ -161,18 +163,20 @@ export default function AddOrder(props) {
 							Add Order
 						</Button>
 					</Form>
-					<Button
-						className="mt-4  mb-4 me-4"
-						variant="warning"
-						size="sm"
-						onClick={async () => {
-							await setShowForm(false);
-							setShowForm(true);
-							window.scrollTo(0, 0);
-						}}
-					>
-						Add Another Order
-					</Button>
+					{showAddAnother && (
+						<Button
+							className="mt-4  mb-4 me-4"
+							variant="secondary"
+							size="sm"
+							onClick={async () => {
+								await setShowForm(false);
+								setShowForm(true);
+								window.scrollTo(0, 0);
+							}}
+						>
+							Add Another Order
+						</Button>
+					)}
 					<Button
 						className="mt-4  mb-4"
 						variant="warning"
@@ -181,6 +185,7 @@ export default function AddOrder(props) {
 					>
 						Done
 					</Button>
+					<hr style={{ width: "50%" }}></hr>
 				</>
 			)}
 		</div>
