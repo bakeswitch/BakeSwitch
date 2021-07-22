@@ -4,26 +4,20 @@ import PricingOptionsDisplay from "./PricingOptionsDisplay";
 
 export default function AddPricingInfo(props) {
 	const [pricingObj, setPricingObj] = useState({});
-	// const [priceArr, setPriceArr] = useState([]);
 	const [qty, setQty] = useState();
 	const [price, setPrice] = useState();
 
 	function handleAdd() {
-		setPricingObj((prevObj) => {
-			return { ...prevObj, [price]: qty };
-		});
-		// setPriceArr((prevArr) => {
-		// 	return [...prevArr, price];
-		// });
-	}
-
-	function handleConfirm() {
-		handleAdd();
+		// Only add if price and qty values are not empty
+		if (price && qty) {
+			setPricingObj((prevObj) => {
+				return { ...prevObj, [price]: qty };
+			});
+		}
 	}
 
 	useEffect(() => {
 		props.updateMap(pricingObj);
-		// props.updateArr(priceArr);
 	}, [pricingObj]);
 
 	return (
@@ -51,10 +45,10 @@ export default function AddPricingInfo(props) {
 				proceeding.
 			</Form.Text>
 			<div className="mt-1 mb-2">
-				<Button className="mt-2" onClick={handleAdd} size="sm">
+				<Button className="mt-2" variant="secondary" onClick={handleAdd} size="sm">
 					Add another option
 				</Button>
-				<Button className="mt-2 ms-3" variant="warning" onClick={handleConfirm} size="sm">
+				<Button className="mt-2 ms-3" variant="warning" onClick={handleAdd} size="sm">
 					Confirm
 				</Button>
 			</div>

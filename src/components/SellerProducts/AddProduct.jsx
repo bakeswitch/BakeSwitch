@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Button, Alert, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import AddPricingInfo from "./AddPricingInfo";
 import AddTags from "./AddTags";
 import { db } from "../../config/firebase";
@@ -15,26 +15,20 @@ export default function AddProduct(props) {
 	const pdtPromo = useRef();
 	const [tags, setTags] = useState([]);
 	const [pricing, setPricing] = useState({});
-	// const [priceArr, setPriceArr] = useState([]);
 
 	const [loading, setLoading] = useState(false);
-	const [msg, setMsg] = useState("");
-	const [err, setErr] = useState("");
 	const [showForm, setShowForm] = useState(false);
 
 	function handleSubmit(event) {
 		event.preventDefault();
 		setLoading(true);
-		setErr("");
-		setMsg("");
 		try {
-			// const sortedPriceArr = priceArr.sort();
 			db.collection("bakes")
 				.add({
 					storeID: storeID,
 					storeName: storeRec.storeName,
-					availabilityStart: storeRec.availabilityStart,
-					availabilityEnd: storeRec.availabilityEnd,
+					// availabilityStart: storeRec.availabilityStart,
+					// availabilityEnd: storeRec.availabilityEnd,
 					isAvailable: true,
 					bakeName: pdtName.current.value,
 					bakeDesc: pdtDesc.current.value,
@@ -42,14 +36,13 @@ export default function AddProduct(props) {
 					bakePhotoURL: photoURL.current.value,
 					bakeTags: tags,
 					bakePriceAndQty: pricing,
-					// bakePriceArr: sortedPriceArr,
 					itemPromo: pdtPromo.current.value,
 				})
 				.then(() => {
-					setMsg("Successfully listed.");
+					alert("Successfully listed.");
 				});
 		} catch (error) {
-			setErr("" + error);
+			alert("" + error);
 		} finally {
 			setLoading(false);
 		}
@@ -130,10 +123,25 @@ export default function AddProduct(props) {
 							Add Product Listing
 						</Button>
 					</Form>
-					{err && <Alert variant="danger">{err}</Alert>}
-					{msg && <Alert variant="success">{msg}</Alert>}
-					<Button className="mt-4  mb-4" variant="warning" onClick={() => setShowForm(false)}>
-						Back
+					<Button
+						className="mt-4  mb-4 me-4"
+						variant="secondary"
+						size="sm"
+						onClick={async () => {
+							await setShowForm(false);
+							setShowForm(true);
+							window.scrollTo(0, 0);
+						}}
+					>
+						Add Another Product
+					</Button>
+					<Button
+						className="mt-4  mb-4"
+						variant="warning"
+						size="sm"
+						onClick={() => window.location.reload()}
+					>
+						Done
 					</Button>
 				</>
 			)}

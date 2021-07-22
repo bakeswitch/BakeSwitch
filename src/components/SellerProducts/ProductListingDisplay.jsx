@@ -12,15 +12,18 @@ export default function ProductListingDisplay(props) {
 	const [loading, setLoading] = useState(true);
 	const [showDetails, setShowDetails] = useState(false);
 	const [confDelete, setConfDelete] = useState(false);
-	const [unavailable, setUnavailable] = useState(false);
+	const [pdtAvailability, setPdtAvailability] = useState();
+	const [switchLoading, setSwitchLoading] = useState(false);
 
 	useEffect(() => {
 		bakeRef.onSnapshot(function (doc) {
 			if (doc && doc.exists) {
 				setBakeRec(doc.data());
+				setPdtAvailability(doc.data().isAvailable);
 			}
 			setLoading(false);
 		});
+
 		// bakeRef
 		// 	.get()
 		// 	.then((snapshot) => setBakeRec(snapshot.data()))
@@ -28,6 +31,18 @@ export default function ProductListingDisplay(props) {
 	}, []);
 
 	const handleClose = () => setShowDetails(false);
+
+	function handleSwitchChange() {
+		setSwitchLoading(true);
+		try {
+			bakeRef.update({ isAvailable: !pdtAvailability });
+			setPdtAvailability(!pdtAvailability);
+		} catch (error) {
+			alert("Error. Unable to change product availability");
+		} finally {
+			setSwitchLoading(false);
+		}
+	}
 
 	function handleDelete() {
 		bakeRef
@@ -40,8 +55,6 @@ export default function ProductListingDisplay(props) {
 				alert("Unsuccessful. Product listing not deleted. " + error);
 			});
 	}
-
-	useEffect(() => bakeRef.update({ isAvailable: !unavailable }), [unavailable]);
 
 	return (
 		!loading && (
@@ -57,9 +70,13 @@ export default function ProductListingDisplay(props) {
 						<div className="mt-3">
 							<FormControlLabel
 								control={
-									<Switch checked={unavailable} onChange={() => setUnavailable(!unavailable)} />
+									<Switch
+										checked={pdtAvailability == false}
+										onChange={handleSwitchChange}
+										disabled={switchLoading}
+									/>
 								}
-								label="Switch to unavailable"
+								label={pdtAvailability ? "Switch to unavailable" : "Unavailable"}
 							/>
 						</div>
 					</Card.Body>
