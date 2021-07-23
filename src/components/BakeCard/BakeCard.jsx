@@ -1,34 +1,57 @@
 import React from "react";
 import styles from "./BakeCard.module.css";
 import { Card } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+
+
 
 export default function BakeCard(props) {
 	const {
 		bakeID = "defaultBakeID",
-		handleOnClick = () => alert("defaultHandleOnClick"),
+		// handleOnClick = () => alert("defaultHandleOnClick"),
 		bakePhotoURL = "defaultURL",
 		bakeName = "defaultBakeName",
 		bakeDesc = "defaultBakeDescription",
 		orderedPriceAndQtyArr = [["defaultPrice", "defaultQty"]],
-		storeID = "defaultStoreID"
+		storeID = "defaultStoreID",
+		storeName="defaultStoreName"
 	} = props;
+	const history = useHistory();
+	
+	function handleClickBake() {
+		history.push(`/bake-product/${bakeID}`);
+	}
 
+	function handleClickStore() {
+		history.push(`/bakerProfile/${storeID}`);
+	}	
+	
 	return (
-		<Card key={"card_" + bakeID} className={styles.card} onClick={handleOnClick}>
+		<Card key={"card_" + bakeID} className={styles.card}>
 			<Card.Img key={"img_" + bakeID}
 				className={styles.cardImg}
 				variant="top"
 				src={bakePhotoURL}
+				onClick={handleClickBake}
 			/>
 			<Card.Body key={"body_" + bakeID} className={styles.cardBody}>
-				<Card.Title key={"title_" + bakeID} className={styles.max2Lines}>{bakeName}</Card.Title>
+				<Card.Title 
+					key={"title_" + bakeID} 
+					className={styles.max2Lines}
+					onClick={handleClickBake}>
+						{bakeName}
+				</Card.Title>
 				<Card.Text key={"desc_" + bakeID} className={styles.max3Lines}>
 						{bakeDesc}
 				</Card.Text>
 				<Card.Text key={"footer_" + bakeID} className={styles.cardFooter}>
-					from S${orderedPriceAndQtyArr[0][0]} dollars onwards
-					<br />
-					by <Card.Link key={"store_" + bakeID}>{storeID}</Card.Link>
+					<span className={styles.max1Line}>from S${orderedPriceAndQtyArr[0][0]} onwards</span>
+					<Card.Link 
+						className={styles.max1Line} 
+						key={"store_" + bakeID}
+						onClick = {handleClickStore}>
+						by {storeName}
+					</Card.Link>
 				</Card.Text>
 			</Card.Body>
 		</Card>

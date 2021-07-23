@@ -72,23 +72,22 @@ export function LoadBakeCard(props) {
 		storeID = "default_store_id",
 		bakeDesc = "default_bake_desc",
 		bakePhotoURL = "default_bake_photo",
+		storeName = 'default_store_name'
 	} = bakeData;
 
-	function handleOnClick() {
-		history.push(`/bake-product/${bakeID}`);
-	}
 
 	return (
 		!isLoading && (
 			<BakeCard
 				key={"displayBakeCard_" + bakeID}
 				bakeID={bakeID}
-				handleOnClick={handleOnClick}
+				// handleOnClick={handleOnClick}
 				bakePhotoURL={bakePhotoURL}
 				bakeName={bakeName}
 				bakeDesc={bakeDesc}
 				orderedPriceAndQtyArr={orderedPriceAndQtyArr}
 				storeID={storeID}
+				storeName={storeName}
 			/>
 		)
 	);
