@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import styles from "./ProductView.module.css";
 import { FormControl, Badge, InputGroup, ButtonGroup, ToggleButton, Card, Nav, Row , Col, Button, Dropdown, DropdownButton } from "react-bootstrap"
 import ProductNavPages from "./ProductNavPages";
-
 import { FaHeart, FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
+import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../config/firebase";
-import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
+import { orderPriceAndQtyArr, writeOrderToUserOrders } from "../../helperFunctions/handleDataFunctions";
 import ErrorCard from "../helperComponents/ErrorCard";
 import { RatingDetails } from "../helperComponents/RatingOutOf5.jsx";
 
@@ -19,17 +19,10 @@ export default function ProductView(props) {
     const [indexPair, setIndexPair] = useState(0);
     const [radioValue, setRadioValue] = useState('1');
     const [isLiked, setIsLiked] = useState(false); //Link to wishlist 
-    const [modeOfTransferArrBool, setModeOfTransferArrBool] = useState([true, true]); //[delivers, canCollect]
-    //RADIO DOESNT WORK, call it aft storeData defined
-
-    //find way to add storeData?.storeDeliveryBool && storeData?.storeSelfCollectionBool
-    // const radios = [
-    //     { name: 'Delivery', value: '1', disabled: false },
-    //     { name: 'Self-Collection', value: '2', disabled: false},
-    // ];
-
     const [qty, setQty] = useState(1); //for qty of item group
-
+    const { currentUser } = useAuth();
+    const uid = currentUser.uid;
+    
     function fillBakeData() {
         //set bakedoc
         bakeRef.get().then(snapshot => {
@@ -71,18 +64,28 @@ export default function ProductView(props) {
 		})
     }
 
+    function addOrderToCart() {
+        const storeID = bakeData.storeID;
+        const bakeSet = orderedPnQArr[indexPair][1];
+        const unitPrice = orderedPnQArr[indexPair][0];
+        const remarks = prompt("Enter any remarks for your order (please include dates for delivery/collection, location, and other specifications");
+        const userOrdersRef = db
+            .collection("users").doc(uid) //samyipsh@gmail.com acct
+            .collection("user-orders").doc(storeID); //modify name (storeID)
+        return writeOrderToUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitPrice, modeOfTransfer, remarks, bakePhotoURL )
+    }
+    
     useEffect(() => {
         fillBakeData();
         getRealTimeUpdates();
 	},[]);
 
-
 	if (!bakeData || !storeData) { 
 		return ErrorCard('no bake data or store data loaded yet');
 	}
 
-    const { bakePhotoURL 	= 'default_bake_name', 
-            bakeName  		= 'default_store_id',
+    const { bakePhotoURL 	= 'default_bake_photo_url', 
+            bakeName  		= 'default_bake_name',
             // bakeDesc 		= 'default_bake_desc',
             isAvailable     = 'default_is_available',
             storeName       = 'default_store_name',     
@@ -92,12 +95,13 @@ export default function ProductView(props) {
             selfCollectionBool = true} = storeData;
     const   orderedPnQArr = orderPriceAndQtyArr(bakeData);
 
-    const modeOfTransfer = radioValue === "1" ? `Self-Collection` : `Delivery`;
-    const orderGenerated = 
-        `${qty}x ` +
-        `(${bakeName}) ` + 
-        `at $${orderedPnQArr[indexPair][0]} each - ` +
-        `[${modeOfTransfer}]`;
+    const modeOfTransfer = radioValue === "1" ? `collection` : `delivery`;
+
+    // const orderGenerated = 
+    //     `${qty}x ` +
+    //     `(${bakeName}) ` + 
+    //     `at $${orderedPnQArr[indexPair][0]} each - ` +
+    //     `[${modeOfTransfer}]`;
 
 
     return !isLoading && (
@@ -196,8 +200,9 @@ export default function ProductView(props) {
                                 <Button 
                                     className={styles.noFocusButton}
                                     variant="primary" 
-                                    title="Send Order Request">
-                                    <FiSend /> Send Order Request
+                                    title="Add to cart"
+                                    onClick = {addOrderToCart}>
+                                    <FiSend /> Add to cart
                                 </Button>
                                 <Button
                                     className={styles.noFocusButton} 
@@ -208,13 +213,11 @@ export default function ProductView(props) {
                                     <FaHeart color={isLiked?'red':'black'} />
                                 </Button>
                             </ButtonGroup>
-                            
                         </Col>
                     </Row>
-                                    
                 </Col>
             </Row>
-            <Row>{orderGenerated}</Row>
+            {/* <Row>{orderGenerated}</Row> */}
             <ProductNavPages 
                 bakeData = {bakeData} 
                 storeData = {storeData}

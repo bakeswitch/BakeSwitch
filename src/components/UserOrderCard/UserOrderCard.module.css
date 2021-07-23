@@ -18,6 +18,10 @@
 	color: black;
 }
 
+.colWithCard {
+	padding: 0;
+}
+
 .priceQtyAndMode {
 	text-align: center;
 	background-color: white;

@@ -1,20 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { Card, Image, Button, ListGroup, Col, Row, Modal } from "react-bootstrap";
 import styles from "./UserOrderCard.module.css";
+// import { useAuth } from "../../contexts/AuthContext";
+import { db } from "../../config/firebase";
+import { CloseButton } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { delOrderFromUserOrders, delUserOrderDoc } from "../../helperFunctions/handleDataFunctions";
 
 export default function UserOrderCard(props) {
-	const { modeOfTransfer = "defaultModeOfTransfer",
+	const { storeID = 'defaultStoreID',
+			uid = 'defaultUID',
+			storeName = 'defaultStoreName',
+			modeOfTransfer = "defaultModeOfTransfer",
 			bakeName = "defaultBakeName",
 			bakeSet = "defaultBakeSet",
 			qty = 1,
 			unitprice = 0,
 			remarks = "defaultRemarks",
-			bakePhotoURL = "https://cdn.pixabay.com/photo/2016/10/12/22/40/bar-1736191_1280.jpg" } = props
+			bakePhotoURL = "https://cdn.pixabay.com/photo/2016/10/12/22/40/bar-1736191_1280.jpg",
+			numOfStoreOrders = "defaultNumOfOrdersInStore",
+			setNumOfStoreOrders = 'defaultSetFunction'} = props;
+	const history = useHistory();
 
-	function handleClick() {
-		alert('ive been clicked');
-		// history.push(`/bakerProfile/${props.storeID}`);
+	const displayModeOfTransfer = (modeOfTransfer) =>
+		 modeOfTransfer == "collection" ? "-Collection-" : "-Delivery-";
+
+	function handleBakeClick() {
+
+		// history.push(`bake-product/${bakeID}`);
+	}
+
+	function handleDelete() {
+		setNumOfStoreOrders(prvNum => prvNum - 1);
+		// alert("numOfStoreOrders: " + numOfStoreOrders);
+        const userOrdersRef = db
+		.collection("users").doc(uid) //samyipsh@gmail.com acct
+		.collection("user-orders").doc(storeID); //modify name (storeID)
+		if (numOfStoreOrders == 1) {
+			delUserOrderDoc(userOrdersRef);
+			// alert('delete store');
+		} else if (numOfStoreOrders > 1) {
+			delOrderFromUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitprice, modeOfTransfer, remarks, bakePhotoURL)
+		}
 	}
 
 	return (
@@ -25,21 +53,21 @@ export default function UserOrderCard(props) {
 						variant = "left"
 						src= {bakePhotoURL}
 						alt="Bake picture"
-						// roundedCircle
 						className={styles.bakeImg}
 					/>
 				</Col>
-				<Col>
+				<Col className={styles.colWithCard}>
 					<Card className={styles.orderCard}>
-						<Card.Header as="h6" onClick={handleClick}>{bakeName}</Card.Header>
+						<Card.Header as="h6" onClick={handleBakeClick}>
+							{bakeName}  
+						</Card.Header>
 						<Card.Body className={styles.orderDesc}>
 							<Row>
 								<Col xs="auto" className="me-auto">
 									<Card.Text className={styles.priceQtyAndMode}>
 										<h6>{qty} x ["{bakeSet}"]</h6>
-										{modeOfTransfer}<br/>
+										{displayModeOfTransfer(modeOfTransfer)}<br/>
 									</Card.Text>
-
 								</Col>
 								<Col className={styles.remarks}>
 								 	{remarks} 
@@ -51,6 +79,9 @@ export default function UserOrderCard(props) {
 							</Row>
 						</Card.Body>
 					</Card>
+				</Col>
+				<Col xs="auto">
+					<AiOutlineCloseCircle onClick={handleDelete} />
 				</Col>
 			</Row>
 		</ListGroup.Item>
@@ -88,29 +119,3 @@ export default function UserOrderCard(props) {
 // 	);
 //   }
   
-
-
-function generateOrder(userOrderData) {
-	const { storeName = "defaultStoreName",
-			totalCost = "defaultTotalCost",
-			orderObj : orderObjArr  = [{}] 	} = userOrderData;
-
-	const greeting = `Hi ${storeName}, may I order the following at a total price of $${totalCost}, please? \n`;
-	const ordersText =  orderObjArr.map((orderObj, index) => {
-		const modeOfTransfer = orderObj.modeOfTransfer;
-		const bakeName = orderObj.bakeName;
-		const bakeSet = orderObj.bakeSet;
-		const qty = orderObj.qty;
-		const unitprice = orderObj.unitprice;
-		return `(${index + 1}) ${qty}x (${bakeSet}) of (${bakeName}) at $${unitprice} each - [${modeOfTransfer}] \n` 
-	});	
-	
-	const ordersRemarks = orderObjArr.map((orderObj, index) => {
-		const remarks = orderObj.remarks;
-		return remarks ? `(${index + 1}) "${remarks}" \n` : ""; 
-	});
-	return greeting + ordersText.join('') + `\n` + `Additional Remarks: \n` + ordersRemarks.join('');
-}
-	// (1) 3x (Bag of 4 cookies) of (Chocolate Hazelnut Cookies) at  $4 each - [collection] 
-	// (2) 2x (Box of 20 cookies) of (Chocolate Hazelnut Cookies) at $17 each - [collection]
-	// (3) 1x (20'' Whole Cake) of (Strawberry Cake) at $40 each - [delivery]"
