@@ -14,7 +14,8 @@ export default function BakeCard(props) {
 		bakeDesc = "defaultBakeDescription",
 		orderedPriceAndQtyArr = [["defaultPrice", "defaultQty"]],
 		storeID = "defaultStoreID",
-		storeName="defaultStoreName"
+		storeName="defaultStoreName",
+		isAvailable="defaultIsAvailable",
 	} = props;
 	const history = useHistory();
 	
@@ -34,7 +35,7 @@ export default function BakeCard(props) {
 				src={bakePhotoURL}
 				onClick={handleClickBake}
 			/>
-			<Card.Body key={"body_" + bakeID} className={styles.cardBody}>
+			<Card.Body key={"body_" + bakeID} className={styles.cardBody} style={{backgroundColor: isAvailable?"": "rgba(255, 242, 242, 0.932)"}}>
 				<Card.Title 
 					key={"title_" + bakeID} 
 					className={styles.max2Lines}

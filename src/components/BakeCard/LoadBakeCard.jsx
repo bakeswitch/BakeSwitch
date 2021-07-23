@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import BakeCard from ".";
 import { orderPriceAndQtyArr } from "../../helperFunctions/handleDataFunctions";
 import { db } from "../../config/firebase";
@@ -19,7 +18,6 @@ export function LoadBakeCard(props) {
 	}
 
 	const bakeRef = db.collection("bakes").doc(bakeID);
-	const history = useHistory();
 
 	function fillBakeData() {
 		bakeRef
@@ -72,7 +70,8 @@ export function LoadBakeCard(props) {
 		storeID = "default_store_id",
 		bakeDesc = "default_bake_desc",
 		bakePhotoURL = "default_bake_photo",
-		storeName = 'default_store_name'
+		storeName = 'default_store_name',
+		isAvailable = 'default_is_available'
 	} = bakeData;
 
 
@@ -88,6 +87,7 @@ export function LoadBakeCard(props) {
 				orderedPriceAndQtyArr={orderedPriceAndQtyArr}
 				storeID={storeID}
 				storeName={storeName}
+				isAvailable={isAvailable}
 			/>
 		)
 	);
