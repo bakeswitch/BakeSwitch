@@ -65,6 +65,11 @@ export default function ProductView(props) {
     }
 
     function addOrderToCart() {
+        if (!isAvailable) {
+            if (!confirm("Are you sure you want to add order? Item is currently not available")) {
+                return;
+            };
+        }
         const storeID = bakeData.storeID;
         const bakeSet = orderedPnQArr[indexPair][1];
         const unitPrice = orderedPnQArr[indexPair][0];
@@ -124,8 +129,8 @@ export default function ProductView(props) {
                         />
                     </div>
                     <dl className="row sm mb-3">
-                        <dt className="col-sm-4">Is Availabile</dt>
-                        <dd className="col-sm-8 p-0">{isAvailable ? "true" : "false"}</dd>
+                        <dt className="col-sm-4">Is Available</dt>
+                        <dd className="col-sm-8 p-0" style={{color:isAvailable?'black':'red'}}>{isAvailable ? "true" : "false"}</dd>
                         <dt className="col-sm-4">Sold by</dt>
                         <dd className="col-sm-8 p-0">{storeName}</dd>
                         <dt className="col-sm-4">Obtain by</dt>
@@ -199,7 +204,7 @@ export default function ProductView(props) {
                             <ButtonGroup>
                                 <Button 
                                     className={styles.noFocusButton}
-                                    variant="primary" 
+                                    variant={isAvailable? "success":"danger"} 
                                     title="Add to cart"
                                     onClick = {addOrderToCart}>
                                     <FiSend /> Add to cart
