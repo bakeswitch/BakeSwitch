@@ -59,23 +59,31 @@ export default function UserOrders() {
                         storeID = {storeID}
                     />
                 )
-                : <Card border="dark" className={styles.callToOrderCard}>
-                    <Card.Img variant="top" src="https://cdn.pixabay.com/photo/2016/02/19/10/13/pug-1209129_1280.jpg" />
-                    <Card.Body>
-                        <Card.Title>No orders?</Card.Title>
-                        <Card.Text as="h6">
-                            Quickk!! Add some orders before mumbo goes hungry
-                        </Card.Text>
-                        <Button variant="secondary" 
-                            onClick={() => {
-                                alert('clicked');
-                                history.push("/bakes");
-                            }}>
-                            Browse Bakes
-                        </Button>
-                    </Card.Body>
-                </Card>}
+                : <CallToOrder />
+            }
         </>
+    )
+}
+
+
+function CallToOrder() {
+    return (
+        <Card border="dark" className={styles.callToOrderCard}>
+            <Card.Img variant="top" src="https://cdn.pixabay.com/photo/2016/02/19/10/13/pug-1209129_1280.jpg" />
+            <Card.Body>
+                <Card.Title>No orders?</Card.Title>
+                <Card.Text as="h6">
+                    Quickk!! Add some orders before mumbo goes hungry
+                </Card.Text>
+                <Button variant="secondary" 
+                    onClick={() => {
+                        alert('clicked');
+                        history.push("/bakes");
+                    }}>
+                    Browse Bakes
+                </Button>
+            </Card.Body>
+        </Card>
     )
 }
 

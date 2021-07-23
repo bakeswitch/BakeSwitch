@@ -40,14 +40,15 @@ export function generateOrder(userOrderData) {
 	return greeting + ordersText.join('') + `\n` + `Additional Remarks: \n` + ordersRemarks.join('');
 }
 
-export function writeOrderToUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitPrice, modeOfTransfer, remarks, bakePhotoURL) {
+export function writeOrderToUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitPrice, modeOfTransfer, remarks, bakePhotoURL, bakeID) {
 	const orderObj = {	modeOfTransfer: modeOfTransfer, 
 						bakeName: bakeName, 
 						bakeSet: bakeSet, 
 						qty: qty, 
-						unitprice: unitPrice, 
+						unitPrice: unitPrice, 
 						remarks: remarks,
-						bakePhotoURL: bakePhotoURL };
+						bakePhotoURL: bakePhotoURL,
+						bakeID : bakeID};
 	userOrdersRef.set({
 		storeName: storeName,
 		orderObj: firebase.firestore.FieldValue.arrayUnion(orderObj)
@@ -55,14 +56,15 @@ export function writeOrderToUserOrders(userOrdersRef, storeName, qty, bakeSet, b
 	.then(() => alert('added order'))
 	.catch((err) => alert("unable to set userOrder: " + err));
 }
-export function delOrderFromUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitPrice, modeOfTransfer, remarks, bakePhotoURL) {
+export function delOrderFromUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitPrice, modeOfTransfer, remarks, bakePhotoURL, bakeID) {
 	const orderObj = {	modeOfTransfer: modeOfTransfer, 
 						bakeName: bakeName, 
 						bakeSet: bakeSet, 
 						qty: qty, 
-						unitprice: unitPrice, 
+						unitPrice: unitPrice, 
 						remarks: remarks,
-						bakePhotoURL: bakePhotoURL };
+						bakePhotoURL: bakePhotoURL,
+						bakeID: bakeID };
 	userOrdersRef.set({
 		storeName: storeName,
 		orderObj: firebase.firestore.FieldValue.arrayRemove(orderObj)
@@ -74,8 +76,10 @@ export function delUserOrderDoc(userOrdersRef) {
 	userOrdersRef.delete()
 		.then(() => alert("Your orders for this store have all been deleted"))
 		.catch((err) => alert("unable to del user order doc: " + err))
+		//imperative code which can be prevented if you pass a store counter 
+		//to rerender UserOrders page into UserStoreOrders > UserOrderCard
 		.finally(() => {
-			setTimeout(() => window.location.reload(), 6000); //setting time so that firestore can delete the doc
+			setTimeout(() => window.location.reload(), 5000); //setting time so that firestore can delete the doc
 		});
 }
 
@@ -83,7 +87,7 @@ export function delUserOrderDoc(userOrdersRef) {
 //RETURNS: total cost of orders to a particular store
 export function getTotalCost(orderObjArr) {
 	const reducer = (accumulatedCost, orderObj) => {
-		const orderCost = orderObj.unitprice * orderObj.qty;
+		const orderCost = orderObj.unitPrice * orderObj.qty;
 		return orderCost + accumulatedCost;
 	};
 	const totalCost = orderObjArr.reduce(reducer, 0);

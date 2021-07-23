@@ -11,12 +11,13 @@ import { delOrderFromUserOrders, delUserOrderDoc } from "../../helperFunctions/h
 export default function UserOrderCard(props) {
 	const { storeID = 'defaultStoreID',
 			uid = 'defaultUID',
+			bakeID = 'defaultBakeID',
 			storeName = 'defaultStoreName',
 			modeOfTransfer = "defaultModeOfTransfer",
 			bakeName = "defaultBakeName",
 			bakeSet = "defaultBakeSet",
 			qty = 1,
-			unitprice = 0,
+			unitPrice = 0,
 			remarks = "defaultRemarks",
 			bakePhotoURL = "https://cdn.pixabay.com/photo/2016/10/12/22/40/bar-1736191_1280.jpg",
 			numOfStoreOrders = "defaultNumOfOrdersInStore",
@@ -27,8 +28,7 @@ export default function UserOrderCard(props) {
 		 modeOfTransfer == "collection" ? "-Collection-" : "-Delivery-";
 
 	function handleBakeClick() {
-
-		// history.push(`bake-product/${bakeID}`);
+		history.push(`bake-product/${bakeID}`);
 	}
 
 	function handleDelete() {
@@ -38,10 +38,10 @@ export default function UserOrderCard(props) {
 		.collection("users").doc(uid) //samyipsh@gmail.com acct
 		.collection("user-orders").doc(storeID); //modify name (storeID)
 		if (numOfStoreOrders == 1) {
-			delUserOrderDoc(userOrdersRef);
 			// alert('delete store');
+			delUserOrderDoc(userOrdersRef);
 		} else if (numOfStoreOrders > 1) {
-			delOrderFromUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitprice, modeOfTransfer, remarks, bakePhotoURL)
+			delOrderFromUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitPrice, modeOfTransfer, remarks, bakePhotoURL, bakeID)
 		}
 	}
 
@@ -73,7 +73,7 @@ export default function UserOrderCard(props) {
 								 	{remarks} 
 								</Col>
 								<Col className="ms-auto" as="h6" xs={2}>
-									${unitprice}
+									${unitPrice}
 								</Col>
 
 							</Row>
