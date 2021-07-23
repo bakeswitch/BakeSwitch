@@ -17,6 +17,9 @@
 	font-weight: bold;
 	color: black;
 }
+.storeName:hover {
+	color: rgb(53, 51, 51);
+}
 
 .colWithCard {
 	padding: 0;

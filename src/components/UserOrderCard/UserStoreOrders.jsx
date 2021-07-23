@@ -13,7 +13,7 @@ export default function UserStoreOrders(props) {
 	const [userOrderData, setUserOrderData] = useState();
 	const [isLoading, setIsLoading] = useState(true);
 	// const [orderTextOnModal, setOrderTextOnModal] = useState("");
-	// const history = useHistory();
+	const history = useHistory();
 	const userOrderRef = db.collection("users").doc(userID)
 							.collection("user-orders").doc(storeID);
 	const [numOfStoreOrders, setNumOfStoreOrders] = useState();
@@ -29,14 +29,15 @@ export default function UserStoreOrders(props) {
 		[userOrderData]
 	)
 
-	// useEffect(() => {
-	// 	fillUserOrderData();
-	// }, [numOfStoreOrders])
+	function handleClickStore() {
+		history.push(`bakerProfile/${storeID}`);
+	}
 
 	function handleClickGenerate() {
 		const orderText = generateOrder(userOrderData)
-		alert("The following text has been copied to clipboard: \n\n" + orderText);
-		navigator.clipboard.writeText(orderText);
+		navigator.clipboard.writeText(orderText) //returns promise
+			.then(() => alert("The following text has been copied to clipboard: \n\n" + orderText),
+				() => alert('unable to write text to clipboard: ' + err)); 
 		// setOrderTextOnModal(orderText);
 		// setShowModal(true);
 	}
@@ -88,7 +89,7 @@ export default function UserStoreOrders(props) {
 					<ListGroup.Item>
 						<Row>
 							<Col xs="auto" className="me-auto"> 
-								<span className={styles.storeName}>{storeName}</span> 
+								<span className={styles.storeName} onClick={handleClickStore}>{storeName}</span> 
 							</Col>
 							{/* <Col>totalCost: ${totalCost}</Col> */}
 							<Col className="ms-auto" xs="auto">
@@ -102,18 +103,17 @@ export default function UserStoreOrders(props) {
 						<UserOrderCard 
 							storeID = {storeID}
 							uid = {userID}
+							bakeID = {orderObj.bakeID}
 							storeName= {storeName}
 							modeOfTransfer = {orderObj.modeOfTransfer}
 							bakeName = {orderObj.bakeName}
 							bakeSet = {orderObj.bakeSet}
 							qty = {orderObj.qty}
-							unitprice = {orderObj.unitprice}
+							unitPrice = {orderObj.unitPrice}
 							remarks = {orderObj.remarks}
 							bakePhotoURL = {orderObj.bakePhotoURL}
 							numOfStoreOrders={numOfStoreOrders}
 							setNumOfStoreOrders = {setNumOfStoreOrders}
-							// userOrderData = {userOrderData}
-								// orderObjArr.length}
 						/>
 					)}
 				</ListGroup>
@@ -125,7 +125,6 @@ export default function UserStoreOrders(props) {
 
 function generateOrder(userOrderData) {
 	const { storeName = "defaultStoreName",
-			// totalCost = "defaultTotalCost",
 			orderObj : orderObjArr  = [{}] 	} = userOrderData;
 	const totalCost = getTotalCost(orderObjArr);
 
@@ -135,8 +134,8 @@ function generateOrder(userOrderData) {
 		const bakeName = orderObj.bakeName;
 		const bakeSet = orderObj.bakeSet;
 		const qty = orderObj.qty;
-		const unitprice = orderObj.unitprice;
-		return `(${index + 1}) ${qty}x (${bakeSet}) of (${bakeName}) at $${unitprice} each - [${modeOfTransfer}] \n` 
+		const unitPrice = orderObj.unitPrice;
+		return `(${index + 1}) ${qty}x (${bakeSet}) of (${bakeName}) at $${unitPrice} each - [${modeOfTransfer}] \n` 
 	});	
 	
 	const ordersRemarks = orderObjArr.map((orderObj, index) => {
