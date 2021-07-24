@@ -6,21 +6,27 @@ import { db } from "../../config/firebase";
 import { LoadBakeCard } from "../BakeCard/LoadBakeCard";
 import ErrorCard from "../helperComponents/ErrorCard";
 
+// Takes in searchTag, storeIDArr
 export default function SearchResults(props) {
-	const searchTerm = props.searchTerm;
-	const isTag = props.isTag;
+	const searchTag = props.searchTag;
+	const storeIDArr = props.storeIDArr;
 	const [bakeIDArr, setBakeIDArr] = useState([]); //array of bakeID strings
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const bakeRef = db.collection("bakes");
 
 	function fillBakeIDArr() {
-		setIsLoading(true);
 		let queryResults;
 
-		if (isTag) {
-			queryResults = bakeRef.where("bakeTags", "array-contains", searchTerm);
+		if (!searchTag && storeIDArr.length == 0) {
+			queryResults = bakeRef;
+		} else if (!searchTag && storeIDArr.length != 0) {
+			queryResults = bakeRef.where("storeID", "in", storeIDArr);
+		} else if (storeIDArr.length == 0 && searchTag) {
+			queryResults = bakeRef.where("bakeTags", "array-contains", searchTag);
 		} else {
-			queryResults = bakeRef.where("storeID", "==", searchTerm);
+			queryResults = bakeRef
+				.where("bakeTags", "array-contains", searchTag)
+				.where("storeID", "in", storeIDArr);
 		}
 
 		queryResults
@@ -42,13 +48,14 @@ export default function SearchResults(props) {
 	}
 
 	useEffect(() => {
-		if (searchTerm != "") {
-			fillBakeIDArr();
-		}
+		fillBakeIDArr();
+		//setBakeIDArr([]);
+		//test
+		console.log(bakeIDArr.length);
 		return () => {
 			setBakeIDArr([]);
 		};
-	}, [searchTerm]);
+	}, [searchTag, storeIDArr]);
 
 	//REPLACE W SEARCH RESULTS WHEN CODE IS READY
 	// const searchResultsBakeIDArr = ["bake_0001", "bake_0002", "bake_0003"];
