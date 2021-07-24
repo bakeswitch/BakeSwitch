@@ -12,6 +12,7 @@
 
 .cardBody {
     background-color:rgba(233, 233, 233, 0.932);
+    /* background-color:rgba(255, 242, 242, 0.932); */
     padding-bottom: 2rem;
 }
 
@@ -42,4 +43,13 @@
     display: -webkit-box;
     -webkit-line-clamp: 3; /* number of lines to show */
     -webkit-box-orient: vertical;
+  }
+
+  .max1Line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+    font-size: small;
   }
