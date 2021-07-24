@@ -153,7 +153,7 @@ export default function ProductView(props) {
 					<Col xs={12} md={6} className="p-4">
 						<Card border="light">
 							{/* make carousel here? */}
-							<Card.Img src={bakePhotoURL} rounded fluid />
+							<Card.Img src={bakePhotoURL} rounded="true" fluid="true" />
 						</Card>
 					</Col>
 					<Col xs={12} md={6} className="p-4">
@@ -205,7 +205,7 @@ export default function ProductView(props) {
 									</ToggleButton>
 								</ButtonGroup>
 							</dd>
-							<label for="qty-select">Choose set:</label>
+							<label htmlFor="qty-select">Choose set:</label>
 							<select
 								onChange={(e) => setIndexPair(e.target.value)}
 								id="qty-select"
