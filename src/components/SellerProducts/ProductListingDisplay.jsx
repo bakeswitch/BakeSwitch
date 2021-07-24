@@ -3,6 +3,7 @@ import { db } from "../../config/firebase";
 import { Card, Button, Modal } from "react-bootstrap";
 import { FormControlLabel, Switch } from "@material-ui/core";
 import ListingContents from "./ListingContents";
+import UpdateString from "../helperComponents/UpdateString";
 import styles from "./SellerProducts.module.css";
 
 export default function ProductListingDisplay(props) {
@@ -60,7 +61,7 @@ export default function ProductListingDisplay(props) {
 		!loading && (
 			<div className="mt-2">
 				<Card className={styles.card}>
-					<Card.Img variant="top" src={bakeRec.bakePhotoURL} />
+					<Card.Img variant="top" src={bakeRec?.bakePhotoURL} />
 					<Card.Body>
 						<Card.Title className={styles.max2Lines}>{bakeRec.bakeName}</Card.Title>
 						<Card.Text className={styles.max3Lines}>{bakeRec.bakeDesc}</Card.Text>
@@ -84,10 +85,13 @@ export default function ProductListingDisplay(props) {
 
 				<Modal show={showDetails} onHide={handleClose}>
 					<Modal.Header>
-						<Modal.Title>{bakeRec.bakeName}</Modal.Title>
+						<Modal.Title>
+							{bakeRec.bakeName}
+							<UpdateString item={bakeRec?.bakeName} field="bakeName" docRef={bakeRef} />
+						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<ListingContents bakeRec={bakeRec} />
+						<ListingContents bakeRec={bakeRec} bakeRef={bakeRef} />
 					</Modal.Body>
 					<Modal.Footer>
 						<Button variant="danger" size="sm" onClick={() => setConfDelete(true)}>
