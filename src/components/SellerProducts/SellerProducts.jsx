@@ -17,6 +17,9 @@ export default function SellerProductDisplay(props) {
 			.then((querySnapshot) => querySnapshot.forEach((doc) => bakeIDArr.push(doc.id)))
 			.then(() => setBakeIDArr(bakeIDArr))
 			.then(() => setLoading(false));
+		return () => {
+			setBakeIDArr([]);
+		};
 	}, []);
 
 	return (
