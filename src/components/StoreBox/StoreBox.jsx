@@ -10,16 +10,16 @@ const Store = props => {
    
     return (
         <>
-         <Container fluid>
                 <Row>
-                    <Col xs={2} className={styles.sideBarWrapper}>      
+                    <Col xs={2} className={styles.sideBar}
+                      // className={styles.sideBarWrapper}
+                    >      
                       <StoreSideBar />
                     </Col>
                     <Col  xs={10} className={styles.pageContentWrapper}>
                         <StorePages />
                     </Col> 
                 </Row>
-            </Container>
         </>
         );
   };
