@@ -8,7 +8,10 @@ function createCategory(title, imgURL) {
 }
 
 export default function Categories(props) {
-    const { setIsDefault, setSearchTag, updateSearchBar } = props;
+    const { setIsDefault, 
+            setSearchTag, 
+            // updateSearchBar 
+    } = props;
     
     const history = useHistory();
     // const [category, setCategory] = useState();
@@ -24,11 +27,8 @@ export default function Categories(props) {
     ];
     
     function redirect(cat) {
-        // alert(cat + " should be placed into search bar and redirected");
-        // history.push(cat);
         setIsDefault(false);
         setSearchTag(cat);
-        updateSearchBar(cat);
     }
 
     return (

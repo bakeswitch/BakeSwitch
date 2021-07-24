@@ -21,15 +21,15 @@ export default function Bakes() {
 			<SearchBox
 				setSearchTag={setSearchTag}
 				setIsDefault={setIsDefault}
-				searchText={searchText}
-				searchRef={searchRef}
-				updateSearchBar={updateSearchBar}
+				// searchText={searchText}
+				// searchRef={searchRef}
+				// updateSearchBar={updateSearchBar}
 			/>
 			{isDefault ? (
 				<Categories
 					setIsDefault={setIsDefault}
 					setSearchTag={setSearchTag}
-					updateSearchBar={updateSearchBar}
+					// updateSearchBar={updateSearchBar}
 				/>
 			) : (
 				<SearchResults searchTerm={searchTag} isTag={true} />

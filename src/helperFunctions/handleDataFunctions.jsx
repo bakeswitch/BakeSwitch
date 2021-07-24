@@ -20,7 +20,7 @@ export function orderPriceAndQtyArr(bakeData) {
 //RETURNS: string of orderText for user to copy and send via preferred contact channel of seller
 export function generateOrder(userOrderData) {
 	const { storeName = "defaultStoreName",
-			totalCost = "defaultTotalCost",
+			// totalCost = "defaultTotalCost",
 			orderObj : orderObjArr  = [{}] 	} = userOrderData;
 
 	const greeting = `Hi ${storeName}, may I order the following at a total price of $${totalCost}, please? \n`;
