@@ -9,3 +9,7 @@
 
 }
 
+.submitButton {
+    flex-direction: row;
+    width: 10rem;
+}
