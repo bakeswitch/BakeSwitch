@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Card, Badge, Button } from "react-bootstrap";
+import { Nav, Card, Badge, Button, ListGroup } from "react-bootstrap";
 import { BiStore, BiReceipt } from "react-icons/bi";
 import { ImStatsDots } from "react-icons/im";
 import { GiCookie } from "react-icons/gi";
@@ -8,28 +8,43 @@ import { BsInfoSquare } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import styles from "./StoreBox.module.css";
 
+//reviews and dashboard not included
 const SideBar = (props) => {
 	const history = useHistory();
 
+	function handleRedirect(category) {
+		history.push(`/store/${category}`);
+	}
+
 	return (
 		<>
-			<h2 className="mt-3 mb-3 ms-2 justify-content-center">
+			<ListGroup className="ms-2">		
+				<ListGroup.Item className="mt-3" as="h4">
+					{/* <BiStore size={30} color="black" /> */}
+					My Store
+				</ListGroup.Item>
+				<ListGroup.Item action onClick={() => handleRedirect('products')}>
+					Products
+				</ListGroup.Item>
+				<ListGroup.Item action onClick={() => handleRedirect('orders')}>
+					Orders
+				</ListGroup.Item>
+				<ListGroup.Item action onClick={() => handleRedirect('information')}>
+					Information
+				</ListGroup.Item>
+			</ListGroup>
+
+		
+			{/* <h2 className="mt-3 mb-3 ms-2 justify-content-center">
 				<BiStore size={30} color="black" /> My Store
 			</h2>
-			{/* <hr className="p-1 bg-dark"/> */}
 			<Nav
 				className="col-md-12 d-none d-md-block bg-light sideBar"
 				activeKey="/home"
 				onSelect={(selectedKey) => {
-					// alert(`selected ${selectedKey}`);
 					history.push(`/store/${selectedKey}`);
 				}}
 			>
-				{/* className={styles.sideBarSticky}>My Store</div> */}
-				{/* <Nav.Item className="mt-2">
-                <Nav.Link eventKey="dashboard"><i><ImStatsDots /></i> Dashboard</Nav.Link> */}
-				{/* href={"/" + {dashboard} */}
-				{/* </Nav.Item> */}
 				<Nav.Item className="mt-2">
 					<Nav.Link eventKey="products">
 						<i>
@@ -46,9 +61,6 @@ const SideBar = (props) => {
 						Orders
 					</Nav.Link>
 				</Nav.Item>
-				{/* <Nav.Item className="mt-2">
-                <Nav.Link eventKey="reviews"><i><AiOutlineComment /></i> Reviews</Nav.Link>
-            </Nav.Item> */}
 				<Nav.Item className="mt-2">
 					<Nav.Link eventKey="information">
 						<i>
@@ -57,13 +69,10 @@ const SideBar = (props) => {
 						Information
 					</Nav.Link>
 				</Nav.Item>
-				{/* <Nav.Item>
-                <Nav.Link eventKey="disabled" disabled>
-                Disabled
-                </Nav.Link>
-            </Nav.Item> */}
-			</Nav>
+			</Nav> */}
+			
 		</>
+	  	
 	);
 };
 
