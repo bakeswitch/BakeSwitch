@@ -278,3 +278,10 @@ export default function ProductView(props) {
 }
 
 //use  Bootstrap Modal for popup
+//   <FloatingLabel controlId="floatingTextarea2" label="Comments">
+// <Form.Control
+// as="textarea"
+// placeholder="Leave a comment here"
+// style={{ height: '100px' }}
+// />
+// </FloatingLabel>
