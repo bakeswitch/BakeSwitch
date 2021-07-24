@@ -18,6 +18,7 @@ export default function TableRow(props) {
 			.delete()
 			.then(() => {
 				setShowDetails(false);
+				window.location.reload();
 				alert("Order successfully deleted");
 			})
 			.catch((error) => {

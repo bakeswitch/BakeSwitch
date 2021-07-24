@@ -50,6 +50,7 @@ export default function ProductListingDisplay(props) {
 			.delete()
 			.then(() => {
 				setShowDetails(false);
+				window.location.reload();
 				alert("Product listing successfully deleted");
 			})
 			.catch((error) => {
@@ -61,7 +62,7 @@ export default function ProductListingDisplay(props) {
 		!loading && (
 			<div className="mt-2">
 				<Card className={styles.card}>
-					<Card.Img variant="top" src={bakeRec?.bakePhotoURL} />
+					<Card.Img variant="top" src={bakeRec?.bakePhotoURL} alt="Product Image" />
 					<Card.Body>
 						<Card.Title className={styles.max2Lines}>{bakeRec.bakeName}</Card.Title>
 						<Card.Text className={styles.max3Lines}>{bakeRec.bakeDesc}</Card.Text>
