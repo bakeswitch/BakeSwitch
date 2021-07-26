@@ -9,6 +9,7 @@ export default function Bakes() {
 	const [searchTag, setSearchTag] = useState("");
 	const [storeIDArr, setStoreIDArr] = useState([]);
 
+	
 	return (
 		<div className={styles.contentBox}>
 			<SearchBox
