@@ -13,7 +13,8 @@ export default function SearchBox(props) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		tag != "" ? setSearchTag(tag) : setSearchTag(false);
+		setSearchTag(tag);
+		
 		if (storeName != "") {
 			db.collection("stores")
 				.where("storeName", ">=", storeName)
@@ -22,6 +23,7 @@ export default function SearchBox(props) {
 				.then((querySnapshot) =>
 					querySnapshot.forEach((doc) => {
 						searchArr.push(doc.id);
+						// setSearchArr(prvArr => [...prvArr, doc.id]);
 					})
 				)
 				.then(() => setStoreIDArr(searchArr))
@@ -43,7 +45,7 @@ export default function SearchBox(props) {
 						placeholder="Choose tag"
 						onChange={(e) => setTag(e.target.value)}
 					>
-						<option value="">-select tag-</option>
+						<option value="">-all categories-</option>
 						{globalTagList.map((tag, index) => (
 							<option value={tag} key={index}>
 								{tag}
