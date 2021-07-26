@@ -39,7 +39,7 @@ function Webpages() {
 				path="/bakerProfile/:id"
 				render={({ match }) => <BakerProfile storeID={match.params.id} />}
 			/>
-			<PrivateRoute
+			<Route
 				exact
 				path="/bake-product/:id"
 				render={({ match }) => <BakeProduct bakeID={match.params.id} />}

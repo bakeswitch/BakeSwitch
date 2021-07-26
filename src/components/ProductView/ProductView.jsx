@@ -26,6 +26,10 @@ import {
 import ErrorCard from "../helperComponents/ErrorCard";
 import { RatingDetails } from "../helperComponents/RatingOutOf5.jsx";
 
+function isLoggedIn(uid) {
+	return uid != "";
+}
+
 export default function ProductView(props) {
 	const bakeID = props.bakeID;
 	const bakeRef = db.collection("bakes").doc(bakeID);
@@ -37,7 +41,7 @@ export default function ProductView(props) {
 	const [isLiked, setIsLiked] = useState(false); //Link to wishlist
 	const [qty, setQty] = useState(1); //for qty of item group
 	const { currentUser } = useAuth();
-	const uid = currentUser.uid;
+	const uid = currentUser ? currentUser.uid : "";
 
 	function fillBakeData() {
 		//set bakedoc
@@ -86,7 +90,11 @@ export default function ProductView(props) {
 		});
 	}
 
-	function addOrderToCart() {
+	function addOrderToCart(uid) {
+		if (!isLoggedIn(uid)) {
+			return alert("Please log in to add to My Orders");
+		}
+
 		if (!isAvailable) {
 			if (!confirm("Are you sure you want to add order? Item is currently not available")) {
 				return;
@@ -253,9 +261,9 @@ export default function ProductView(props) {
 										className={styles.noFocusButton}
 										variant={isAvailable ? "success" : "danger"}
 										title="Add to cart"
-										onClick={addOrderToCart}
+										onClick={() => addOrderToCart(uid)}
 									>
-										<FiSend /> Add to cart
+										<FiSend /> Add to My Orders
 									</Button>
 									<Button
 										className={styles.noFocusButton}
