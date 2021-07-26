@@ -40,25 +40,20 @@ export default function SearchResults(props) {
 				});
 			})
 			.catch((error) => {
-				alert("Error filtering bakeID from bakeTag: " + error);
+				alert("Search Error. " + error);
 			})
-			.finally(() => setIsLoading(false));
-
-		setIsLoading(false);
+			.finally(() => {
+				setIsLoading(false);
+			});
 	}
 
 	useEffect(() => {
 		fillBakeIDArr();
-		//setBakeIDArr([]);
-		//test
-		console.log(bakeIDArr.length);
+		setBakeIDArr([]);
 		return () => {
 			setBakeIDArr([]);
 		};
 	}, [searchTag, storeIDArr]);
-
-	//REPLACE W SEARCH RESULTS WHEN CODE IS READY
-	// const searchResultsBakeIDArr = ["bake_0001", "bake_0002", "bake_0003"];
 
 	if (isLoading) {
 		return (
