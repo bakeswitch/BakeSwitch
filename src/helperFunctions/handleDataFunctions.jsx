@@ -53,7 +53,9 @@ export function writeOrderToUserOrders(userOrdersRef, storeName, qty, bakeSet, b
 		storeName: storeName,
 		orderObj: firebase.firestore.FieldValue.arrayUnion(orderObj)
 	}, {merge: true})
-	.then(() => alert('added order'))
+	.then(() => {
+		alert('Order successfully added - view "My Orders" tab for all orders')
+	})
 	.catch((err) => alert("unable to set userOrder: " + err));
 }
 export function delOrderFromUserOrders(userOrdersRef, storeName, qty, bakeSet, bakeName, unitPrice, modeOfTransfer, remarks, bakePhotoURL, bakeID) {
