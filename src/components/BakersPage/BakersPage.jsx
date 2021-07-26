@@ -58,6 +58,7 @@ export default function BakersPage() {
 						<Form.Control type="text" onChange={handleChange} placeholder="enter store name" />
 						<Button onClick={handleSearch}>Search</Button>
 					</InputGroup>
+					<Form.Text className="d-flex">search is case-sensitive</Form.Text>
 				</Form.Group>
 				{showDefault && storeIDArr.map((storeID) => <BakerCard storeID={storeID} key={storeID} />)}
 				{!showDefault &&
