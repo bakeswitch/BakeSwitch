@@ -33,13 +33,13 @@ export default function UserStoreOrders(props) {
 	}
 
 	function handleClickGenerate() {
-		const orderText = generateOrder(userOrderData);
+		const orderText = '"' + generateOrder(userOrderData) + '"';
 		navigator.clipboard
 			.writeText(orderText) //returns promise
 			.then(
-				() => alert("The following text has been copied to clipboard: \n\n" + orderText),
+				() => alert(`Contact seller at their desired chat platform! \nModify the following generated text or paste it as it is.\n\nThe following text has been copied to your clipboard: \n\n` + orderText),
 				() => alert("unable to write text to clipboard: " + err)
-			);
+			)
 		// setOrderTextOnModal(orderText);
 		// setShowModal(true);
 	}
