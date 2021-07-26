@@ -44,6 +44,9 @@ export default function BakersPage() {
 			.then((querySnapshot) => querySnapshot.forEach((doc) => storeIDArr.push(doc.id)))
 			.then(() => setStoreIDArr(storeIDArr))
 			.then(() => setLoading(false));
+		return () => {
+			setStoreIDArr([]);
+		};
 	}, []);
 
 	return (

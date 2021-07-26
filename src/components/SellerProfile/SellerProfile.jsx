@@ -75,7 +75,7 @@ export default function SellerProfile(props) {
 						</Tabs>
 					</Card.Body>
 				</Card>
-				{!isOwnStore && <SearchResults searchTerm={storeID} isTag={false} />}
+				{!isOwnStore && <SearchResults storeIDArr={[storeID]} searchTag={false} />}
 			</>
 		)
 	);

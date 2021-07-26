@@ -54,7 +54,9 @@ export default function UserOrders() {
 			<>
 				{/* storeID: {JSON.stringify(storeIDArr)} */}
 				{storeIDArr.length != 0 ? (
-					storeIDArr.map((storeID) => <UserStoreOrders userID={uid} storeID={storeID} />)
+					storeIDArr.map((storeID) => (
+						<UserStoreOrders userID={uid} storeID={storeID} key={storeID} />
+					))
 				) : (
 					<CallToOrder />
 				)}

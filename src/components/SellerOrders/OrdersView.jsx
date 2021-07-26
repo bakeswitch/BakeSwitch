@@ -36,6 +36,10 @@ export default function OrdersView(props) {
 				setDeliveryOrdersArr(deliveryOrdersArr);
 			})
 			.then(() => setLoading(false));
+		return () => {
+			setCollectOrdersArr([]);
+			setDeliveryOrdersArr([]);
+		};
 	}, []);
 
 	useEffect(() => {
@@ -48,6 +52,9 @@ export default function OrdersView(props) {
 			)
 			.then(() => setAllOrdersArr(allOrdersArr))
 			.then(() => setShowAllLoading(false));
+		return () => {
+			setAllOrdersArr([]);
+		};
 	}, []);
 
 	return (
