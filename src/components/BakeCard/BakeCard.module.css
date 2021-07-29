@@ -8,6 +8,7 @@
 .cardImg {
     /* Im hard coding this to maintain aspect ratio 6:4, make it responsive */
     height: 184px; 
+    /* border: 1px solid black; */
 }
 
 .cardBody {
