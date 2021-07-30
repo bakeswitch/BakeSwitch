@@ -60,7 +60,7 @@ export default function AddOrder(props) {
 				variant="warning"
 				className="mt-4 mb-2"
 				onClick={() => setShowForm(true)}
-				disabled={showForm}
+				hidden={showForm}
 			>
 				Add Order
 			</Button>

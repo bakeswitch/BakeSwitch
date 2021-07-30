@@ -65,7 +65,7 @@ export default function AddProduct(props) {
 				variant="warning"
 				className="mt-4 mb-2"
 				onClick={() => setShowForm(true)}
-				disabled={showForm}
+				hidden={showForm}
 			>
 				List New Product
 			</Button>

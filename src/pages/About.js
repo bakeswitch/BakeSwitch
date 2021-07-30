@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./pages.module.css";
 import { Paper, Accordion, AccordionSummary, AccordionDetails } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { questionList } from "../helperData/faq";
 
 function QuestionBlock(props) {
 	return (
@@ -10,44 +11,14 @@ function QuestionBlock(props) {
 				<h6>{props.question}</h6>
 			</AccordionSummary>
 			<AccordionDetails>
-				<p>{props.answer}</p>
+				{props.answer}
+				{/* answer returns a react component */}
 			</AccordionDetails>
 		</Accordion>
 	);
 }
 
 export default function About() {
-	const questionList = [
-		{
-			qn: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?",
-			ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		},
-		{
-			qn: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?",
-			ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Velit egestas dui id ornare arcu odio ut sem nulla. Mauris augue neque gravida in.",
-		},
-		{
-			qn: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?",
-			ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		},
-		{
-			qn: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?",
-			ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Velit egestas dui id ornare arcu odio ut sem nulla. Mauris augue neque gravida in.",
-		},
-		{
-			qn: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?",
-			ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		},
-		{
-			qn: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?",
-			ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Velit egestas dui id ornare arcu odio ut sem nulla. Mauris augue neque gravida in.",
-		},
-		{
-			qn: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor?",
-			ans: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		},
-	];
-
 	return (
 		<div className={styles.contentBox}>
 			<Paper className={styles.ourStory} elevation={2}>
@@ -55,21 +26,12 @@ export default function About() {
 					Our Story
 				</h3>
 				<p style={{ textAlign: "left" }}>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-					ut labore et dolore magna aliqua. Velit egestas dui id ornare arcu odio ut sem nulla.
-					Mauris augue neque gravida in. Neque laoreet suspendisse interdum consectetur libero id
-					faucibus. Mauris sit amet massa vitae. Ac tortor dignissim convallis aenean et. Dolor
-					morbi non arcu risus quis varius quam.
+					We aim to make it effortless for Singapore home bakers to set up their baking business online by providing an interactive web-based platform as the bakers central store. 
+					This platform is designed to be used hand in hand with social media platforms to leverage on their effectiveness (chat, sharing & outreach capabilities). 
+					Being a centralized store, customers will be able to view a wide variety of baked goods from different home bakers, and contact them directly for order via their preferred method of contact.
 				</p>
 				<p style={{ textAlign: "left" }}>
-					Fermentum iaculis eu non diam. Viverra maecenas accumsan lacus vel facilisis volutpat est
-					velit egestas. Ut venenatis tellus in metus vulputate eu scelerisque. Aliquam etiam erat
-					velit scelerisque in. Sapien nec sagittis aliquam malesuada bibendum arcu. Tristique
-					sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula. Pharetra et ultrices
-					neque ornare aenean euismod elementum nisi quis. Arcu cursus euismod quis viverra nibh
-					cras pulvinar mattis. Habitant morbi tristique senectus et netus et malesuada fames.
-					Facilisis sed odio morbi quis commodo. Gravida neque convallis a cras semper auctor neque
-					vitae.
+					Bakeswitch is an online marketplace web app that will have features beneficial to both buyer and seller users. Buyers are able to browse product listings from sellers and sellers are able to list products and bake sales, and manage orders from buyers. 
 				</p>
 			</Paper>
 
