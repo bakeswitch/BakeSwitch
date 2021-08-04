@@ -9,3 +9,10 @@
 .delConfButton {
 	margin: 0.75rem 1.5rem 2rem;
 }
+
+.sellerProfilImg {
+	width: 100%;
+	height: 300px;
+	object-fit: contain;
+	background-color: grey;
+}

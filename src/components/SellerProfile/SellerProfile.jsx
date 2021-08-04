@@ -9,6 +9,7 @@ import UpdateString from "../helperComponents/UpdateString";
 import SearchResults from "../SearchResults";
 import styles from "./SellerProfile.module.css";
 
+//Seller Information sidetab
 export default function SellerProfile(props) {
 	const storeID = props.storeID;
 	// Takes in storeID as props
@@ -44,7 +45,7 @@ export default function SellerProfile(props) {
 						variant="top"
 						alt="Image from store"
 						src={storeRec.storeLogo}
-						style={{ width: "100%", height: "300px" }}
+						className={styles.sellerProfilImg}
 					/>
 					{isOwnStore && (
 						<UpdateString

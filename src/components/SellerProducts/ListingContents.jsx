@@ -41,7 +41,9 @@ export default function ListingContents(props) {
 				isTextArea={true}
 			/>
 			<h6>Update Bake Picture URL</h6>
-			<UpdateString item={bakeRec?.bakePhotoURL} field="bakePhotoURL" docRef={bakeRef} />
+			<UpdateString item={bakeRec?.bakePhotoURL} field="bakePhotoURL" docRef={bakeRef} 
+				formText=" 4 by 3 aspect ratio (ideally)" 
+			/>
 		</div>
 	);
 }

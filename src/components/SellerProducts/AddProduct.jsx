@@ -93,7 +93,7 @@ export default function AddProduct(props) {
 						<Form.Group className="mt-4" controlId="formPdtImg">
 							<Form.Label>Bake Product Image</Form.Label>
 							<Form.Control type="text" placeholder="Enter image URL" ref={photoURL} />
-							<Form.Text className="text-muted">Include URL to an image of your product.</Form.Text>
+							<Form.Text className="text-muted">Include URL to an image of your product. Refer to FAQ on how to generate. Photo should have 4 by 3 aspect ratio ideally</Form.Text>
 						</Form.Group>
 						<Form.Group className="mt-4" controlId="formPdtAllergens">
 							<Form.Label>Bake Product Allergens</Form.Label>
