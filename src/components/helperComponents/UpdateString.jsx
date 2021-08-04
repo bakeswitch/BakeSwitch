@@ -6,12 +6,14 @@ import IconButton from "@material-ui/core/IconButton";
 import styles from "./helperComponents.module.css";
 
 // Takes in 3 compulsory props (item, field, docRef), 1 optional prop (isTextArea - for store description)
+// another 1 optional prop (formText) which is footer for form field
 // This is only to be used for fields that are non-mandatory.
 // To delete a field value, click update without typing anything in the input box
 export default function UpdateString(props) {
 	const item = props.item;
 	const field = props.field;
 	const docRef = props.docRef;
+	const formText = props.formText;
 
 	const [updateItem, setUpdateItem] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -39,22 +41,26 @@ export default function UpdateString(props) {
 			{updateItem && (
 				<Form onSubmit={handleUpdate}>
 					<Form.Group className={styles.editString}>
-						<InputGroup className="mb-2">
-							{props.isTextArea ? (
-								<Form.Control
-									type="text"
-									placeholder="Type here"
-									ref={newVal}
-									as="textarea"
-									rows={5}
-								/>
-							) : (
-								<Form.Control type="text" placeholder="Type here" ref={newVal} />
-							)}
+						<InputGroup 
+							// className="mb-2"
+						>
+							{props.isTextArea 
+								? (
+									<Form.Control
+										type="text"
+										placeholder="Type here"
+										ref={newVal}
+										as="textarea"
+										rows={5}
+									/> ) 
+								: (
+									<Form.Control type="text" placeholder="Type here" ref={newVal} />
+								)}
 							<Button disabled={loading} type="submit">
 								Update
 							</Button>
 						</InputGroup>
+						<Form.Text>{formText}</Form.Text>
 					</Form.Group>
 				</Form>
 			)}
