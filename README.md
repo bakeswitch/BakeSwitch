@@ -6,7 +6,7 @@ BakeSwitch is an online marketplace web app that has features beneficial to both
 
 [View website](https://bake-switch.vercel.app/) 
 
-### Setting Up 
+### Setting up 
 1. Download NodeJS
 2. Clone this repository
 3. Create a top-level file named *.env.local* to store your Firebase API keys 
