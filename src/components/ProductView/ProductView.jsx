@@ -270,6 +270,7 @@ export default function ProductView(props) {
 										variant="outline-secondary"
 										title="Add to wishlist"
 										onClick={() => setIsLiked((prvBool) => !prvBool)}
+										hidden
 									>
 										<FaHeart color={isLiked ? "red" : "black"} />
 									</Button>
