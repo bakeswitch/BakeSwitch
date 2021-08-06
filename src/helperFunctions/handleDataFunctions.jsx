@@ -1,5 +1,6 @@
 import { db } from "../config/firebase";
 import firebase from "@firebase/app";
+import React, { useState, useEffect } from "react";
 
 
 //PARAM: bakeData
@@ -103,3 +104,49 @@ const orderGenerated =
 `at $${orderedPnQArr[indexPair][0]} each - ` +
 `[${modeOfTransfer}]`;
 */
+
+export function useGlobalStoreIDAndNameArr() { //useFetch()
+	const [status, setStatus] = useState("idle");
+	const [storeIDAndNameArr, setStoreIDAndNameArr] = useState([{}]); //array of storeObjs 
+	/*[	{storeID:"", storeName:""}, 
+		{storeID:"", storeName:""}, 
+		{storeID:"", storeName:""},...] */
+
+	useEffect(() => {
+		const fetchData = async () => {
+			setStatus('fetching');
+			const response = await db.collection("stores").get(); //returns querysnapshot
+			response.forEach((doc) => {
+				setStoreIDAndNameArr(prvArr => [...prvArr, {storeID:doc.id, storeName:doc.data().storeName}]);
+			})
+			setStatus('fetched');
+		};
+
+		fetchData();
+	}, []);
+
+	return { status, storeIDAndNameArr };
+}
+
+const useFetch = (query) => {
+    const [status, setStatus] = useState('idle');
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        if (!query) return;
+
+        const fetchData = async () => {
+            setStatus('fetching');
+            const response = await fetch(
+                `https://hn.algolia.com/api/v1/search?query=${query}`
+            );
+            const data = await response.json();
+            setData(data.hits);
+            setStatus('fetched');
+        };
+
+        fetchData();
+    }, [query]);
+
+    return { status, data };
+};

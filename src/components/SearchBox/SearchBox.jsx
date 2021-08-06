@@ -6,33 +6,18 @@ import { db } from "../../config/firebase";
 
 export default function SearchBox(props) {
 	const [tag, setTag] = useState("");
-	const [storeName, setStoreName] = useState("");
-	const [searchArr, setSearchArr] = useState([]);
+	const [storeID, setStoreID] = useState("");
 
-	const { setSearchTag, setIsDefault, setStoreIDArr } = props;
+	const { setSearchTag, 
+			setSearchStoreID,
+			setIsDefault, 
+			globalStoreIDAndNameArr } = props;
 
 	function handleSubmit(e) {
 		e.preventDefault();
 		setSearchTag(tag);
-		
-		if (storeName != "") {
-			db.collection("stores")
-				.where("storeName", ">=", storeName)
-				.where("storeName", "<=", storeName + "\uf8ff")
-				.get()
-				.then((querySnapshot) =>
-					querySnapshot.forEach((doc) => {
-						searchArr.push(doc.id);
-						// setSearchArr(prvArr => [...prvArr, doc.id]);
-					})
-				)
-				.then(() => setStoreIDArr(searchArr))
-				.then(() => setSearchArr([]))
-				.then(() => setIsDefault(false));
-		} else {
-			setStoreIDArr([]);
-			setIsDefault(false);
-		}
+		setSearchStoreID(storeID);
+		setIsDefault(false); //toggle off initial category page
 	}
 
 	return (
@@ -57,10 +42,22 @@ export default function SearchBox(props) {
 				<Form.Group as={Col} controlId="formBaker">
 					<Form.Label className="d-flex align-items-left">baker</Form.Label>
 					<Form.Control
+						as="select"
+						placeholder="Choose store"
+						onChange={(e) => setStoreID(e.target.value)}
+					>
+						<option value="">-all stores-</option>
+						{globalStoreIDAndNameArr.map((storeObj, index) => (
+							<option value={storeObj.storeID} key={storeObj.storeID}>
+								{storeObj.storeName}
+							</option>
+						))}
+					</Form.Control>
+					{/* <Form.Control
 						type="text"
 						placeholder="enter store name"
 						onChange={(e) => setStoreName(e.target.value)}
-					/>
+					/> */}
 				</Form.Group>
 
 				{/* <Form.Group xs="auto" as={Col} controlId="formDateStart">

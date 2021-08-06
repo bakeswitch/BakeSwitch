@@ -8,33 +8,42 @@ import ErrorCard from "../helperComponents/ErrorCard";
 
 // Takes in searchTag, storeIDArr
 export default function SearchResults(props) {
-	const { searchTag, storeIDArr } = props;
+	const { searchTag, 
+			searchStoreID } = props;
 	const [bakeIDArr, setBakeIDArr] = useState([]); //array of bakeID strings
 	const [isLoading, setIsLoading] = useState(true);
 	const bakeRef = db.collection("bakes");
 
+
 	function fillBakeIDArr() {
 		// setBakeIDArr([]);
-		let queryResults;
 		// alert('i ran inside fillBakeIDArr()');
+		let queryResults;
 
+		// const queryResults = 
+		// 	(searchTag == "" && storeIDArr.length == 0) ? bakeRef
+		// 	(searchTag == "" && storeIDArr.length != 0) ? bakeRef.where("storeID", "in", storeIDArr)
+		// 	(searchTag != "" && storeIDArr.length == 0) ? bakeRef.where("bakeTags", "array-contains", searchTag)
+		// 												: bakeRef
+		// 													.where("bakeTags", "array-contains", searchTag)
+		// 													.where("storeID", "in", storeIDArr);
 		//4 Use Cases
 		// if no search tag and no stores
-		if (searchTag == "" && storeIDArr.length == 0) {
+		if (searchTag == "" && searchStoreID == "") {
 			// alert('1st');
 			queryResults = bakeRef;
 		// if no search tag and there are stores parsed
-		} else if (searchTag == "" && storeIDArr.length != 0) {
+		} else if (searchTag == "" && searchStoreID != "") {
 			// alert('2nd');
-			queryResults = bakeRef.where("storeID", "in", storeIDArr);
-		} else if (searchTag != "" && storeIDArr.length == 0) {
+			queryResults = bakeRef.where("storeID", "==", searchStoreID);
+		} else if (searchTag != "" && searchStoreID == "") {
 			// alert('3rd');
 			queryResults = bakeRef.where("bakeTags", "array-contains", searchTag);
-		} else { //if both searchTag and storeIDArr populated
+		} else { //if both searchTag and searchStoreID populated
 			// alert('4th');
 			queryResults = bakeRef
 				.where("bakeTags", "array-contains", searchTag)
-				.where("storeID", "in", storeIDArr);
+				.where("storeID", "==", searchStoreID);
 		}
 		// const queryResults = bakeRef
 		// 	.where("bakeTags", "array-contains", searchTag)
@@ -69,7 +78,7 @@ export default function SearchResults(props) {
 		return () => {
 			setBakeIDArr([]);
 		};
-	}, [searchTag, storeIDArr]);
+	}, [searchTag, searchStoreID]);
 
 	/* PROB: After changing baker name, change bake tag, and there would be a problem of duplicate bakes
 	click search again and it will clear
@@ -93,9 +102,9 @@ export default function SearchResults(props) {
 				<Col>bakedocarr length: {bakeDocArr.length}</Col> */}
 				{/* <Col>{JSON.stringify(bakeIDArr)}</Col> */}
 
+				{/* {uniqBakeIDArr.map((bakeID) => ( */}
 				{/* Resolve unique key ID error */}
-				{/* {bakeIDArr.map((bakeID) => ( */}
-				{uniqBakeIDArr.map((bakeID) => (
+				{bakeIDArr.map((bakeID) => (
 					<Col
 						// display={bakeID? 'none': 'block'}
 						key={"col_" + bakeID}
