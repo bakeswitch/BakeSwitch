@@ -35,7 +35,7 @@ export default function BakerCard(props) {
 				/>
 				<Card className={styles.bakerCard}>
 					<Button variant="light" onClick={handleClick}>
-						<Card.Header as="h5">{storeRec.storeName}</Card.Header>
+						<Card.Header className={styles.buttonHeader} as="h5">{storeRec.storeName}</Card.Header>
 					</Button>
 					<Card.Body className={styles.bakerDesc}>
 						<Card.Text>{storeRec.storeDesc}</Card.Text>

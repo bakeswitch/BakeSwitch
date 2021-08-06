@@ -24,6 +24,11 @@
 	flex-grow: 1;
 }
 
+.buttonHeader:hover {
+	background-color:rgba(233, 233, 233, 0.932)
+	/* border:1px solid blue; */
+}
+
 .bakerDesc {
 	text-align: left;
 	overflow: auto;
