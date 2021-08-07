@@ -10,5 +10,14 @@ BakeSwitch is an online marketplace web app that has features beneficial to both
 1. Download NodeJS
 2. Clone this repository
 3. Create a top-level file named *.env.local* to store your Firebase API keys 
+  ```
+  REACT_APP_FIREBASE_API_KEY = "..."
+  REACT_APP_FIREBASE_AUTH_DOMAIN = "..."
+  REACT_APP_FIREBASE_PROJECT_ID = "..."
+  REACT_APP_FIREBASE_STORAGE_BUCKET = "..."
+  REACT_APP_FIREBASE_MESSAGING_SENDER_ID = "..."
+  REACT_APP_FIREBASE_APP_ID = "..."
+  REACT_APP_FIREBASE_MEASUREMENT_ID = "..."
+  ```
 4. Run `npm install` to install dependencies
 5. Run `npm start` to start the website on localhost:3000
