@@ -2,7 +2,7 @@
 
 BakeSwitch is an **online marketplace** web app that has features beneficial to both buyer and seller users. Buyers are able to browse product listings from sellers and sellers are able to list products and bake sales, and manage orders from buyers.
 
-Checkout our other README document for more details on BakeSwitch :arrow_right: [README document](https://drive.google.com/file/d/1-boVU3OC5LkJy-dVe5TYezPsMhl2KaC9/view?usp=sharing)  
+Check out our full README document for more details on BakeSwitch :arrow_right: [README document](https://drive.google.com/file/d/1-boVU3OC5LkJy-dVe5TYezPsMhl2KaC9/view?usp=sharing)  
 View our website! :arrow_right: [BakeSwitch Website](https://bake-switch.vercel.app/) :computer:
 
 ### Setting up your own replica of this e-commerce site
