@@ -26,7 +26,7 @@ export default function About() {
 					Our Story
 				</h3>
 				<p style={{ textAlign: "left" }}>
-					We aim to make it effortless for Singapore home bakers to set up their baking business online by providing an interactive web-based platform as the bakers central store. 
+					We aim to make it effortless for home bakers in Singapore to set up their baking business online by providing an interactive web-based platform as the bakers central store. 
 					This platform is designed to be used hand in hand with social media platforms to leverage on their effectiveness (chat, sharing & outreach capabilities). 
 					Being a centralized store, customers will be able to view a wide variety of baked goods from different home bakers, and contact them directly for order via their preferred method of contact.
 				</p>
