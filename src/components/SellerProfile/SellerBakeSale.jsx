@@ -6,20 +6,25 @@ import UpdateDate from "../helperComponents/UpdateDate";
 import { CreateBakeSale, DeleteBakeSale } from "./CreateDeleteBakeSale";
 
 export default function SellerBakeSale(props) {
-	const sellerDoc = props.sellerDoc;
-	const isOwnStore = props.isOwnStore;
-	const storeRef = props.storeRef;
+	const { sellerDoc,
+			isOwnStore,
+			storeRef } = props;
+	const { availabilityStart,
+			availabilityEnd,
+			bakeSaleDesc,
+			bakeSaleName,
+			bakeSalePromo } = sellerDoc 
 
 	if (sellerDoc?.bakeSaleName) {
 		const today = new Date();
-		const startDate = new Date(sellerDoc.availabilityStart);
-		const endDate = new Date(sellerDoc.availabilityEnd);
+		const startDate = new Date(availabilityStart);
+		const endDate = new Date(availabilityEnd);
 		var saleStatus = startDate > today ? "Upcoming" : endDate < today ? "Ended" : "Ongoing";
 	}
 
 	return (
 		<Card body className={styles.tabBox}>
-			{sellerDoc?.bakeSaleName ? (
+			{bakeSaleName ? (
 				<>
 					<Card.Title className="mb-4">
 						<div>
@@ -27,13 +32,13 @@ export default function SellerBakeSale(props) {
 								{saleStatus}
 							</Button>
 						</div>
-						{sellerDoc.bakeSaleName}
+						{bakeSaleName}
 					</Card.Title>
 					<Card.Text>
-						<strong>Start</strong> : {sellerDoc.availabilityStart}
+						<strong>Start</strong> : {availabilityStart}
 					</Card.Text>
 					<Card.Text>
-						<strong>End</strong> : {sellerDoc.availabilityEnd}
+						<strong>End</strong> : {availabilityEnd}
 					</Card.Text>
 					{isOwnStore && (
 						<UpdateDate start="availabilityStart" end="availabilityEnd" docRef={storeRef} />
@@ -42,29 +47,33 @@ export default function SellerBakeSale(props) {
 					<Card.Title className="mb-3" as="h6">
 						Description
 					</Card.Title>
-					<Card.Text>{sellerDoc.bakeSaleDesc}</Card.Text>
-					{isOwnStore && (
-						<UpdateString
-							item={sellerDoc.bakeSaleDesc}
-							field="bakeSaleDesc"
-							docRef={storeRef}
-							isTextArea={true}
-						/>
-					)}
-					{(sellerDoc?.bakeSalePromo || isOwnStore) && (
+					<Card.Text>
+						{isOwnStore 
+							? <UpdateString
+								item={bakeSaleDesc}
+								field="bakeSaleDesc"
+								docRef={storeRef}
+								isTextArea={true}
+							/>
+							: bakeSaleDesc
+						}
+					</Card.Text>
+					{(bakeSalePromo || isOwnStore) && (
 						<>
 							<Card.Title className="mb-3" as="h6">
 								Promotions
 							</Card.Title>
-							<Card.Text>{sellerDoc.bakeSalePromo}</Card.Text>
-							{isOwnStore && (
-								<UpdateString
-									item={sellerDoc.bakeSalePromo}
-									field="bakeSalePromo"
-									docRef={storeRef}
-									isTextArea={true}
-								/>
-							)}
+							<Card.Text>
+								{isOwnStore 
+									? <UpdateString
+										item={bakeSalePromo}
+										field="bakeSalePromo"
+										docRef={storeRef}
+										isTextArea={true}
+									/>
+									: bakeSalePromo
+								}
+							</Card.Text>
 						</>
 					)}
 				</>
@@ -72,19 +81,19 @@ export default function SellerBakeSale(props) {
 				"No bake sale"
 			)}
 
-			{isOwnStore && !sellerDoc?.bakeSaleName && (
+			{isOwnStore && !bakeSaleName && (
 				<CreateBakeSale docRef={storeRef} buttonLabel="Create Bake Sale" />
 			)}
 
-			{isOwnStore && sellerDoc?.bakeSaleName && saleStatus === "Ended" && (
+			{isOwnStore && bakeSaleName && saleStatus === "Ended" && (
 				<CreateBakeSale docRef={storeRef} buttonLabel="Create New Bake Sale" />
 			)}
-			{isOwnStore && sellerDoc?.bakeSaleName && saleStatus === "Ended" && (
+			{isOwnStore && bakeSaleName && saleStatus === "Ended" && (
 				<div className="mt-3">
 					<h6>OR</h6>
 				</div>
 			)}
-			{isOwnStore && sellerDoc?.bakeSaleName && <DeleteBakeSale docRef={storeRef} />}
+			{isOwnStore && bakeSaleName && <DeleteBakeSale docRef={storeRef} />}
 		</Card>
 	);
 }

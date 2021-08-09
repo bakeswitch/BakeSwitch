@@ -4,18 +4,20 @@ import styles from "./SellerProfile.module.css";
 import UpdateString from "../helperComponents/UpdateString";
 
 export default function SellerAbout(props) {
-	const sellerDoc = props.sellerDoc;
+	const { sellerDoc,
+			isOwnStore } = props;
+	const { storeDesc } = sellerDoc
 	return (
 		<Card body className={styles.tabBox}>
-			{sellerDoc.storeDesc}
-			{props.isOwnStore && (
-				<UpdateString
+			{isOwnStore 
+				? <UpdateString
 					item={sellerDoc.storeDesc}
 					field="storeDesc"
 					docRef={props.storeRef}
 					isTextArea={true}
 				/>
-			)}
+				: storeDesc
+			}
 		</Card>
 	);
 }

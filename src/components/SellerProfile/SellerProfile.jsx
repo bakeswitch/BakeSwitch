@@ -52,6 +52,7 @@ export default function SellerProfile(props) {
 							item={storeRec.storeLogo}
 							field="storeLogo"
 							docRef={storeRef}
+							showValue={false}
 						></UpdateString>
 					)}
 
