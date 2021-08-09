@@ -20,4 +20,4 @@ View our website! :arrow_right: [BakeSwitch Website](https://bakeswitch-orbital.
   ```
 4. Run `npm install` to install dependencies
 5. Run `npm start` to start the website on localhost:3000
-6. Deploy your website on platforms like 
+6. Deploy the website on a platform of your choice (e.g. Firebase Hosting, Vercel, Heroku) 
