@@ -23,4 +23,4 @@ const db = firebase.firestore();
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 export { auth, GoogleAuthProvider, EmailAuthProvider, db };
-export default app; //MAY NOT BE USED?
+export default app; // NOT USED?
