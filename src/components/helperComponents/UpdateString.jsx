@@ -5,8 +5,22 @@ import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import styles from "./helperComponents.module.css";
 
-// Reformated UpdateString helper function to display field as well.
-// Requires additional text (conditional rendering) for non-sellers to view
+/* 
+Reformated UpdateString helper function to display field as well.
+Important! => Requires additional text (conditional rendering) for non-sellers to view
+
+Example implementation:
+	{isOwnStore 
+		? <UpdateString
+			item={X}
+			field="X"
+			docRef={storeRef}
+			isTextArea={true}
+		/>
+		: X
+	}
+*/
+
 
 // Takes in 3 compulsory props (item, field, docRef), 1 optional prop (isTextArea - for store description)
 // another 1 optional prop (formText) which is footer for form field

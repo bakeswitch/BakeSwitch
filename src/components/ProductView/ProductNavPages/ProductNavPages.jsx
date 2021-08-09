@@ -56,7 +56,7 @@ function ProductNavPages(props) {
 				/>
 			</Tab>
 			<Tab eventKey="reviews" title="reviews">
-				<ProductReviews />
+				<ProductReviews/>
 			</Tab>
 			<Tab eventKey="allergens" title="allergens">
 				<ProductAllergens

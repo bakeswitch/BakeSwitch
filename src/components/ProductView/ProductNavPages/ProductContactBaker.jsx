@@ -23,7 +23,7 @@ export default function ProductContactBaker(props) {
 	} = storeData;
 
 	return (
-		<Container className={styles.cardDetailsBox}>
+		<Container className={styles.productDetailsBox}>
 			<dl className="row sm mb-3 mt-3">
 				{contactEmail && (
 					<>

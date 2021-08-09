@@ -19,7 +19,7 @@ export default function ProductDetails(props) {
 	// //replace with actual content
 	// const [productTags, setProductTags] = useState(["Chocolate", "Cookie", "Sweet", "Dark Chocolate"]);
 	return (
-		<Container className={styles.productDetailBox}>
+		<Container className={styles.productDetailsBox}>
 			<dl className="row sm mb-3 mt-3">
 				<dt className="col-sm-3">Description</dt>
 				<dd className="col-sm-9">{bakeDesc}</dd>

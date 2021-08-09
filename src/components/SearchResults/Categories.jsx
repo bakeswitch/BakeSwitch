@@ -34,7 +34,7 @@ export default function Categories(props) {
 	return (
 		<Row xs={1} md={3} className="mb-4 mt-4">
 			{categoriesArr.map((category, index) => (
-				<Col key={index}>
+				<Col className="text-center" key={index}>
 					<Card onClick={() => updateSearch(category[0])} className="mb-4">
 						<Card.Img variant="top" src={category[1]} style={{ height: "250px" }} />
 						<Card.Body style={{ backgroundColor: "rgba(233, 233, 233, 0.932)" }}>

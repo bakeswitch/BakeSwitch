@@ -11,7 +11,7 @@ export default function ProductReviews() {
 	// }
 	//replace with actual content
 	return (
-		<Container className={styles.cardDetailsBox}>
+		<Container className={styles.productDetailsBox}>
 			<h5>Product reviews in construction</h5>
 		</Container>
 	);

@@ -166,8 +166,8 @@ export default function ProductView(props) {
 					</Col>
 					<Col xs={12} md={6} className="p-4">
 						<h3 className="mb-0">
-							{bakeName}
-							{!isAvailable && <span className="badge pill bg-danger ms-3">Not available</span>}
+							{bakeName + " "}
+							{!isAvailable && <span className="badge pill bg-danger">Not available</span>}
 						</h3>
 
 						<div className="mb-3">

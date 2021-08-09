@@ -20,7 +20,7 @@ export default function ProductAllergens(props) {
 
 
     return (
-        <Container className={styles.cardDetailsBox}>
+        <Container className={styles.productDetailsBox}>
             <dl className="row sm mb-3 mt-3">
                 <dt className="col-sm-3">Allergens</dt>
                 <dd className="col-sm-9">{productAllergens.toString()}</dd>
