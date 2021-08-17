@@ -36,7 +36,7 @@ function ProductNavPages(props) {
 	const bakeData = props.bakeData;
 	const storeData = props.storeData;
 	const orderedPnQArr = props.orderedPnQArr;
-	const [key, setKey] = useState('home');
+	const [key, setKey] = useState('details');
 
 	// if (!(bakeData && storeData && orderedPnQArr)) {
 	// 	return ErrorTabs();
@@ -49,21 +49,22 @@ function ProductNavPages(props) {
 			onSelect={(k) => setKey(k)}
 			className="mb-3 ms-2 text-align-left"
 		>
-			<Tab eventKey="details" title="details">
+			<Tab className={styles.tab} eventKey="details" title="details">
 				<ProductDetails 
 					bakeData = {bakeData}
 					orderedPnQArr = {orderedPnQArr}
 				/>
 			</Tab>
-			<Tab eventKey="reviews" title="reviews">
+			{/* Temp disabled till implemented*/}
+			{/* <Tab className={styles.tab} eventKey="reviews" title="reviews">
 				<ProductReviews/>
-			</Tab>
-			<Tab eventKey="allergens" title="allergens">
+			</Tab> */}
+			<Tab className={styles.tab} eventKey="allergens" title="allergens">
 				<ProductAllergens
 					bakeData = {bakeData}
 				/>
 			</Tab>
-			<Tab eventKey="contact" title="contact">
+			<Tab className={styles.tab} eventKey="contact" title="contact">
 				<ProductContactBaker 
 					storeData = {storeData}
 				/>

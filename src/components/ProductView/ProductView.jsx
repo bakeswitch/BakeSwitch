@@ -17,6 +17,7 @@ import {
 import ProductNavPages from "./ProductNavPages";
 import { FaHeart, FaPlusSquare, FaMinusSquare } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
+import { GrCircleInformation } from "react-icons/gr";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../config/firebase";
 import {
@@ -25,6 +26,7 @@ import {
 } from "../../helperFunctions/handleDataFunctions";
 import ErrorCard from "../helperComponents/ErrorCard";
 import { RatingDetails } from "../helperComponents/RatingOutOf5.jsx";
+import { useHistory } from "react-router-dom";
 
 function isLoggedIn(uid) {
 	return uid != "";
@@ -40,8 +42,10 @@ export default function ProductView(props) {
 	const [radioValue, setRadioValue] = useState("1");
 	const [isLiked, setIsLiked] = useState(false); //Link to wishlist
 	const [qty, setQty] = useState(1); //for qty of item group
+	const [showPref, setShowPref] = useState(false); //show seller delivery/collection pref
 	const { currentUser } = useAuth();
 	const uid = currentUser ? currentUser.uid : "";
+	const history = useHistory();
 
 	function fillBakeData() {
 		//set bakedoc
@@ -142,8 +146,12 @@ export default function ProductView(props) {
 		storeName = "default_store_name",
 		numOfRatings = 0,
 		numOfStars = 0,
+		storeID,
 	} = bakeData;
-	const { deliveryBool = true, selfCollectionBool = true } = storeData;
+	const { deliveryBool = true, 
+			selfCollectionBool = true, 
+			deliveryDetails,
+			selfCollectionDetails } = storeData;
 	const orderedPnQArr = orderPriceAndQtyArr(bakeData);
 
 	const modeOfTransfer = radioValue === "1" ? `collection` : `delivery`;
@@ -154,6 +162,11 @@ export default function ProductView(props) {
 	//     `at $${orderedPnQArr[indexPair][0]} each - ` +
 	//     `[${modeOfTransfer}]`;
 
+	function handleStoreClick(storeID) {
+		const newURL = `/bakerProfile/${storeID}`
+		history.push(newURL);
+	}
+
 	return (
 		!isLoading && (
 			<>
@@ -161,28 +174,29 @@ export default function ProductView(props) {
 					<Col xs={12} md={6} className="p-4">
 						<Card border="light">
 							{/* make carousel here? */}
-							<Card.Img src={bakePhotoURL} rounded="true" fluid="true" />
+							<Card.Img className={styles.img} src={bakePhotoURL} rounded="true" fluid="true" />
 						</Card>
 					</Col>
 					<Col xs={12} md={6} className="p-4">
-						<h3 className="mb-0">
+						<h3 className="mb-5">
 							{bakeName + " "}
 							{!isAvailable && <span className="badge pill bg-danger">Not available</span>}
 						</h3>
 
-						<div className="mb-3">
+						{/* TOGGLE BACK ON when review is implemented */}
+						{/* <div className="mb-3">
 							<RatingDetails numOfRatings={numOfRatings} numOfStars={numOfStars} />
-						</div>
+						</div> */}
 						<dl className="row sm mb-3">
 							{/* <dt className="col-sm-4">Is Available</dt>
 							<dd className="col-sm-8 p-0" style={{ color: isAvailable ? "black" : "red" }}>
 								{isAvailable ? "Av" : "false"}
 							</dd> */}
 							<dt className="col-sm-4">Sold by</dt>
-							<dd className="col-sm-8 p-0">{storeName}</dd>
+							<dd className="col-sm-8 p-0" onClick={() => handleStoreClick(storeID)}>{storeName}</dd>
 							<dt className="col-sm-4">Obtain by</dt>
 							<dd className="col-sm-8 p-0">
-								<ButtonGroup className="mb-2">
+								<ButtonGroup className="mb-2 d-block">
 									<ToggleButton
 										className="p-0 me-4"
 										key="collection"
@@ -211,8 +225,12 @@ export default function ProductView(props) {
 									>
 										Delivery
 									</ToggleButton>
+									<GrCircleInformation className={styles.showDetails} style={showPref ? {border: "0.7px blue solid"}:{}}onClick={() => setShowPref((prvVal) => !prvVal)} />
 								</ButtonGroup>
+								{showPref && <em className={styles.storePrefDetails}>{(modeOfTransfer=="collection" ? selfCollectionDetails : deliveryDetails) || 'no store preference indicated'}</em>}
 							</dd>
+							<dt className="col-sm-4"></dt>
+							<dd className="col-sm-8 p-0" ></dd>
 							<label htmlFor="qty-select">Choose set:</label>
 							<select
 								onChange={(e) => setIndexPair(e.target.value)}

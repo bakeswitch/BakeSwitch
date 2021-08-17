@@ -10,3 +10,19 @@
     outline: 0 !important;
     box-shadow: none !important;
 }
+
+.img {
+    object-fit: cover;
+    height: 22rem;
+}
+
+.showDetails:hover {
+    border: 1px solid blue;
+    /* background-color: ; */
+}
+.storePrefDetails {
+    border: 1px solid black;
+    padding: 1rem;
+    position: absolute;
+    background-color: rgb(231, 231, 231);
+}

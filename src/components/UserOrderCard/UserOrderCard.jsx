@@ -30,7 +30,7 @@ export default function UserOrderCard(props) {
 		modeOfTransfer == "collection" ? "-Collection-" : "-Delivery-";
 
 	function handleBakeClick() {
-		history.push(`bake-product/${bakeID}`);
+		history.push(`/bake-product/${bakeID}`);
 	}
 
 	function handleDelete() {
