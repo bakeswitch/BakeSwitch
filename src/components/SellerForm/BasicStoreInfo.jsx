@@ -1,6 +1,11 @@
 import React, { useRef, useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 
+export const basicStoreInfoOptions = {
+    isBakingStoreNameOptional : false,
+    isBakingStoreDescOptional : false
+}
+
 export default function BasicStoreInfo(props) {
 	const storeNameRef = useRef();
 	const storeDescRef = useRef();
@@ -24,7 +29,7 @@ export default function BasicStoreInfo(props) {
 				Basic Store Information
 			</Card.Header>
 			<Card.Body>
-				<Form onSubmit={handleSubmit}>
+				<Form>
 					<Form.Group className="mb-3" controlId="formStoreName">
 						<Form.Label>Name of Baking Store</Form.Label>
 						<Form.Control type="text" placeholder="Enter store name" ref={storeNameRef} required />
@@ -50,9 +55,9 @@ export default function BasicStoreInfo(props) {
 							Optional. Include URL to your store logo/image.
 						</Form.Text>
 					</Form.Group>
-					<Button className="mt-3" variant="primary" type="submit" disabled={loading}>
+					{/* <Button className="mt-3" variant="primary" type="submit" disabled={loading}>
 						Next
-					</Button>
+					</Button> */}
 				</Form>
 			</Card.Body>
 		</Card>

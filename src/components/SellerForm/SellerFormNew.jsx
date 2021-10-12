@@ -1,37 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./ManualSignUp.module.css";
+import styles from "./SellerForm.module.css";
 import { Button, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 import { db } from "../../config/firebase";
-import ProfileInfo from "./ProfileInfo";
 import { Card, Form, InputGroup } from "react-bootstrap";
-import validator from 'validator';
+import BasicStoreInfo from "./BasicStoreInfo";
+import ContactInfo from "./ContactInfo";
+import validator from "validator";
+import { storeContactOptions } from "../ManualSignUp/ManualSignUp";
+import { basicStoreInfoOptions } from "../ManualSignUp/ManualSignUp";
 
-export const storeContactOptions = {
-    isEmailOptional : true,
-    isPhoneNumberOptional : true,
-    isTelegramOptional : true,
-    isInstaOptional : true,
-    isFacebookOptional : true,
-    isWebsiteOptional : true
-}
+const SellerFormNew = (props) => {
+	const { currentUser } = useAuth()
+    var contactInfo = {}
+    var basicStoreInfo = {}
 
-export const basicStoreInfoOptions = {
-    isBakingStoreNameOptional : false,
-    isBakingStoreDescOptional : false
-}
-
-const ManualSignUp = () => {
-	const { signUp, logOut } = useAuth();
-	const history = useHistory();
-
-	const [signUpInfo, setSignUpInfo] = useState("");
-	const [profileInfo, setProfileInfo] = useState("");
-	var basicStoreInfo = {};
-	var contactInfo = {};
-
-	const storeNameRef = useRef();
+    const storeNameRef = useRef();
 	const storeDescRef = useRef();
 	const storeLogoRef = useRef();
     const instaRef = useRef();
@@ -40,14 +24,49 @@ const ManualSignUp = () => {
 	const phoneRef = useRef();
 	const teleHandleRef = useRef();
 	const emailRef = useRef();
+
 	const [error, setError] = useState("");
-
+	const [message, setMessage] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [yesSeller, setYesSeller] = useState(false);
-	const [showSubmit, setShowSubmit] = useState(false);
-	const [profileNotCompleted, setProfileNotCompleted] = useState(true);
+	const [proceed, setProceed] = useState(false);
 
-	const validateContactInfo = () => {
+	async function handleSubmit() {
+        if (!validateStoreInfo()) {
+            return;
+        }
+        if (!validateContactInfo()) {
+            return;
+        }
+        setError("");
+
+        contactInfo = {
+            email: emailRef.current.value,
+            phoneNum: phoneRef.current.value,
+            teleHandle: teleHandleRef.current.value,
+            instaLink: instaRef.current.value,
+            fbLink: fbRef.current.value,
+            websiteLink: websiteRef.current.value,
+        };
+
+        basicStoreInfo = {
+            storeName: storeNameRef.current.value,
+            storeDesc: storeDescRef.current.value,
+            storeLogo: storeLogoRef.current.value,
+        };
+
+		try {
+			setLoading(true);
+			await addUserToDatabase();
+		} catch (err) {
+			setError("Failed to join as a seller. " + err);
+		} finally {
+			setLoading(false);
+			setProceed(true);
+			setMessage("Successfully registered as a seller");
+		}
+	}
+
+    const validateContactInfo = () => {
         if (!validator.isEmail(emailRef.current.value) && !storeContactOptions.isEmailOptional) {
             setError("Please enter a valid email address");
             return false;
@@ -71,154 +90,49 @@ const ManualSignUp = () => {
         return true;
     }
 
-	const validateStoreInfo = () => {
+    const validateStoreInfo = () => {
         if (storeNameRef.current.value == "" && !basicStoreInfoOptions.isBakingStoreNameOptional) {
             setError("Please fill in baking store information");
             return false;
         }
         else if (storeDescRef.current.value == "" && !basicStoreInfoOptions.isBakingStoreDescOptional) {
-            setError("Pkease fill in baking store description")
+            setError("Please fill in baking store description")
             return false;
         }
         return true;
     }
 
-	async function handleSubmit(e) {
-		e.preventDefault();
-		setError("");
-		if (yesSeller) {
-			if (!validateStoreInfo()) {
-				return;
-			}
-			if (!validateContactInfo()) {
-				return;
-			}
-
-			contactInfo = {
-				email: emailRef.current.value,
-				phoneNum: phoneRef.current.value,
-				teleHandle: teleHandleRef.current.value,
-				instaLink: instaRef.current.value,
-				fbLink: fbRef.current.value,
-				websiteLink: websiteRef.current.value,
-			};
-
-			basicStoreInfo = {
-				storeName: storeNameRef.current.value,
-				storeDesc: storeDescRef.current.value,
-				storeLogo: storeLogoRef.current.value,
-			};
-		}
-
-		//SIGN-UP
-		try {
-			setLoading(true);
-			var userCredential = await signUp(signUpInfo.email, signUpInfo.password);
-			var user = userCredential.user;
-			addUserToDatabase(user);
-		} catch (err) {
-			const errorCode = err.code;
-			switch (errorCode) {
-				case "auth/email-already-in-use":
-					setError("Account with this email already exists");
-					break;
-				case "auth/invalid-email":
-					setError("Invalid email");
-					break;
-				case "auth/weak-password":
-					setError("Password is too weak");
-					break;
-				default:
-					setError("Failed to create an account" + err.message);
-			}
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	async function sendEmailVer(user) {
-		try {
-			logOut();
-			await user.sendEmailVerification();
-			history.push("/log-in");
-			alert(
-				"Email verification sent. Please check your inbox and verify your email to complete account creation."
-			);
-		} catch {
-			setErrors("Failed to send email verification");
-		}
-	}
- 
-	async function addUserToDatabase(user) {
-		const uid = user.uid;
+	async function addUserToDatabase() {
+		const uid = currentUser.uid;
 		const userRef = db.collection("users").doc(uid);
-		await userRef.set({
-			email: user.email,
-			photoURL: user?.photoURL,
-			isManualSignUp: true,
-			isSeller: false,
+		const storeRef = await db.collection("stores").add({
+			storeOwnerID: uid,
 		});
-		await userRef.update({
-			username: profileInfo.username,
-			phoneNumber: profileInfo.phoneNumber,
-		}); 
-		if (yesSeller) {
-			const storeRef = await db.collection("stores").add({
-				storeOwnerID: uid,
-			});
-			const storeID = storeRef.id;
-			await db.collection("stores").doc(storeID).update(basicStoreInfo);
-			await db.collection("stores").doc(storeID).update(contactInfo);
-			userRef.update({
-				isSeller: true,
-				storeID: storeID,
-			});
-		}
-		sendEmailVer(user);
+		const storeID = storeRef.id;
+		db.collection("stores").doc(storeID).update(basicStoreInfo);
+		db.collection("stores").doc(storeID).update(contactInfo);
+		userRef.update({
+			isSeller: true,
+			storeID: storeID,
+		});
 	}
 
 	// Scroll to the top
 	useEffect(() => {
 		window.scrollTo(0, 0);
-	}, [error]);
+	}, [message || error]);
 
 	return (
 		<div className={styles.mainBox}>
 			{error && <Alert variant="danger">{error}</Alert>}
-			<br />
-			{profileNotCompleted && <ProfileInfo
-				updateFunc={(obj1, obj2) => {
-					setSignUpInfo(obj1);
-					setProfileInfo(obj2);
-					setProfileNotCompleted(false);
-				}}
-			/>}
-			{signUpInfo && (
-				<div className={styles.qnBox}>
-					<h6>Do you want to register as a seller?</h6>
-					<Button
-						variant="outline-primary"
-						onClick={() => {
-							setYesSeller(true);
-							setShowSubmit(false);
-						}}
-						className={styles.replyButtons}
-					>
-						Yes
-					</Button>
-
-					<Button
-						variant="outline-secondary"
-						onClick={handleSubmit}
-						className={styles.replyButtons}
-					>
-						No
-					</Button>
-				</div>
+			{message && <Alert variant="success">{message}</Alert>}
+            {proceed && (
+				<Button className="mt-3" variant="primary" href={props.redirect}>
+					Proceed
+				</Button>
 			)}
-
-		{yesSeller && (
-		<Form >
+			<br />
+        <Form >
 		<Card>
             <Card.Header as="h4" className="my-3">
                 Basic Store Information
@@ -311,13 +225,18 @@ const ManualSignUp = () => {
                     Next
                 </Button> */}
             </Card.Body>
-        	</Card>
-    	</Form>)}
-		{yesSeller && <Button disabled={loading} className="mt-3 w-100" variant="warning" onClick={handleSubmit}>
-			Submit
-		</Button>}
-		</div>
+        </Card>
+    </Form>
+    <Button
+        className="mt-3"
+        variant="warning"
+        size="lg"
+        onClick={handleSubmit}
+        disabled={loading} >
+        Submit
+    </Button>
+	</div>
 	);
-};
+}
 
-export default ManualSignUp;
+export default SellerFormNew

@@ -43,7 +43,6 @@ function BuyerProfile(props) {
 									<b>Phone number</b>
 								</td>
 								<td>
-									{userRec.phoneNumber}
 									<UpdateString item={userRec?.phoneNumber} field="phoneNumber" docRef={userRef} />
 								</td>
 							</tr>
