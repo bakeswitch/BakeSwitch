@@ -1,9 +1,9 @@
 {
   "hosting": {
     "public": "build",
-    "predeploy":[
-        "npm ci",
-        "npm run build"
+    "predeploy": [
+      "npm ci",
+      "npm run build"
     ],
     "ignore": [
       "firebase.json",
@@ -16,5 +16,17 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "emulators": {
+    "firestore": {
+      "port": 8080
+    },
+    "ui": {
+      "enabled": true
+    }
   }
 }

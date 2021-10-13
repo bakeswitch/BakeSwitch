@@ -92,7 +92,7 @@ export default function ProductListingDisplay(props) {
 				<Modal show={showDetails} onHide={handleClose}>
 					<Modal.Header>
 						<Modal.Title>
-							{bakeRec.bakeName}
+							{/* {bakeRec.bakeName} */}
 							<UpdateString item={bakeRec?.bakeName} field="bakeName" docRef={bakeRef} />
 						</Modal.Title>
 					</Modal.Header>

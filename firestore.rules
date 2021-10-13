@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+    match /users/{userid} {
+      // owner can only read, update, delete his own userdata
+      allow read, write: if request.auth != null && request.auth.uid == userid;
+      
+    	match /user-orders/{userOrder} {
+      	allow read, write: if request.auth != null && request.auth.uid == userid;
+      }
+    }
+    
+    match /stores/{storeID} {
+    	// allow reading of stores to the whole world
+    	allow read;
+      
+      // only allow the owner to update his stores
+    	allow update, delete: if request.auth.uid == resource.data.storeOwnerID;
+      
+      // allow authenticated users to create stores
+      allow create: if request.auth != null;
+      
+    }
+    
+    match /orders/{orderID} {
+    	// allow authenticated users to create orders
+    	allow create: if request.auth != null && get(/databases/$(database)/documents/stores/$(request.resource.data.storeID)).data.storeOwnerID == request.auth.uid;
+      
+      allow read, update, delete: if request.auth != null && get(/databases/$(database)/documents/stores/$(resource.data.storeID)).data.storeOwnerID == request.auth.uid;
+    
+    }
+    
+    match /bakes/{bakeID} {
+    	// allow whole world to see bakes selection
+    	allow read;
+
+      // allow create bakes if authenticated user and bake he is creating is from his stall
+      allow create: if request.auth != null && 
+        get(/databases/$(database)/documents/stores/$(request.resource.data.storeID)).data.storeOwnerID == request.auth.uid;
+      
+      // allow update if person sending request owns the store
+      allow update, delete: if request.auth != null && 
+        get(/databases/$(database)/documents/stores/$(resource.data.storeID)).data.storeOwnerID == request.auth.uid;
+    }
+  }
+}
