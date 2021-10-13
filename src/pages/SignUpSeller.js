@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SellerForm from "../components/SellerForm";
 import Button from "react-bootstrap/Button";
 import styles from "./pages.module.css";
-import SellerFormNew from "../components/SellerForm/SellerFormNew";
+import SellerForm from "../components/SellerForm/SellerForm";
 // Users who use google to create account and those who decide to become a seller after being prompted the first time
 // will be directed to this page to register as a seller.
 // This can be accesssed through the "Join as a seller" button under profile settings
@@ -33,7 +33,7 @@ export default function SignUpSeller() {
 			)}
 			{joinSeller && (
 				<div className={styles.formBox}>
-					<SellerFormNew redirect="/" />
+					<SellerForm redirect="/" />
 				</div>
 			)}
 		</>
