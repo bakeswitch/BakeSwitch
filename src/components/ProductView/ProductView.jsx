@@ -104,6 +104,7 @@ export default function ProductView(props) {
 				return;
 			}
 		}
+		
 		const storeID = bakeData.storeID;
 		const bakeSet = orderedPnQArr[indexPair][1];
 		const unitPrice = orderedPnQArr[indexPair][0];
