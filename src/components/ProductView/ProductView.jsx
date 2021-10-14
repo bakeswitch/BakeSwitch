@@ -42,7 +42,7 @@ export default function ProductView(props) {
 	const [radioValue, setRadioValue] = useState("1");
 	const [isLiked, setIsLiked] = useState(false); //Link to wishlist
 	const [qty, setQty] = useState(1); //for qty of item group
-	const [showPref, setShowPref] = useState(false); //show seller delivery/collection pref
+	const [showPref, setShowPref] = useState(true); //show seller delivery/collection pref
 	const { currentUser } = useAuth();
 	const uid = currentUser ? currentUser.uid : "";
 	const history = useHistory();
