@@ -3,7 +3,7 @@ import styles from "./pages.module.css";
 import { Paper, Accordion, AccordionSummary, AccordionDetails } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { questionList } from "../helperData/faq";
-
+import {Button} from 'react-bootstrap'
 function QuestionBlock(props) {
 	return (
 		<Accordion className={styles.questionItem}>
@@ -40,7 +40,7 @@ export default function About() {
 				<p style={{ textAlign: "left" }}>
 					We would love to hear your experience using BakeSwitch and appreciate if you could take time to fill in this google form. Let us know how we can better improve the product! <br/>
 					<br/>
-					<a href="https://docs.google.com/forms/d/e/1FAIpQLSf18UDAs9UZeffoeInLE1xrg16ZdPCPqP2aVOWv8S0F3zFnPg/viewform">Give us valuable feedback!</a>
+					<Button onClick={() => {window.open("https://docs.google.com/forms/d/e/1FAIpQLSf18UDAs9UZeffoeInLE1xrg16ZdPCPqP2aVOWv8S0F3zFnPg/viewform", '_blank', 'noopener,noreferrer')}}>Give us valuable feedback!</Button>
 				</p>
 			</Paper>
 
